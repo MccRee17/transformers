@@ -22,6 +22,7 @@ import random
 import sys
 from dataclasses import dataclass, field
 from typing import Optional
+import json
 
 import datasets
 import numpy as np
@@ -30,8 +31,12 @@ from datasets import load_dataset, load_metric
 import transformers
 from transformers import (
     AutoConfig,
-    AutoModelForSequenceClassification,
+ #   AutoModelForSequenceClassification,
     AutoTokenizer,
+    BertConfig,
+    BertForSequenceClassification,
+    BertForPreTraining,
+    BertTokenizer,
     DataCollatorWithPadding,
     EvalPrediction,
     HfArgumentParser,
@@ -183,6 +188,10 @@ class ModelArguments:
         default=True,
         metadata={"help": "Whether to use one of the fast tokenizer (backed by the tokenizers library) or not."},
     )
+    act: str = field(
+        default=None,
+        metadata={"help": "activation functions"},
+    )
     model_revision: str = field(
         default="main",
         metadata={"help": "The specific model version to use (can be a branch name, tag name or commit id)."},
@@ -215,6 +224,7 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
+    
     # Setup logging
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -343,7 +353,6 @@ def main():
             num_labels = len(label_list)
 
     # Load pretrained model and tokenizer
-    #
     # In distributed training, the .from_pretrained methods guarantee that only one local process can concurrently
     # download model & vocab.
     config = AutoConfig.from_pretrained(
@@ -361,16 +370,12 @@ def main():
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_args.model_name_or_path,
-        from_tf=bool(".ckpt" in model_args.model_name_or_path),
-        config=config,
-        cache_dir=model_args.cache_dir,
-        revision=model_args.model_revision,
-        use_auth_token=True if model_args.use_auth_token else None,
-        ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
-    )
-
+    config.hidden_act = model_args.act #"linear"
+    print(f"using model config: {config}")
+    
+    #assert config.hidden_act == "linear"
+    model = BertForSequenceClassification(config)
+    
     # Preprocessing the raw_datasets
     if data_args.task_name is not None:
         sentence1_key, sentence2_key = task_to_keys[data_args.task_name]
@@ -504,6 +509,9 @@ def main():
     else:
         data_collator = None
 
+    #training_args.evaluate_during_training = True
+    #training_args.logging_steps = 1000
+    print(f"using training arge: {training_args}")
     # Initialize our Trainer
     trainer = Trainer(
         model=model,
@@ -522,6 +530,7 @@ def main():
             checkpoint = training_args.resume_from_checkpoint
         elif last_checkpoint is not None:
             checkpoint = last_checkpoint
+        print("Am I using checkpoint", checkpoint)
         train_result = trainer.train(resume_from_checkpoint=checkpoint)
         metrics = train_result.metrics
         max_train_samples = (
@@ -535,6 +544,7 @@ def main():
         trainer.save_metrics("train", metrics)
         trainer.save_state()
 
+    #print(model.bert.embeddings.word_embeddings.weight)
     # Evaluation
     if training_args.do_eval:
         logger.info("*** Evaluate ***")

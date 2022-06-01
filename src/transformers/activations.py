@@ -151,6 +151,14 @@ class LinearActivation(nn.Module):
         return input
 
 
+class QuadActivation(nn.Module):
+    """
+    Applies the quadratic activation function, i.e. forwarding input directly to output.
+    """
+
+    def forward(self, input: Tensor) -> Tensor:
+        return 0.125*input*input + 0.25*input + 0.5
+
 ACT2FN = {
     "gelu": GELUActivation(),
     "gelu_10": ClippedGELUActivation(-10, 10),
@@ -165,6 +173,7 @@ ACT2FN = {
     "silu": SiLUActivation(),
     "swish": SiLUActivation(),
     "tanh": nn.Tanh(),
+    "quad": QuadActivation() 
 }
 
 

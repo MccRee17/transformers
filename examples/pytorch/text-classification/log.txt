@@ -1,0 +1,254 @@
+05/25/2022 17:31:34 - WARNING - __main__ - Process rank: -1, device: cuda:0, n_gpu: 1distributed training: False, 16-bits training: False
+05/25/2022 17:31:34 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=IntervalStrategy.NO,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_min_num_params=0,
+full_determinism=False,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=2e-05,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=/tmp/mrpc/runs/May25_17-31-34_h0.security4.biglearning.orca.pdl.cmu.edu,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=2.0,
+optim=OptimizerNames.ADAMW_HF,
+output_dir=/tmp/mrpc/,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=32,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=/tmp/mrpc/,
+save_on_each_node=False,
+save_steps=500,
+save_strategy=IntervalStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+05/25/2022 17:31:35 - INFO - datasets.info - Loading Dataset Infos from /users/dacheng2/.cache/huggingface/modules/datasets_modules/datasets/glue/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+05/25/2022 17:31:35 - INFO - datasets.builder - Overwrite dataset info from restored data version.
+05/25/2022 17:31:35 - INFO - datasets.info - Loading Dataset info from /users/dacheng2/.cache/huggingface/datasets/glue/mrpc/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+05/25/2022 17:31:35 - WARNING - datasets.builder - Reusing dataset glue (/users/dacheng2/.cache/huggingface/datasets/glue/mrpc/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad)
+05/25/2022 17:31:35 - INFO - datasets.info - Loading Dataset info from /users/dacheng2/.cache/huggingface/datasets/glue/mrpc/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+  0%|          | 0/3 [00:00<?, ?it/s]100%|██████████| 3/3 [00:00<00:00, 478.17it/s]
+[INFO|configuration_utils.py:659] 2022-05-25 17:31:35,722 >> loading configuration file https://huggingface.co/prajjwal1/bert-mini/resolve/main/config.json from cache at /users/dacheng2/.cache/huggingface/transformers/a32529b12a03c02e99c269bf68c0c7b8349093f626e860ab9b012e3d9539c539.e6c2a1d71adb3143ecd42222c4604e92ff255a7663c04bb5c4fad770c78e096c
+[INFO|configuration_utils.py:708] 2022-05-25 17:31:35,724 >> Model config BertConfig {
+  "_name_or_path": "prajjwal1/bert-mini",
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "finetuning_task": "mrpc",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 256,
+  "initializer_range": 0.02,
+  "intermediate_size": 1024,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 4,
+  "num_hidden_layers": 4,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+[INFO|tokenization_auto.py:383] 2022-05-25 17:31:35,825 >> Could not locate the tokenizer configuration file, will try to use the model config instead.
+[INFO|configuration_utils.py:659] 2022-05-25 17:31:35,920 >> loading configuration file https://huggingface.co/prajjwal1/bert-mini/resolve/main/config.json from cache at /users/dacheng2/.cache/huggingface/transformers/a32529b12a03c02e99c269bf68c0c7b8349093f626e860ab9b012e3d9539c539.e6c2a1d71adb3143ecd42222c4604e92ff255a7663c04bb5c4fad770c78e096c
+[INFO|configuration_utils.py:708] 2022-05-25 17:31:35,922 >> Model config BertConfig {
+  "_name_or_path": "prajjwal1/bert-mini",
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 256,
+  "initializer_range": 0.02,
+  "intermediate_size": 1024,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 4,
+  "num_hidden_layers": 4,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+[INFO|tokenization_utils_base.py:1781] 2022-05-25 17:31:36,519 >> loading file https://huggingface.co/prajjwal1/bert-mini/resolve/main/vocab.txt from cache at /users/dacheng2/.cache/huggingface/transformers/62f8357e13eddc9798915fddaeb0de8bb9a14deda654be17fbfd049a56dd3b5a.d789d64ebfe299b0e416afc4a169632f903f693095b4629a7ea271d5a0cf2c99
+[INFO|tokenization_utils_base.py:1781] 2022-05-25 17:31:36,519 >> loading file https://huggingface.co/prajjwal1/bert-mini/resolve/main/tokenizer.json from cache at None
+[INFO|tokenization_utils_base.py:1781] 2022-05-25 17:31:36,520 >> loading file https://huggingface.co/prajjwal1/bert-mini/resolve/main/added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1781] 2022-05-25 17:31:36,520 >> loading file https://huggingface.co/prajjwal1/bert-mini/resolve/main/special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:1781] 2022-05-25 17:31:36,520 >> loading file https://huggingface.co/prajjwal1/bert-mini/resolve/main/tokenizer_config.json from cache at None
+[INFO|configuration_utils.py:659] 2022-05-25 17:31:36,617 >> loading configuration file https://huggingface.co/prajjwal1/bert-mini/resolve/main/config.json from cache at /users/dacheng2/.cache/huggingface/transformers/a32529b12a03c02e99c269bf68c0c7b8349093f626e860ab9b012e3d9539c539.e6c2a1d71adb3143ecd42222c4604e92ff255a7663c04bb5c4fad770c78e096c
+[INFO|configuration_utils.py:708] 2022-05-25 17:31:36,619 >> Model config BertConfig {
+  "_name_or_path": "prajjwal1/bert-mini",
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 256,
+  "initializer_range": 0.02,
+  "intermediate_size": 1024,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 4,
+  "num_hidden_layers": 4,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+[INFO|configuration_utils.py:659] 2022-05-25 17:31:36,762 >> loading configuration file https://huggingface.co/prajjwal1/bert-mini/resolve/main/config.json from cache at /users/dacheng2/.cache/huggingface/transformers/a32529b12a03c02e99c269bf68c0c7b8349093f626e860ab9b012e3d9539c539.e6c2a1d71adb3143ecd42222c4604e92ff255a7663c04bb5c4fad770c78e096c
+[INFO|configuration_utils.py:708] 2022-05-25 17:31:36,764 >> Model config BertConfig {
+  "_name_or_path": "prajjwal1/bert-mini",
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 256,
+  "initializer_range": 0.02,
+  "intermediate_size": 1024,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 4,
+  "num_hidden_layers": 4,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+05/25/2022 17:31:37 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /users/dacheng2/.cache/huggingface/datasets/glue/mrpc/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-5c96aa57035dc4f5.arrow
+05/25/2022 17:31:37 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /users/dacheng2/.cache/huggingface/datasets/glue/mrpc/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-10d637ad4eb4b778.arrow
+05/25/2022 17:31:37 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /users/dacheng2/.cache/huggingface/datasets/glue/mrpc/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-01f925d5408ecdf2.arrow
+05/25/2022 17:31:37 - INFO - __main__ - Sample 2619 of the training set: {'sentence1': 'The proceedings were taken up with prosecutors outlining their case against Amrozi , reading 33 pages of documents outlining allegations against him .', 'sentence2': 'Proceedings were taken up with prosecutors outlining their case against Amrozi , reading a 33-page accusation letter to the court .', 'label': 1, 'idx': 2916, 'input_ids': [101, 1996, 8931, 2020, 2579, 2039, 2007, 19608, 2041, 16992, 2037, 2553, 2114, 2572, 3217, 5831, 1010, 3752, 3943, 5530, 1997, 5491, 2041, 16992, 9989, 2114, 2032, 1012, 102, 8931, 2020, 2579, 2039, 2007, 19608, 2041, 16992, 2037, 2553, 2114, 2572, 3217, 5831, 1010, 3752, 1037, 3943, 1011, 3931, 19238, 3661, 2000, 1996, 2457, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+05/25/2022 17:31:37 - INFO - __main__ - Sample 456 of the training set: {'sentence1': "Chechen officials working for the Moscow-backed government are a frequent target for rebels and tension is running high ahead of next Sunday 's presidential election in war-torn Chechnya .", 'sentence2': "Officials in Chechnya 's Moscow-backed government are a frequent target for rebels , and tension is running high ahead of Sunday 's presidential election in the war-ravaged region .", 'label': 1, 'idx': 509, 'input_ids': [101, 18178, 8661, 4584, 2551, 2005, 1996, 4924, 1011, 6153, 2231, 2024, 1037, 6976, 4539, 2005, 8431, 1998, 6980, 2003, 2770, 2152, 3805, 1997, 2279, 4465, 1005, 1055, 4883, 2602, 1999, 2162, 1011, 7950, 18178, 2818, 17238, 1012, 102, 4584, 1999, 18178, 2818, 17238, 1005, 1055, 4924, 1011, 6153, 2231, 2024, 1037, 6976, 4539, 2005, 8431, 1010, 1998, 6980, 2003, 2770, 2152, 3805, 1997, 4465, 1005, 1055, 4883, 2602, 1999, 1996, 2162, 1011, 25537, 2555, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+05/25/2022 17:31:37 - INFO - __main__ - Sample 102 of the training set: {'sentence1': "Standard & Poor 's 500 stock index futures declined 4.40 points to 983.50 , while Nasdaq futures fell 6.5 points to 1,206.50 .", 'sentence2': "The Standard & Poor 's 500 Index was up 1.75 points , or 0.18 percent , to 977.68 .", 'label': 0, 'idx': 116, 'input_ids': [101, 3115, 1004, 3532, 1005, 1055, 3156, 4518, 5950, 17795, 6430, 1018, 1012, 2871, 2685, 2000, 5818, 2509, 1012, 2753, 1010, 2096, 17235, 2850, 4160, 17795, 3062, 1020, 1012, 1019, 2685, 2000, 1015, 1010, 18744, 1012, 2753, 1012, 102, 1996, 3115, 1004, 3532, 1005, 1055, 3156, 5950, 2001, 2039, 1015, 1012, 4293, 2685, 1010, 2030, 1014, 1012, 2324, 3867, 1010, 2000, 5989, 2581, 1012, 6273, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+[INFO|trainer.py:627] 2022-05-25 17:31:39,398 >> The following columns in the training set don't have a corresponding argument in `BertForSequenceClassification.forward` and have been ignored: sentence2, sentence1, idx. If sentence2, sentence1, idx are not expected by `BertForSequenceClassification.forward`,  you can safely ignore this message.
+/users/dacheng2/security/transformers/src/transformers/optimization.py:306: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+[INFO|trainer.py:1430] 2022-05-25 17:31:39,404 >> ***** Running training *****
+[INFO|trainer.py:1431] 2022-05-25 17:31:39,404 >>   Num examples = 3668
+[INFO|trainer.py:1432] 2022-05-25 17:31:39,404 >>   Num Epochs = 2
+[INFO|trainer.py:1433] 2022-05-25 17:31:39,404 >>   Instantaneous batch size per device = 32
+[INFO|trainer.py:1434] 2022-05-25 17:31:39,404 >>   Total train batch size (w. parallel, distributed & accumulation) = 32
+[INFO|trainer.py:1435] 2022-05-25 17:31:39,404 >>   Gradient Accumulation steps = 1
+[INFO|trainer.py:1436] 2022-05-25 17:31:39,404 >>   Total optimization steps = 230
+  0%|          | 0/230 [00:00<?, ?it/s]  1%|          | 2/230 [00:00<00:15, 14.49it/s]  2%|▏         | 4/230 [00:00<00:15, 14.16it/s]  3%|▎         | 6/230 [00:00<00:16, 13.53it/s]  3%|▎         | 8/230 [00:00<00:17, 12.98it/s]  4%|▍         | 10/230 [00:00<00:17, 12.69it/s]  5%|▌         | 12/230 [00:00<00:17, 12.51it/s]  6%|▌         | 14/230 [00:01<00:17, 12.41it/s]  7%|▋         | 16/230 [00:01<00:17, 12.33it/s]  8%|▊         | 18/230 [00:01<00:17, 12.30it/s]  9%|▊         | 20/230 [00:01<00:17, 12.26it/s] 10%|▉         | 22/230 [00:01<00:17, 12.22it/s] 10%|█         | 24/230 [00:01<00:16, 12.23it/s] 11%|█▏        | 26/230 [00:02<00:16, 12.22it/s] 12%|█▏        | 28/230 [00:02<00:16, 12.21it/s] 13%|█▎        | 30/230 [00:02<00:16, 12.21it/s] 14%|█▍        | 32/230 [00:02<00:16, 12.21it/s] 15%|█▍        | 34/230 [00:02<00:15, 12.30it/s] 16%|█▌        | 36/230 [00:02<00:15, 12.35it/s] 17%|█▋        | 38/230 [00:03<00:15, 12.31it/s] 17%|█▋        | 40/230 [00:03<00:15, 12.29it/s] 18%|█▊        | 42/230 [00:03<00:15, 12.27it/s] 19%|█▉        | 44/230 [00:03<00:15, 12.27it/s] 20%|██        | 46/230 [00:03<00:15, 12.27it/s] 21%|██        | 48/230 [00:03<00:14, 12.23it/s] 22%|██▏       | 50/230 [00:04<00:14, 12.22it/s] 23%|██▎       | 52/230 [00:04<00:14, 12.23it/s] 23%|██▎       | 54/230 [00:04<00:14, 12.23it/s] 24%|██▍       | 56/230 [00:04<00:14, 12.22it/s] 25%|██▌       | 58/230 [00:04<00:14, 12.24it/s] 26%|██▌       | 60/230 [00:04<00:13, 12.26it/s] 27%|██▋       | 62/230 [00:05<00:13, 12.28it/s] 28%|██▊       | 64/230 [00:05<00:13, 12.27it/s] 29%|██▊       | 66/230 [00:05<00:13, 12.28it/s] 30%|██▉       | 68/230 [00:05<00:13, 12.25it/s] 30%|███       | 70/230 [00:05<00:13, 12.23it/s] 31%|███▏      | 72/230 [00:05<00:12, 12.23it/s] 32%|███▏      | 74/230 [00:05<00:12, 12.21it/s] 33%|███▎      | 76/230 [00:06<00:12, 12.22it/s] 34%|███▍      | 78/230 [00:06<00:12, 12.22it/s] 35%|███▍      | 80/230 [00:06<00:12, 12.19it/s] 36%|███▌      | 82/230 [00:06<00:12, 12.19it/s] 37%|███▋      | 84/230 [00:06<00:11, 12.40it/s] 37%|███▋      | 86/230 [00:06<00:11, 12.34it/s] 38%|███▊      | 88/230 [00:07<00:11, 12.27it/s] 39%|███▉      | 90/230 [00:07<00:11, 12.24it/s] 40%|████      | 92/230 [00:07<00:11, 12.22it/s] 41%|████      | 94/230 [00:07<00:11, 12.21it/s] 42%|████▏     | 96/230 [00:07<00:10, 12.22it/s] 43%|████▎     | 98/230 [00:07<00:10, 12.19it/s] 43%|████▎     | 100/230 [00:08<00:10, 12.20it/s] 44%|████▍     | 102/230 [00:08<00:10, 12.19it/s] 45%|████▌     | 104/230 [00:08<00:10, 12.17it/s] 46%|████▌     | 106/230 [00:08<00:10, 12.20it/s] 47%|████▋     | 108/230 [00:08<00:09, 12.21it/s] 48%|████▊     | 110/230 [00:08<00:09, 12.17it/s] 49%|████▊     | 112/230 [00:09<00:09, 12.19it/s] 50%|████▉     | 114/230 [00:09<00:09, 12.21it/s] 50%|█████     | 116/230 [00:09<00:08, 12.87it/s] 51%|█████▏    | 118/230 [00:09<00:08, 12.85it/s] 52%|█████▏    | 120/230 [00:09<00:08, 12.66it/s] 53%|█████▎    | 122/230 [00:09<00:08, 12.51it/s] 54%|█████▍    | 124/230 [00:10<00:08, 12.44it/s] 55%|█████▍    | 126/230 [00:10<00:08, 12.39it/s] 56%|█████▌    | 128/230 [00:10<00:08, 12.34it/s] 57%|█████▋    | 130/230 [00:10<00:08, 12.32it/s] 57%|█████▋    | 132/230 [00:10<00:08, 12.25it/s] 58%|█████▊    | 134/230 [00:10<00:07, 12.22it/s] 59%|█████▉    | 136/230 [00:11<00:07, 12.19it/s] 60%|██████    | 138/230 [00:11<00:07, 12.19it/s] 61%|██████    | 140/230 [00:11<00:07, 12.16it/s] 62%|██████▏   | 142/230 [00:11<00:07, 12.17it/s] 63%|██████▎   | 144/230 [00:11<00:07, 12.17it/s] 63%|██████▎   | 146/230 [00:11<00:06, 12.18it/s] 64%|██████▍   | 148/230 [00:12<00:06, 12.18it/s] 65%|██████▌   | 150/230 [00:12<00:06, 12.15it/s] 66%|██████▌   | 152/230 [00:12<00:06, 12.16it/s] 67%|██████▋   | 154/230 [00:12<00:06, 12.15it/s] 68%|██████▊   | 156/230 [00:12<00:06, 12.15it/s] 69%|██████▊   | 158/230 [00:12<00:05, 12.16it/s] 70%|██████▉   | 160/230 [00:13<00:05, 12.17it/s] 70%|███████   | 162/230 [00:13<00:05, 12.19it/s] 71%|███████▏  | 164/230 [00:13<00:05, 12.17it/s] 72%|███████▏  | 166/230 [00:13<00:05, 12.17it/s] 73%|███████▎  | 168/230 [00:13<00:05, 12.18it/s] 74%|███████▍  | 170/230 [00:13<00:04, 12.19it/s] 75%|███████▍  | 172/230 [00:13<00:04, 12.18it/s] 76%|███████▌  | 174/230 [00:14<00:04, 12.19it/s] 77%|███████▋  | 176/230 [00:14<00:04, 12.21it/s] 77%|███████▋  | 178/230 [00:14<00:04, 12.22it/s] 78%|███████▊  | 180/230 [00:14<00:04, 12.18it/s] 79%|███████▉  | 182/230 [00:14<00:03, 12.49it/s] 80%|████████  | 184/230 [00:14<00:03, 12.36it/s] 81%|████████  | 186/230 [00:15<00:03, 12.29it/s] 82%|████████▏ | 188/230 [00:15<00:03, 12.24it/s] 83%|████████▎ | 190/230 [00:15<00:03, 12.21it/s] 83%|████████▎ | 192/230 [00:15<00:03, 12.15it/s] 84%|████████▍ | 194/230 [00:15<00:02, 12.14it/s] 85%|████████▌ | 196/230 [00:15<00:02, 12.16it/s] 86%|████████▌ | 198/230 [00:16<00:02, 12.15it/s] 87%|████████▋ | 200/230 [00:16<00:02, 12.15it/s] 88%|████████▊ | 202/230 [00:16<00:02, 12.16it/s] 89%|████████▊ | 204/230 [00:16<00:02, 12.12it/s] 90%|████████▉ | 206/230 [00:16<00:01, 12.11it/s] 90%|█████████ | 208/230 [00:16<00:01, 12.13it/s] 91%|█████████▏| 210/230 [00:17<00:01, 12.12it/s] 92%|█████████▏| 212/230 [00:17<00:01, 12.14it/s] 93%|█████████▎| 214/230 [00:17<00:01, 12.15it/s] 94%|█████████▍| 216/230 [00:17<00:01, 12.17it/s] 95%|█████████▍| 218/230 [00:17<00:00, 12.11it/s] 96%|█████████▌| 220/230 [00:17<00:00, 12.14it/s] 97%|█████████▋| 222/230 [00:18<00:00, 12.14it/s] 97%|█████████▋| 224/230 [00:18<00:00, 12.16it/s] 98%|█████████▊| 226/230 [00:18<00:00, 12.15it/s] 99%|█████████▉| 228/230 [00:18<00:00, 12.15it/s]100%|██████████| 230/230 [00:18<00:00, 12.58it/s][INFO|trainer.py:1673] 2022-05-25 17:31:58,142 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+                                                 100%|██████████| 230/230 [00:18<00:00, 12.58it/s]100%|██████████| 230/230 [00:18<00:00, 12.27it/s]
+[INFO|trainer.py:2403] 2022-05-25 17:31:58,143 >> Saving model checkpoint to /tmp/mrpc/
+[INFO|configuration_utils.py:446] 2022-05-25 17:31:58,145 >> Configuration saved in /tmp/mrpc/config.json
+[INFO|modeling_utils.py:1602] 2022-05-25 17:31:58,263 >> Model weights saved in /tmp/mrpc/pytorch_model.bin
+[INFO|tokenization_utils_base.py:2108] 2022-05-25 17:31:58,264 >> tokenizer config file saved in /tmp/mrpc/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2114] 2022-05-25 17:31:58,264 >> Special tokens file saved in /tmp/mrpc/special_tokens_map.json
+{'train_runtime': 18.7382, 'train_samples_per_second': 391.5, 'train_steps_per_second': 12.274, 'train_loss': 0.6344439962635869, 'epoch': 2.0}
+***** train metrics *****
+  epoch                    =        2.0
+  train_loss               =     0.6344
+  train_runtime            = 0:00:18.73
+  train_samples            =       3668
+  train_samples_per_second =      391.5
+  train_steps_per_second   =     12.274
+05/25/2022 17:31:58 - INFO - __main__ - *** Evaluate ***
+[INFO|trainer.py:627] 2022-05-25 17:31:58,317 >> The following columns in the evaluation set don't have a corresponding argument in `BertForSequenceClassification.forward` and have been ignored: sentence2, sentence1, idx. If sentence2, sentence1, idx are not expected by `BertForSequenceClassification.forward`,  you can safely ignore this message.
+[INFO|trainer.py:2653] 2022-05-25 17:31:58,319 >> ***** Running Evaluation *****
+[INFO|trainer.py:2655] 2022-05-25 17:31:58,319 >>   Num examples = 408
+[INFO|trainer.py:2658] 2022-05-25 17:31:58,319 >>   Batch size = 8
+  0%|          | 0/51 [00:00<?, ?it/s] 22%|██▏       | 11/51 [00:00<00:00, 100.85it/s] 43%|████▎     | 22/51 [00:00<00:00, 95.21it/s]  63%|██████▎   | 32/51 [00:00<00:00, 93.68it/s] 82%|████████▏ | 42/51 [00:00<00:00, 92.07it/s]05/25/2022 17:31:58 - INFO - datasets.metric - Removing /users/dacheng2/.cache/huggingface/metrics/glue/mrpc/default_experiment-1-0.arrow
+100%|██████████| 51/51 [00:00<00:00, 90.55it/s]
+***** eval metrics *****
+  epoch                   =        2.0
+  eval_accuracy           =     0.6838
+  eval_combined_score     =      0.748
+  eval_f1                 =     0.8122
+  eval_loss               =     0.6236
+  eval_runtime            = 0:00:00.57
+  eval_samples            =        408
+  eval_samples_per_second =    708.767
+  eval_steps_per_second   =     88.596
