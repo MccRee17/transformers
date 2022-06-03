@@ -157,7 +157,7 @@ class QuadActivation(nn.Module):
     """
 
     def forward(self, input: Tensor) -> Tensor:
-        return 0.125*input*input + 0.25*input + 0.5
+        return 0.125*torch.square(input) + 0.25*input + 0.5
 
 ACT2FN = {
     "gelu": GELUActivation(),

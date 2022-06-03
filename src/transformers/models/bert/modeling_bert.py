@@ -210,6 +210,7 @@ class BertEmbeddings(nn.Module):
         inputs_embeds: Optional[torch.FloatTensor] = None,
         past_key_values_length: int = 0,
     ) -> torch.Tensor:
+        #print(self.word_embeddings.weight[:10])
         if input_ids is not None:
             input_shape = input_ids.size()
         else:
@@ -445,6 +446,7 @@ class BertIntermediate(nn.Module):
 
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
         hidden_states = self.dense(hidden_states)
+        #print(self.dense.weight[:2])
         hidden_states = self.intermediate_act_fn(hidden_states)
         return hidden_states
 
@@ -1519,7 +1521,7 @@ class BertForSequenceClassification(BertPreTrainedModel):
         )
         self.dropout = nn.Dropout(classifier_dropout)
         self.classifier = nn.Linear(config.hidden_size, config.num_labels)
-
+        
         # Initialize weights and apply final processing
         self.post_init()
 
@@ -1552,7 +1554,7 @@ class BertForSequenceClassification(BertPreTrainedModel):
             `config.num_labels > 1` a classification loss is computed (Cross-Entropy).
         """
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
-
+        print(self.classifier.weight[:10])
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,

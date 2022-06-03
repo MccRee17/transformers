@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=2,3 python run_glue.py   --model_name_or_path bert-base-cased   --task_name $TASK_NAME   --do_train   --do_eval   --max_seq_length 512   --per_device_train_batch_size 16   --learning_rate 5e-5   --num_train_epochs 3   --output_dir ./tmp/$TASK_NAME/relu --act relu  --fp16 --overwrite_output_dir  --eval_steps 200 --evaluation_strategy steps > relu_log.txt
