@@ -159,6 +159,17 @@ class QuadActivation(nn.Module):
     def forward(self, input: Tensor) -> Tensor:
         return 0.125*torch.square(input) + 0.25*input + 0.5
 
+def softmax_2relu(scores, dim, eps=1e-4):
+    relu = torch.nn.functional.relu(scores)
+    reduce_dim = scores.shape[dim]
+    out = (relu + eps/reduce_dim) / (torch.sum(relu, dim=dim, keepdims=True)+eps)
+    #print(torch.isnan(out).any(), out.shape)
+    return out
+    
+def softmax_2quad(scores, dim):
+    quad =  0.125*torch.square(scores) + 0.25*scores + 0.5
+    return quad / torch.sum(quad, dim=dim, keepdims=True)
+
 ACT2FN = {
     "gelu": GELUActivation(),
     "gelu_10": ClippedGELUActivation(-10, 10),
@@ -174,6 +185,12 @@ ACT2FN = {
     "swish": SiLUActivation(),
     "tanh": nn.Tanh(),
     "quad": QuadActivation() 
+}
+
+ACT2SFN = {
+    "softmax": torch.nn.functional.softmax,
+    "2relu": softmax_2relu,
+    "2quad": softmax_2quad
 }
 
 

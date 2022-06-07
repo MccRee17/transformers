@@ -28,7 +28,7 @@ from packaging import version
 from torch import nn
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
-from ...activations import ACT2FN
+from ...activations import ACT2FN, ACT2SFN
 from ...modeling_outputs import (
     BaseModelOutputWithPastAndCrossAttentions,
     BaseModelOutputWithPoolingAndCrossAttentions,
@@ -184,10 +184,18 @@ class BertEmbeddings(nn.Module):
 
     def __init__(self, config):
         super().__init__()
-        self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
-        self.position_embeddings = nn.Embedding(config.max_position_embeddings, config.hidden_size)
-        self.token_type_embeddings = nn.Embedding(config.type_vocab_size, config.hidden_size)
-
+        
+        if config.crypten:
+            logger.info("initializing embedding using Linear inside Crypten")
+            self.word_embeddings = nn.Linear(config.vocab_size, config.hidden_size)
+            self.position_embeddings = nn.Linear(config.max_position_embeddings, config.hidden_size)
+            self.token_type_embeddings = nn.Linear(config.type_vocab_size, config.hidden_size)
+        else:
+            logger.info("initializing embedding using nn.Embedding")
+            self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
+            self.position_embeddings = nn.Embedding(config.max_position_embeddings, config.hidden_size)
+            self.token_type_embeddings = nn.Embedding(config.type_vocab_size, config.hidden_size)
+        
         # self.LayerNorm is not snake-cased to stick with TensorFlow model variable name and be able to load
         # any TensorFlow checkpoint file
         self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
@@ -270,6 +278,7 @@ class BertSelfAttention(nn.Module):
             self.max_position_embeddings = config.max_position_embeddings
             self.distance_embedding = nn.Embedding(2 * config.max_position_embeddings - 1, self.attention_head_size)
 
+        self.softmax_act = ACT2SFN[config.softmax_act]
         self.is_decoder = config.is_decoder
 
     def transpose_for_scores(self, x: torch.Tensor) -> torch.Tensor:
@@ -349,7 +358,7 @@ class BertSelfAttention(nn.Module):
             attention_scores = attention_scores + attention_mask
 
         # Normalize the attention scores to probabilities.
-        attention_probs = nn.functional.softmax(attention_scores, dim=-1)
+        attention_probs = self.softmax_act(attention_scores, dim=-1) #nn.functional.softmax(attention_scores, dim=-1)
 
         # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.
@@ -1554,7 +1563,6 @@ class BertForSequenceClassification(BertPreTrainedModel):
             `config.num_labels > 1` a classification loss is computed (Cross-Entropy).
         """
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
-        print(self.classifier.weight[:10])
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,

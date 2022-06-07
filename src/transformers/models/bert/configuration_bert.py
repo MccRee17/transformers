@@ -144,6 +144,7 @@ class BertConfig(PretrainedConfig):
         num_attention_heads=12,
         intermediate_size=3072,
         hidden_act="gelu",
+        softmax_act="softmax",
         hidden_dropout_prob=0.1,
         attention_probs_dropout_prob=0.1,
         max_position_embeddings=512,
@@ -154,6 +155,7 @@ class BertConfig(PretrainedConfig):
         position_embedding_type="absolute",
         use_cache=True,
         classifier_dropout=None,
+        crypten=False,
         **kwargs
     ):
         super().__init__(pad_token_id=pad_token_id, **kwargs)
@@ -163,6 +165,7 @@ class BertConfig(PretrainedConfig):
         self.num_hidden_layers = num_hidden_layers
         self.num_attention_heads = num_attention_heads
         self.hidden_act = hidden_act
+        self.softmax_act = softmax_act
         self.intermediate_size = intermediate_size
         self.hidden_dropout_prob = hidden_dropout_prob
         self.attention_probs_dropout_prob = attention_probs_dropout_prob
@@ -173,7 +176,7 @@ class BertConfig(PretrainedConfig):
         self.position_embedding_type = position_embedding_type
         self.use_cache = use_cache
         self.classifier_dropout = classifier_dropout
-
+        self.crypten = crypten
 
 class BertOnnxConfig(OnnxConfig):
     @property

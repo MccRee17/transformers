@@ -1,0 +1,1297 @@
+06/03/2022 23:09:04 - WARNING - __main__ - Process rank: -1, device: cuda:0, n_gpu: 2distributed training: False, 16-bits training: True
+06/03/2022 23:09:04 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
+_n_gpu=2,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=200,
+evaluation_strategy=IntervalStrategy.STEPS,
+fp16=True,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_min_num_params=0,
+full_determinism=False,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=./tmp/mnli/relu/runs/Jun03_23-09-04_ip-172-31-12-12.us-east-2.compute.internal,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=50.0,
+optim=OptimizerNames.ADAMW_HF,
+output_dir=./tmp/mnli/relu,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=128,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=./tmp/mnli/relu,
+save_on_each_node=False,
+save_steps=500,
+save_strategy=IntervalStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.1,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+06/03/2022 23:09:04 - INFO - datasets.info - Loading Dataset Infos from /home/ec2-user/.cache/huggingface/modules/datasets_modules/datasets/glue/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/03/2022 23:09:04 - INFO - datasets.builder - Overwrite dataset info from restored data version.
+06/03/2022 23:09:04 - INFO - datasets.info - Loading Dataset info from /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/03/2022 23:09:04 - WARNING - datasets.builder - Reusing dataset glue (/home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad)
+06/03/2022 23:09:04 - INFO - datasets.info - Loading Dataset info from /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+using model config: BertConfig {
+  "_name_or_path": "prajjwal1/bert-small",
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "finetuning_task": "mnli",
+  "hidden_act": "relu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 512,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 2048,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 8,
+  "num_hidden_layers": 4,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "softmax_act": "2relu",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+model architecture: BertForSequenceClassification(
+  (bert): BertModel(
+    (embeddings): BertEmbeddings(
+      (word_embeddings): Embedding(30522, 512, padding_idx=0)
+      (position_embeddings): Embedding(512, 512)
+      (token_type_embeddings): Embedding(2, 512)
+      (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (encoder): BertEncoder(
+      (layer): ModuleList(
+        (0): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=512, out_features=512, bias=True)
+              (key): Linear(in_features=512, out_features=512, bias=True)
+              (value): Linear(in_features=512, out_features=512, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=512, out_features=512, bias=True)
+              (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=512, out_features=2048, bias=True)
+            (intermediate_act_fn): ReLU()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=2048, out_features=512, bias=True)
+            (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (1): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=512, out_features=512, bias=True)
+              (key): Linear(in_features=512, out_features=512, bias=True)
+              (value): Linear(in_features=512, out_features=512, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=512, out_features=512, bias=True)
+              (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=512, out_features=2048, bias=True)
+            (intermediate_act_fn): ReLU()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=2048, out_features=512, bias=True)
+            (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (2): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=512, out_features=512, bias=True)
+              (key): Linear(in_features=512, out_features=512, bias=True)
+              (value): Linear(in_features=512, out_features=512, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=512, out_features=512, bias=True)
+              (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=512, out_features=2048, bias=True)
+            (intermediate_act_fn): ReLU()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=2048, out_features=512, bias=True)
+            (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (3): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=512, out_features=512, bias=True)
+              (key): Linear(in_features=512, out_features=512, bias=True)
+              (value): Linear(in_features=512, out_features=512, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=512, out_features=512, bias=True)
+              (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=512, out_features=2048, bias=True)
+            (intermediate_act_fn): ReLU()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=2048, out_features=512, bias=True)
+            (LayerNorm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+      )
+    )
+    (pooler): BertPooler(
+      (dense): Linear(in_features=512, out_features=512, bias=True)
+      (activation): Tanh()
+    )
+  )
+  (dropout): Dropout(p=0.1, inplace=False)
+  (classifier): Linear(in_features=512, out_features=3, bias=True)
+)
+bert.embeddings.word_embeddings.weight
+bert.embeddings.position_embeddings.weight
+bert.embeddings.token_type_embeddings.weight
+bert.embeddings.LayerNorm.weight
+bert.embeddings.LayerNorm.bias
+bert.encoder.layer.0.attention.self.query.weight
+bert.encoder.layer.0.attention.self.query.bias
+bert.encoder.layer.0.attention.self.key.weight
+bert.encoder.layer.0.attention.self.key.bias
+bert.encoder.layer.0.attention.self.value.weight
+bert.encoder.layer.0.attention.self.value.bias
+bert.encoder.layer.0.attention.output.dense.weight
+bert.encoder.layer.0.attention.output.dense.bias
+bert.encoder.layer.0.attention.output.LayerNorm.weight
+bert.encoder.layer.0.attention.output.LayerNorm.bias
+bert.encoder.layer.0.intermediate.dense.weight
+bert.encoder.layer.0.intermediate.dense.bias
+bert.encoder.layer.0.output.dense.weight
+bert.encoder.layer.0.output.dense.bias
+bert.encoder.layer.0.output.LayerNorm.weight
+bert.encoder.layer.0.output.LayerNorm.bias
+bert.encoder.layer.1.attention.self.query.weight
+bert.encoder.layer.1.attention.self.query.bias
+bert.encoder.layer.1.attention.self.key.weight
+bert.encoder.layer.1.attention.self.key.bias
+bert.encoder.layer.1.attention.self.value.weight
+bert.encoder.layer.1.attention.self.value.bias
+bert.encoder.layer.1.attention.output.dense.weight
+bert.encoder.layer.1.attention.output.dense.bias
+bert.encoder.layer.1.attention.output.LayerNorm.weight
+bert.encoder.layer.1.attention.output.LayerNorm.bias
+bert.encoder.layer.1.intermediate.dense.weight
+bert.encoder.layer.1.intermediate.dense.bias
+bert.encoder.layer.1.output.dense.weight
+bert.encoder.layer.1.output.dense.bias
+bert.encoder.layer.1.output.LayerNorm.weight
+bert.encoder.layer.1.output.LayerNorm.bias
+bert.encoder.layer.2.attention.self.query.weight
+bert.encoder.layer.2.attention.self.query.bias
+bert.encoder.layer.2.attention.self.key.weight
+bert.encoder.layer.2.attention.self.key.bias
+bert.encoder.layer.2.attention.self.value.weight
+bert.encoder.layer.2.attention.self.value.bias
+bert.encoder.layer.2.attention.output.dense.weight
+bert.encoder.layer.2.attention.output.dense.bias
+bert.encoder.layer.2.attention.output.LayerNorm.weight
+bert.encoder.layer.2.attention.output.LayerNorm.bias
+bert.encoder.layer.2.intermediate.dense.weight
+bert.encoder.layer.2.intermediate.dense.bias
+bert.encoder.layer.2.output.dense.weight
+bert.encoder.layer.2.output.dense.bias
+bert.encoder.layer.2.output.LayerNorm.weight
+bert.encoder.layer.2.output.LayerNorm.bias
+bert.encoder.layer.3.attention.self.query.weight
+bert.encoder.layer.3.attention.self.query.bias
+bert.encoder.layer.3.attention.self.key.weight
+bert.encoder.layer.3.attention.self.key.bias
+bert.encoder.layer.3.attention.self.value.weight
+bert.encoder.layer.3.attention.self.value.bias
+bert.encoder.layer.3.attention.output.dense.weight
+bert.encoder.layer.3.attention.output.dense.bias
+bert.encoder.layer.3.attention.output.LayerNorm.weight
+bert.encoder.layer.3.attention.output.LayerNorm.bias
+bert.encoder.layer.3.intermediate.dense.weight
+bert.encoder.layer.3.intermediate.dense.bias
+bert.encoder.layer.3.output.dense.weight
+bert.encoder.layer.3.output.dense.bias
+bert.encoder.layer.3.output.LayerNorm.weight
+bert.encoder.layer.3.output.LayerNorm.bias
+bert.pooler.dense.weight
+bert.pooler.dense.bias
+classifier.weight
+classifier.bias
+06/03/2022 23:09:06 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-198c52b2ef1bed9d.arrow
+06/03/2022 23:09:06 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-62fa92e1894942ab.arrow
+06/03/2022 23:09:06 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-277829aec50b91fa.arrow
+06/03/2022 23:09:06 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-110cad7ae0154309.arrow
+06/03/2022 23:09:06 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-b37093259ffbe7c0.arrow
+06/03/2022 23:09:06 - INFO - __main__ - Sample 335243 of the training set: {'premise': "you know when their parents come and it's hard to get them out and a lot of parents have places to go and and things like that and it's late at night so", 'hypothesis': "Parents are busy and it's sometimes hard to get them out.", 'label': 0, 'idx': 335243, 'input_ids': [101, 2017, 2113, 2043, 2037, 3008, 2272, 1998, 2009, 1005, 1055, 2524, 2000, 2131, 2068, 2041, 1998, 1037, 2843, 1997, 3008, 2031, 3182, 2000, 2175, 1998, 1998, 2477, 2066, 2008, 1998, 2009, 1005, 1055, 2397, 2012, 2305, 2061, 102, 3008, 2024, 5697, 1998, 2009, 1005, 1055, 2823, 2524, 2000, 2131, 2068, 2041, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+06/03/2022 23:09:06 - INFO - __main__ - Sample 58369 of the training set: {'premise': 'Where is art?', 'hypothesis': 'Where and what is art? ', 'label': 1, 'idx': 58369, 'input_ids': [101, 2073, 2003, 2396, 1029, 102, 2073, 1998, 2054, 2003, 2396, 1029, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+06/03/2022 23:09:06 - INFO - __main__ - Sample 13112 of the training set: {'premise': 'Alcohol and injury, as well as brief interventions, are on the list.', 'hypothesis': 'The list says alcohol and injury are negatives facing staff.', 'label': 1, 'idx': 13112, 'input_ids': [101, 6544, 1998, 4544, 1010, 2004, 2092, 2004, 4766, 19388, 1010, 2024, 2006, 1996, 2862, 1012, 102, 1996, 2862, 2758, 6544, 1998, 4544, 2024, 4997, 2015, 5307, 3095, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+using training arge: TrainingArguments(
+_n_gpu=2,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=200,
+evaluation_strategy=IntervalStrategy.STEPS,
+fp16=True,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_min_num_params=0,
+full_determinism=False,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=0.0001,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=./tmp/mnli/relu/runs/Jun03_23-09-04_ip-172-31-12-12.us-east-2.compute.internal,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=50.0,
+optim=OptimizerNames.ADAMW_HF,
+output_dir=./tmp/mnli/relu,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=128,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=./tmp/mnli/relu,
+save_on_each_node=False,
+save_steps=500,
+save_strategy=IntervalStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.1,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+Am I using checkpoint None
+06/03/2022 23:09:55 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.097056269645691, 'eval_accuracy': 0.3613856342333164, 'eval_runtime': 12.8434, 'eval_samples_per_second': 764.204, 'eval_steps_per_second': 47.807, 'epoch': 0.13}
+06/03/2022 23:10:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.09346342086792, 'eval_accuracy': 0.35914416709118696, 'eval_runtime': 12.8319, 'eval_samples_per_second': 764.892, 'eval_steps_per_second': 47.85, 'epoch': 0.26}
+{'loss': 1.0981, 'learning_rate': 6.518904823989571e-06, 'epoch': 0.33}
+06/03/2022 23:11:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0852564573287964, 'eval_accuracy': 0.37768721344880285, 'eval_runtime': 12.8419, 'eval_samples_per_second': 764.297, 'eval_steps_per_second': 47.812, 'epoch': 0.39}
+06/03/2022 23:12:03 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.079555630683899, 'eval_accuracy': 0.3922567498726439, 'eval_runtime': 12.8515, 'eval_samples_per_second': 763.723, 'eval_steps_per_second': 47.776, 'epoch': 0.52}
+{'loss': 1.0842, 'learning_rate': 1.301173402868318e-05, 'epoch': 0.65}
+06/03/2022 23:12:46 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.07401704788208, 'eval_accuracy': 0.39724910850738665, 'eval_runtime': 12.9021, 'eval_samples_per_second': 760.731, 'eval_steps_per_second': 47.589, 'epoch': 0.65}
+06/03/2022 23:13:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0619527101516724, 'eval_accuracy': 0.4139582272032603, 'eval_runtime': 12.9018, 'eval_samples_per_second': 760.744, 'eval_steps_per_second': 47.59, 'epoch': 0.78}
+06/03/2022 23:14:12 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0471107959747314, 'eval_accuracy': 0.436474783494651, 'eval_runtime': 12.8808, 'eval_samples_per_second': 761.989, 'eval_steps_per_second': 47.668, 'epoch': 0.91}
+{'loss': 1.0621, 'learning_rate': 1.951760104302477e-05, 'epoch': 0.98}
+06/03/2022 23:14:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0437145233154297, 'eval_accuracy': 0.44034640855832907, 'eval_runtime': 12.8717, 'eval_samples_per_second': 762.526, 'eval_steps_per_second': 47.702, 'epoch': 1.04}
+06/03/2022 23:15:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0211315155029297, 'eval_accuracy': 0.47692307692307695, 'eval_runtime': 13.0465, 'eval_samples_per_second': 752.312, 'eval_steps_per_second': 47.063, 'epoch': 1.17}
+{'loss': 1.0328, 'learning_rate': 2.602346805736636e-05, 'epoch': 1.3}
+06/03/2022 23:16:20 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0320135354995728, 'eval_accuracy': 0.4717269485481406, 'eval_runtime': 13.0225, 'eval_samples_per_second': 753.695, 'eval_steps_per_second': 47.149, 'epoch': 1.3}
+06/03/2022 23:17:04 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.005247950553894, 'eval_accuracy': 0.4975038206826286, 'eval_runtime': 13.0368, 'eval_samples_per_second': 752.869, 'eval_steps_per_second': 47.097, 'epoch': 1.43}
+06/03/2022 23:17:47 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9973557591438293, 'eval_accuracy': 0.49393785022924097, 'eval_runtime': 13.0382, 'eval_samples_per_second': 752.786, 'eval_steps_per_second': 47.092, 'epoch': 1.56}
+{'loss': 1.0109, 'learning_rate': 3.2542372881355934e-05, 'epoch': 1.63}
+06/03/2022 23:18:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9910010695457458, 'eval_accuracy': 0.5018848700967906, 'eval_runtime': 12.8328, 'eval_samples_per_second': 764.838, 'eval_steps_per_second': 47.846, 'epoch': 1.69}
+06/03/2022 23:19:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9880173802375793, 'eval_accuracy': 0.5054508405501783, 'eval_runtime': 12.7923, 'eval_samples_per_second': 767.26, 'eval_steps_per_second': 47.998, 'epoch': 1.83}
+{'loss': 0.9903, 'learning_rate': 3.9061277705345506e-05, 'epoch': 1.96}
+06/03/2022 23:19:55 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9830640554428101, 'eval_accuracy': 0.5155374426897605, 'eval_runtime': 13.02, 'eval_samples_per_second': 753.842, 'eval_steps_per_second': 47.158, 'epoch': 1.96}
+06/03/2022 23:20:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9635183215141296, 'eval_accuracy': 0.5238920020376974, 'eval_runtime': 13.0691, 'eval_samples_per_second': 751.008, 'eval_steps_per_second': 46.981, 'epoch': 2.09}
+06/03/2022 23:21:22 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9765409231185913, 'eval_accuracy': 0.5160468670402445, 'eval_runtime': 13.081, 'eval_samples_per_second': 750.325, 'eval_steps_per_second': 46.938, 'epoch': 2.22}
+{'loss': 0.9681, 'learning_rate': 4.558018252933507e-05, 'epoch': 2.28}
+06/03/2022 23:22:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.961228609085083, 'eval_accuracy': 0.5322465613856342, 'eval_runtime': 13.0414, 'eval_samples_per_second': 752.605, 'eval_steps_per_second': 47.081, 'epoch': 2.35}
+06/03/2022 23:22:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9532949328422546, 'eval_accuracy': 0.5319409067753439, 'eval_runtime': 12.9568, 'eval_samples_per_second': 757.516, 'eval_steps_per_second': 47.388, 'epoch': 2.48}
+{'loss': 0.9563, 'learning_rate': 5.209908735332465e-05, 'epoch': 2.61}
+06/03/2022 23:23:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9372866749763489, 'eval_accuracy': 0.552827305145186, 'eval_runtime': 12.9551, 'eval_samples_per_second': 757.614, 'eval_steps_per_second': 47.394, 'epoch': 2.61}
+06/03/2022 23:24:14 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9385672211647034, 'eval_accuracy': 0.5553744268976057, 'eval_runtime': 12.7865, 'eval_samples_per_second': 767.607, 'eval_steps_per_second': 48.019, 'epoch': 2.74}
+06/03/2022 23:24:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.928965151309967, 'eval_accuracy': 0.5554763117677025, 'eval_runtime': 12.8149, 'eval_samples_per_second': 765.903, 'eval_steps_per_second': 47.913, 'epoch': 2.87}
+{'loss': 0.9421, 'learning_rate': 5.8617992177314216e-05, 'epoch': 2.93}
+06/03/2022 23:25:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9450620412826538, 'eval_accuracy': 0.5489556800815079, 'eval_runtime': 12.8905, 'eval_samples_per_second': 761.416, 'eval_steps_per_second': 47.632, 'epoch': 3.0}
+06/03/2022 23:26:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9238510131835938, 'eval_accuracy': 0.5623025980641875, 'eval_runtime': 12.8043, 'eval_samples_per_second': 766.54, 'eval_steps_per_second': 47.953, 'epoch': 3.13}
+{'loss': 0.9177, 'learning_rate': 6.513689700130378e-05, 'epoch': 3.26}
+06/03/2022 23:27:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.913104236125946, 'eval_accuracy': 0.5696383087111564, 'eval_runtime': 12.7153, 'eval_samples_per_second': 771.904, 'eval_steps_per_second': 48.288, 'epoch': 3.26}
+06/03/2022 23:27:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9085423350334167, 'eval_accuracy': 0.567396841569027, 'eval_runtime': 12.9756, 'eval_samples_per_second': 756.417, 'eval_steps_per_second': 47.319, 'epoch': 3.39}
+06/03/2022 23:28:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.91304612159729, 'eval_accuracy': 0.5715741212429954, 'eval_runtime': 12.7653, 'eval_samples_per_second': 768.883, 'eval_steps_per_second': 48.099, 'epoch': 3.52}
+{'loss': 0.9099, 'learning_rate': 7.165580182529335e-05, 'epoch': 3.59}
+06/03/2022 23:29:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9189742803573608, 'eval_accuracy': 0.5694345389709629, 'eval_runtime': 12.7413, 'eval_samples_per_second': 770.331, 'eval_steps_per_second': 48.19, 'epoch': 3.65}
+06/03/2022 23:29:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9256151914596558, 'eval_accuracy': 0.5667855323484463, 'eval_runtime': 12.8181, 'eval_samples_per_second': 765.713, 'eval_steps_per_second': 47.901, 'epoch': 3.78}
+{'loss': 0.9084, 'learning_rate': 7.816166883963495e-05, 'epoch': 3.91}
+06/03/2022 23:30:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9077914953231812, 'eval_accuracy': 0.5825776872134488, 'eval_runtime': 12.8321, 'eval_samples_per_second': 764.879, 'eval_steps_per_second': 47.849, 'epoch': 3.91}
+06/03/2022 23:31:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9116959571838379, 'eval_accuracy': 0.5799286805909323, 'eval_runtime': 12.8368, 'eval_samples_per_second': 764.596, 'eval_steps_per_second': 47.831, 'epoch': 4.04}
+06/03/2022 23:32:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9211914539337158, 'eval_accuracy': 0.5740193581253183, 'eval_runtime': 12.8161, 'eval_samples_per_second': 765.836, 'eval_steps_per_second': 47.909, 'epoch': 4.17}
+{'loss': 0.8833, 'learning_rate': 8.468057366362452e-05, 'epoch': 4.24}
+06/03/2022 23:32:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9544883966445923, 'eval_accuracy': 0.5682119205298013, 'eval_runtime': 12.6693, 'eval_samples_per_second': 774.71, 'eval_steps_per_second': 48.464, 'epoch': 4.3}
+06/03/2022 23:33:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8941313624382019, 'eval_accuracy': 0.5858380030565461, 'eval_runtime': 13.0319, 'eval_samples_per_second': 753.15, 'eval_steps_per_second': 47.115, 'epoch': 4.43}
+{'loss': 0.8857, 'learning_rate': 9.119947848761409e-05, 'epoch': 4.56}
+06/03/2022 23:34:14 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9288031458854675, 'eval_accuracy': 0.5490575649516047, 'eval_runtime': 13.0707, 'eval_samples_per_second': 750.917, 'eval_steps_per_second': 46.975, 'epoch': 4.56}
+06/03/2022 23:34:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.890468180179596, 'eval_accuracy': 0.5869587366276108, 'eval_runtime': 12.9939, 'eval_samples_per_second': 755.357, 'eval_steps_per_second': 47.253, 'epoch': 4.69}
+06/03/2022 23:35:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.898293137550354, 'eval_accuracy': 0.5862455425369333, 'eval_runtime': 13.0235, 'eval_samples_per_second': 753.639, 'eval_steps_per_second': 47.146, 'epoch': 4.82}
+{'loss': 0.8837, 'learning_rate': 9.771838331160365e-05, 'epoch': 4.89}
+06/03/2022 23:36:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8958103060722351, 'eval_accuracy': 0.5918492103922568, 'eval_runtime': 12.8088, 'eval_samples_per_second': 766.273, 'eval_steps_per_second': 47.936, 'epoch': 4.95}
+06/03/2022 23:37:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9106264710426331, 'eval_accuracy': 0.5954151808456444, 'eval_runtime': 12.8505, 'eval_samples_per_second': 763.786, 'eval_steps_per_second': 47.78, 'epoch': 5.08}
+{'loss': 0.8632, 'learning_rate': 9.953063885267275e-05, 'epoch': 5.22}
+06/03/2022 23:37:47 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8877850770950317, 'eval_accuracy': 0.5943963321446765, 'eval_runtime': 12.6617, 'eval_samples_per_second': 775.17, 'eval_steps_per_second': 48.493, 'epoch': 5.22}
+06/03/2022 23:38:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8886193633079529, 'eval_accuracy': 0.5889964340295466, 'eval_runtime': 12.9648, 'eval_samples_per_second': 757.052, 'eval_steps_per_second': 47.359, 'epoch': 5.35}
+06/03/2022 23:39:12 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8752729296684265, 'eval_accuracy': 0.6022414671421293, 'eval_runtime': 13.0108, 'eval_samples_per_second': 754.372, 'eval_steps_per_second': 47.192, 'epoch': 5.48}
+{'loss': 0.8548, 'learning_rate': 9.88063160944517e-05, 'epoch': 5.54}
+06/03/2022 23:39:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8862491250038147, 'eval_accuracy': 0.5909322465613857, 'eval_runtime': 12.7063, 'eval_samples_per_second': 772.45, 'eval_steps_per_second': 48.322, 'epoch': 5.61}
+06/03/2022 23:40:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8876425623893738, 'eval_accuracy': 0.5896077432501273, 'eval_runtime': 12.6532, 'eval_samples_per_second': 775.691, 'eval_steps_per_second': 48.525, 'epoch': 5.74}
+{'loss': 0.8572, 'learning_rate': 9.808199333623062e-05, 'epoch': 5.87}
+06/03/2022 23:41:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8747467994689941, 'eval_accuracy': 0.5980641874681609, 'eval_runtime': 12.596, 'eval_samples_per_second': 779.214, 'eval_steps_per_second': 48.746, 'epoch': 5.87}
+06/03/2022 23:42:02 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.880761444568634, 'eval_accuracy': 0.5982679572083546, 'eval_runtime': 12.9354, 'eval_samples_per_second': 758.768, 'eval_steps_per_second': 47.466, 'epoch': 6.0}
+06/03/2022 23:42:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8696215748786926, 'eval_accuracy': 0.6015282730514518, 'eval_runtime': 12.7724, 'eval_samples_per_second': 768.457, 'eval_steps_per_second': 48.073, 'epoch': 6.13}
+{'loss': 0.8345, 'learning_rate': 9.735767057800957e-05, 'epoch': 6.19}
+06/03/2022 23:43:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8742077946662903, 'eval_accuracy': 0.5993886907794193, 'eval_runtime': 12.9441, 'eval_samples_per_second': 758.258, 'eval_steps_per_second': 47.435, 'epoch': 6.26}
+06/03/2022 23:44:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9042961001396179, 'eval_accuracy': 0.6044829342842588, 'eval_runtime': 13.0519, 'eval_samples_per_second': 751.997, 'eval_steps_per_second': 47.043, 'epoch': 6.39}
+{'loss': 0.824, 'learning_rate': 9.66333478197885e-05, 'epoch': 6.52}
+06/03/2022 23:44:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8836194276809692, 'eval_accuracy': 0.5982679572083546, 'eval_runtime': 13.0088, 'eval_samples_per_second': 754.491, 'eval_steps_per_second': 47.199, 'epoch': 6.52}
+06/03/2022 23:45:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8848215341567993, 'eval_accuracy': 0.5948038716250637, 'eval_runtime': 12.7785, 'eval_samples_per_second': 768.085, 'eval_steps_per_second': 48.049, 'epoch': 6.65}
+06/03/2022 23:46:18 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8669236302375793, 'eval_accuracy': 0.604381049414162, 'eval_runtime': 12.7542, 'eval_samples_per_second': 769.549, 'eval_steps_per_second': 48.141, 'epoch': 6.78}
+{'loss': 0.8297, 'learning_rate': 9.590902506156744e-05, 'epoch': 6.84}
+06/03/2022 23:47:02 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8683662414550781, 'eval_accuracy': 0.6086602139582272, 'eval_runtime': 12.8931, 'eval_samples_per_second': 761.262, 'eval_steps_per_second': 47.622, 'epoch': 6.91}
+06/03/2022 23:47:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9167612791061401, 'eval_accuracy': 0.5977585328578706, 'eval_runtime': 12.6558, 'eval_samples_per_second': 775.531, 'eval_steps_per_second': 48.515, 'epoch': 7.04}
+{'loss': 0.808, 'learning_rate': 9.518470230334637e-05, 'epoch': 7.17}
+06/03/2022 23:48:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8737725019454956, 'eval_accuracy': 0.6042791645440652, 'eval_runtime': 12.6827, 'eval_samples_per_second': 773.891, 'eval_steps_per_second': 48.413, 'epoch': 7.17}
+06/03/2022 23:49:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8638139367103577, 'eval_accuracy': 0.6074375955170657, 'eval_runtime': 12.7072, 'eval_samples_per_second': 772.398, 'eval_steps_per_second': 48.319, 'epoch': 7.3}
+06/03/2022 23:49:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8592109084129333, 'eval_accuracy': 0.6060112073357107, 'eval_runtime': 12.957, 'eval_samples_per_second': 757.508, 'eval_steps_per_second': 47.388, 'epoch': 7.43}
+{'loss': 0.7927, 'learning_rate': 9.446037954512531e-05, 'epoch': 7.5}
+06/03/2022 23:50:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8719247579574585, 'eval_accuracy': 0.6080489047376465, 'eval_runtime': 12.8952, 'eval_samples_per_second': 761.137, 'eval_steps_per_second': 47.615, 'epoch': 7.56}
+06/03/2022 23:51:18 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8610719442367554, 'eval_accuracy': 0.6045848191543556, 'eval_runtime': 12.7421, 'eval_samples_per_second': 770.28, 'eval_steps_per_second': 48.187, 'epoch': 7.69}
+{'loss': 0.7957, 'learning_rate': 9.373605678690425e-05, 'epoch': 7.82}
+06/03/2022 23:52:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8552029728889465, 'eval_accuracy': 0.6095771777890984, 'eval_runtime': 12.7897, 'eval_samples_per_second': 767.413, 'eval_steps_per_second': 48.007, 'epoch': 7.82}
+06/03/2022 23:52:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8639407157897949, 'eval_accuracy': 0.6028527763627102, 'eval_runtime': 12.7523, 'eval_samples_per_second': 769.663, 'eval_steps_per_second': 48.148, 'epoch': 7.95}
+06/03/2022 23:53:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8802348375320435, 'eval_accuracy': 0.6099847172694854, 'eval_runtime': 12.862, 'eval_samples_per_second': 763.099, 'eval_steps_per_second': 47.737, 'epoch': 8.08}
+{'loss': 0.7763, 'learning_rate': 9.301173402868318e-05, 'epoch': 8.15}
+06/03/2022 23:54:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8837757110595703, 'eval_accuracy': 0.6149770759042282, 'eval_runtime': 12.9036, 'eval_samples_per_second': 760.642, 'eval_steps_per_second': 47.584, 'epoch': 8.21}
+06/03/2022 23:54:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.871319591999054, 'eval_accuracy': 0.6088639836984208, 'eval_runtime': 12.8061, 'eval_samples_per_second': 766.43, 'eval_steps_per_second': 47.946, 'epoch': 8.34}
+{'loss': 0.7557, 'learning_rate': 9.228741127046212e-05, 'epoch': 8.47}
+06/03/2022 23:55:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8563510179519653, 'eval_accuracy': 0.6123280692817117, 'eval_runtime': 12.7731, 'eval_samples_per_second': 768.411, 'eval_steps_per_second': 48.07, 'epoch': 8.47}
+06/03/2022 23:56:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8703624606132507, 'eval_accuracy': 0.6167091186958736, 'eval_runtime': 12.8843, 'eval_samples_per_second': 761.781, 'eval_steps_per_second': 47.655, 'epoch': 8.6}
+06/03/2022 23:56:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8657580018043518, 'eval_accuracy': 0.617524197656648, 'eval_runtime': 12.6126, 'eval_samples_per_second': 778.187, 'eval_steps_per_second': 48.681, 'epoch': 8.74}
+{'loss': 0.7621, 'learning_rate': 9.15645371577575e-05, 'epoch': 8.8}
+06/03/2022 23:57:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8577678203582764, 'eval_accuracy': 0.6137544574630668, 'eval_runtime': 12.8387, 'eval_samples_per_second': 764.488, 'eval_steps_per_second': 47.824, 'epoch': 8.87}
+06/03/2022 23:58:24 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8577614426612854, 'eval_accuracy': 0.6185430463576159, 'eval_runtime': 12.9288, 'eval_samples_per_second': 759.156, 'eval_steps_per_second': 47.491, 'epoch': 9.0}
+{'loss': 0.746, 'learning_rate': 9.084021439953643e-05, 'epoch': 9.13}
+06/03/2022 23:59:07 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8846229314804077, 'eval_accuracy': 0.6154865002547122, 'eval_runtime': 13.9275, 'eval_samples_per_second': 704.722, 'eval_steps_per_second': 44.085, 'epoch': 9.13}
+06/03/2022 23:59:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8722476363182068, 'eval_accuracy': 0.617524197656648, 'eval_runtime': 12.7279, 'eval_samples_per_second': 771.139, 'eval_steps_per_second': 48.24, 'epoch': 9.26}
+06/04/2022 00:00:32 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8723052144050598, 'eval_accuracy': 0.6187468160978095, 'eval_runtime': 12.7114, 'eval_samples_per_second': 772.144, 'eval_steps_per_second': 48.303, 'epoch': 9.39}
+{'loss': 0.7209, 'learning_rate': 9.011589164131537e-05, 'epoch': 9.45}
+06/04/2022 00:01:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8734017610549927, 'eval_accuracy': 0.6201732042791646, 'eval_runtime': 12.6837, 'eval_samples_per_second': 773.825, 'eval_steps_per_second': 48.408, 'epoch': 9.52}
+06/04/2022 00:01:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8808727264404297, 'eval_accuracy': 0.6201732042791646, 'eval_runtime': 12.6784, 'eval_samples_per_second': 774.149, 'eval_steps_per_second': 48.429, 'epoch': 9.65}
+{'loss': 0.731, 'learning_rate': 8.939301752861075e-05, 'epoch': 9.78}
+06/04/2022 00:02:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.851054847240448, 'eval_accuracy': 0.6176260825267448, 'eval_runtime': 12.5987, 'eval_samples_per_second': 779.049, 'eval_steps_per_second': 48.735, 'epoch': 9.78}
+06/04/2022 00:03:22 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8594281077384949, 'eval_accuracy': 0.623841059602649, 'eval_runtime': 12.6571, 'eval_samples_per_second': 775.455, 'eval_steps_per_second': 48.51, 'epoch': 9.91}
+06/04/2022 00:04:03 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9080259203910828, 'eval_accuracy': 0.6164034640855833, 'eval_runtime': 12.7563, 'eval_samples_per_second': 769.422, 'eval_steps_per_second': 48.133, 'epoch': 10.04}
+{'loss': 0.716, 'learning_rate': 8.86686947703897e-05, 'epoch': 10.1}
+06/04/2022 00:04:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8715441823005676, 'eval_accuracy': 0.6227203260315843, 'eval_runtime': 12.8084, 'eval_samples_per_second': 766.297, 'eval_steps_per_second': 47.937, 'epoch': 10.17}
+06/04/2022 00:05:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8880758881568909, 'eval_accuracy': 0.6153846153846154, 'eval_runtime': 12.8766, 'eval_samples_per_second': 762.235, 'eval_steps_per_second': 47.683, 'epoch': 10.3}
+{'loss': 0.68, 'learning_rate': 8.794437201216863e-05, 'epoch': 10.43}
+06/04/2022 00:06:12 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8932747840881348, 'eval_accuracy': 0.6193581253183902, 'eval_runtime': 12.7038, 'eval_samples_per_second': 772.601, 'eval_steps_per_second': 48.332, 'epoch': 10.43}
+06/04/2022 00:06:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8858283758163452, 'eval_accuracy': 0.621395822720326, 'eval_runtime': 13.1775, 'eval_samples_per_second': 744.828, 'eval_steps_per_second': 46.594, 'epoch': 10.56}
+06/04/2022 00:07:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9024598598480225, 'eval_accuracy': 0.623841059602649, 'eval_runtime': 13.0032, 'eval_samples_per_second': 754.812, 'eval_steps_per_second': 47.219, 'epoch': 10.69}
+{'loss': 0.6911, 'learning_rate': 8.722004925394757e-05, 'epoch': 10.76}
+06/04/2022 00:08:24 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.88863605260849, 'eval_accuracy': 0.6223127865511972, 'eval_runtime': 12.9236, 'eval_samples_per_second': 759.463, 'eval_steps_per_second': 47.51, 'epoch': 10.82}
+06/04/2022 00:09:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.86581951379776, 'eval_accuracy': 0.6247580234335202, 'eval_runtime': 12.8816, 'eval_samples_per_second': 761.937, 'eval_steps_per_second': 47.665, 'epoch': 10.95}
+{'loss': 0.6812, 'learning_rate': 8.64957264957265e-05, 'epoch': 11.08}
+06/04/2022 00:09:47 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9181270599365234, 'eval_accuracy': 0.6231278655119715, 'eval_runtime': 12.9098, 'eval_samples_per_second': 760.278, 'eval_steps_per_second': 47.561, 'epoch': 11.08}
+06/04/2022 00:10:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9152451157569885, 'eval_accuracy': 0.6158940397350994, 'eval_runtime': 12.7182, 'eval_samples_per_second': 771.731, 'eval_steps_per_second': 48.277, 'epoch': 11.21}
+06/04/2022 00:11:12 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8815460801124573, 'eval_accuracy': 0.6206826286296485, 'eval_runtime': 12.7839, 'eval_samples_per_second': 767.765, 'eval_steps_per_second': 48.029, 'epoch': 11.34}
+{'loss': 0.6434, 'learning_rate': 8.577140373750544e-05, 'epoch': 11.41}
+06/04/2022 00:11:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8948015570640564, 'eval_accuracy': 0.626795720835456, 'eval_runtime': 12.9055, 'eval_samples_per_second': 760.527, 'eval_steps_per_second': 47.577, 'epoch': 11.47}
+06/04/2022 00:12:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9022214412689209, 'eval_accuracy': 0.6292409577177789, 'eval_runtime': 12.6254, 'eval_samples_per_second': 777.403, 'eval_steps_per_second': 48.632, 'epoch': 11.6}
+{'loss': 0.6515, 'learning_rate': 8.504708097928438e-05, 'epoch': 11.73}
+06/04/2022 00:13:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9065605401992798, 'eval_accuracy': 0.6368823229750382, 'eval_runtime': 12.5987, 'eval_samples_per_second': 779.05, 'eval_steps_per_second': 48.735, 'epoch': 11.73}
+06/04/2022 00:14:03 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.8812025189399719, 'eval_accuracy': 0.6287315333672949, 'eval_runtime': 12.9663, 'eval_samples_per_second': 756.964, 'eval_steps_per_second': 47.354, 'epoch': 11.86}
+06/04/2022 00:14:45 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9017859697341919, 'eval_accuracy': 0.6328069281711666, 'eval_runtime': 12.9289, 'eval_samples_per_second': 759.154, 'eval_steps_per_second': 47.491, 'epoch': 11.99}
+{'loss': 0.6428, 'learning_rate': 8.432420686657975e-05, 'epoch': 12.06}
+06/04/2022 00:15:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9423018097877502, 'eval_accuracy': 0.6242485990830362, 'eval_runtime': 12.9745, 'eval_samples_per_second': 756.483, 'eval_steps_per_second': 47.324, 'epoch': 12.13}
+06/04/2022 00:16:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9486028552055359, 'eval_accuracy': 0.6241467142129393, 'eval_runtime': 12.9724, 'eval_samples_per_second': 756.608, 'eval_steps_per_second': 47.331, 'epoch': 12.26}
+{'loss': 0.5906, 'learning_rate': 8.359988410835868e-05, 'epoch': 12.39}
+06/04/2022 00:16:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9414627552032471, 'eval_accuracy': 0.6265919510952623, 'eval_runtime': 12.6715, 'eval_samples_per_second': 774.57, 'eval_steps_per_second': 48.455, 'epoch': 12.39}
+06/04/2022 00:17:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9670738577842712, 'eval_accuracy': 0.6285277636271014, 'eval_runtime': 12.7387, 'eval_samples_per_second': 770.484, 'eval_steps_per_second': 48.199, 'epoch': 12.52}
+06/04/2022 00:18:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9247161149978638, 'eval_accuracy': 0.6312786551197147, 'eval_runtime': 12.6511, 'eval_samples_per_second': 775.824, 'eval_steps_per_second': 48.533, 'epoch': 12.65}
+{'loss': 0.6095, 'learning_rate': 8.287556135013762e-05, 'epoch': 12.71}
+06/04/2022 00:19:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9334080815315247, 'eval_accuracy': 0.6276107997962302, 'eval_runtime': 12.6399, 'eval_samples_per_second': 776.506, 'eval_steps_per_second': 48.576, 'epoch': 12.78}
+06/04/2022 00:19:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9300745725631714, 'eval_accuracy': 0.6285277636271014, 'eval_runtime': 12.5954, 'eval_samples_per_second': 779.255, 'eval_steps_per_second': 48.748, 'epoch': 12.91}
+{'loss': 0.6073, 'learning_rate': 8.215123859191656e-05, 'epoch': 13.04}
+06/04/2022 00:20:24 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9933393001556396, 'eval_accuracy': 0.6314824248599084, 'eval_runtime': 12.9401, 'eval_samples_per_second': 758.493, 'eval_steps_per_second': 47.449, 'epoch': 13.04}
+06/04/2022 00:21:07 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9810779690742493, 'eval_accuracy': 0.6284258787570046, 'eval_runtime': 12.9126, 'eval_samples_per_second': 760.11, 'eval_steps_per_second': 47.55, 'epoch': 13.17}
+06/04/2022 00:21:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9817097783088684, 'eval_accuracy': 0.6309730005094244, 'eval_runtime': 12.9631, 'eval_samples_per_second': 757.151, 'eval_steps_per_second': 47.365, 'epoch': 13.3}
+{'loss': 0.5494, 'learning_rate': 8.142836447921194e-05, 'epoch': 13.36}
+06/04/2022 00:22:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.940313458442688, 'eval_accuracy': 0.6309730005094244, 'eval_runtime': 12.8805, 'eval_samples_per_second': 762.007, 'eval_steps_per_second': 47.669, 'epoch': 13.43}
+06/04/2022 00:23:14 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9457756876945496, 'eval_accuracy': 0.6309730005094244, 'eval_runtime': 12.9407, 'eval_samples_per_second': 758.458, 'eval_steps_per_second': 47.447, 'epoch': 13.56}
+{'loss': 0.5632, 'learning_rate': 8.070404172099087e-05, 'epoch': 13.69}
+06/04/2022 00:23:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9331149458885193, 'eval_accuracy': 0.6285277636271014, 'eval_runtime': 12.9501, 'eval_samples_per_second': 757.911, 'eval_steps_per_second': 47.413, 'epoch': 13.69}
+06/04/2022 00:24:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.936262845993042, 'eval_accuracy': 0.6356597045338768, 'eval_runtime': 12.9366, 'eval_samples_per_second': 758.698, 'eval_steps_per_second': 47.462, 'epoch': 13.82}
+06/04/2022 00:25:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9545659422874451, 'eval_accuracy': 0.6381049414161997, 'eval_runtime': 12.9744, 'eval_samples_per_second': 756.487, 'eval_steps_per_second': 47.324, 'epoch': 13.95}
+{'loss': 0.5756, 'learning_rate': 7.997971896276981e-05, 'epoch': 14.02}
+06/04/2022 00:26:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9638909697532654, 'eval_accuracy': 0.6272032603158431, 'eval_runtime': 12.6731, 'eval_samples_per_second': 774.473, 'eval_steps_per_second': 48.449, 'epoch': 14.08}
+06/04/2022 00:26:46 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0202367305755615, 'eval_accuracy': 0.6313805399898115, 'eval_runtime': 12.7614, 'eval_samples_per_second': 769.114, 'eval_steps_per_second': 48.114, 'epoch': 14.21}
+{'loss': 0.507, 'learning_rate': 7.92568448500652e-05, 'epoch': 14.34}
+06/04/2022 00:27:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9908400177955627, 'eval_accuracy': 0.6297503820682628, 'eval_runtime': 12.6053, 'eval_samples_per_second': 778.639, 'eval_steps_per_second': 48.71, 'epoch': 14.34}
+06/04/2022 00:28:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9963527321815491, 'eval_accuracy': 0.6332144676515538, 'eval_runtime': 12.7653, 'eval_samples_per_second': 768.884, 'eval_steps_per_second': 48.099, 'epoch': 14.47}
+06/04/2022 00:28:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0217704772949219, 'eval_accuracy': 0.6259806418746816, 'eval_runtime': 12.5731, 'eval_samples_per_second': 780.632, 'eval_steps_per_second': 48.834, 'epoch': 14.6}
+{'loss': 0.5207, 'learning_rate': 7.853252209184414e-05, 'epoch': 14.67}
+06/04/2022 00:29:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9827688932418823, 'eval_accuracy': 0.6302598064187468, 'eval_runtime': 12.7984, 'eval_samples_per_second': 766.893, 'eval_steps_per_second': 47.975, 'epoch': 14.73}
+06/04/2022 00:30:18 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9724948406219482, 'eval_accuracy': 0.6299541518084565, 'eval_runtime': 12.7819, 'eval_samples_per_second': 767.88, 'eval_steps_per_second': 48.037, 'epoch': 14.86}
+{'loss': 0.5352, 'learning_rate': 7.780819933362306e-05, 'epoch': 14.99}
+06/04/2022 00:30:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.9441977143287659, 'eval_accuracy': 0.6314824248599084, 'eval_runtime': 12.7297, 'eval_samples_per_second': 771.031, 'eval_steps_per_second': 48.234, 'epoch': 14.99}
+06/04/2022 00:31:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0429993867874146, 'eval_accuracy': 0.6255731023942944, 'eval_runtime': 12.747, 'eval_samples_per_second': 769.983, 'eval_steps_per_second': 48.168, 'epoch': 15.12}
+06/04/2022 00:32:24 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.068827509880066, 'eval_accuracy': 0.6281202241467142, 'eval_runtime': 12.6519, 'eval_samples_per_second': 775.77, 'eval_steps_per_second': 48.53, 'epoch': 15.25}
+{'loss': 0.4642, 'learning_rate': 7.708387657540201e-05, 'epoch': 15.32}
+06/04/2022 00:33:08 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0570627450942993, 'eval_accuracy': 0.6264900662251656, 'eval_runtime': 12.8126, 'eval_samples_per_second': 766.046, 'eval_steps_per_second': 47.922, 'epoch': 15.38}
+06/04/2022 00:33:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.047343134880066, 'eval_accuracy': 0.6298522669383596, 'eval_runtime': 12.8025, 'eval_samples_per_second': 766.649, 'eval_steps_per_second': 47.96, 'epoch': 15.51}
+{'loss': 0.4785, 'learning_rate': 7.635955381718094e-05, 'epoch': 15.65}
+06/04/2022 00:34:32 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0298632383346558, 'eval_accuracy': 0.627712684666327, 'eval_runtime': 12.7974, 'eval_samples_per_second': 766.952, 'eval_steps_per_second': 47.978, 'epoch': 15.65}
+06/04/2022 00:35:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0693612098693848, 'eval_accuracy': 0.6322975038206826, 'eval_runtime': 12.6957, 'eval_samples_per_second': 773.098, 'eval_steps_per_second': 48.363, 'epoch': 15.78}
+06/04/2022 00:35:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0444318056106567, 'eval_accuracy': 0.6308711156393275, 'eval_runtime': 12.7871, 'eval_samples_per_second': 767.57, 'eval_steps_per_second': 48.017, 'epoch': 15.91}
+{'loss': 0.4929, 'learning_rate': 7.563523105895988e-05, 'epoch': 15.97}
+06/04/2022 00:36:41 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.1403818130493164, 'eval_accuracy': 0.6295466123280693, 'eval_runtime': 12.9535, 'eval_samples_per_second': 757.713, 'eval_steps_per_second': 47.4, 'epoch': 16.04}
+06/04/2022 00:37:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0963518619537354, 'eval_accuracy': 0.626286296484972, 'eval_runtime': 12.9463, 'eval_samples_per_second': 758.131, 'eval_steps_per_second': 47.427, 'epoch': 16.17}
+{'loss': 0.4297, 'learning_rate': 7.491090830073881e-05, 'epoch': 16.3}
+06/04/2022 00:38:04 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0932941436767578, 'eval_accuracy': 0.6283239938869077, 'eval_runtime': 12.9764, 'eval_samples_per_second': 756.374, 'eval_steps_per_second': 47.317, 'epoch': 16.3}
+06/04/2022 00:38:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.089431643486023, 'eval_accuracy': 0.6273051451859399, 'eval_runtime': 12.6797, 'eval_samples_per_second': 774.07, 'eval_steps_per_second': 48.424, 'epoch': 16.43}
+06/04/2022 00:39:29 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.1319849491119385, 'eval_accuracy': 0.6321956189505858, 'eval_runtime': 12.6844, 'eval_samples_per_second': 773.784, 'eval_steps_per_second': 48.406, 'epoch': 16.56}
+{'loss': 0.4393, 'learning_rate': 7.418658554251775e-05, 'epoch': 16.62}
+06/04/2022 00:40:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.142886996269226, 'eval_accuracy': 0.6283239938869077, 'eval_runtime': 12.93, 'eval_samples_per_second': 759.089, 'eval_steps_per_second': 47.487, 'epoch': 16.69}
+06/04/2022 00:40:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.0903207063674927, 'eval_accuracy': 0.6303616912888436, 'eval_runtime': 12.7635, 'eval_samples_per_second': 768.991, 'eval_steps_per_second': 48.106, 'epoch': 16.82}
+{'loss': 0.4485, 'learning_rate': 7.346226278429669e-05, 'epoch': 16.95}
+06/04/2022 00:41:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.138512134552002, 'eval_accuracy': 0.6300560366785533, 'eval_runtime': 12.611, 'eval_samples_per_second': 778.287, 'eval_steps_per_second': 48.688, 'epoch': 16.95}
+06/04/2022 00:42:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2044103145599365, 'eval_accuracy': 0.6255731023942944, 'eval_runtime': 12.7078, 'eval_samples_per_second': 772.358, 'eval_steps_per_second': 48.317, 'epoch': 17.08}
+06/04/2022 00:43:01 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.152717113494873, 'eval_accuracy': 0.627712684666327, 'eval_runtime': 12.7008, 'eval_samples_per_second': 772.785, 'eval_steps_per_second': 48.343, 'epoch': 17.21}
+{'loss': 0.3951, 'learning_rate': 7.273938867159207e-05, 'epoch': 17.28}
+06/04/2022 00:43:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.1568490266799927, 'eval_accuracy': 0.6266938359653591, 'eval_runtime': 12.6591, 'eval_samples_per_second': 775.329, 'eval_steps_per_second': 48.503, 'epoch': 17.34}
+06/04/2022 00:44:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.1756352186203003, 'eval_accuracy': 0.6254712175241977, 'eval_runtime': 12.6488, 'eval_samples_per_second': 775.965, 'eval_steps_per_second': 48.542, 'epoch': 17.47}
+{'loss': 0.4025, 'learning_rate': 7.2015065913371e-05, 'epoch': 17.6}
+06/04/2022 00:45:07 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.1132526397705078, 'eval_accuracy': 0.6252674477840041, 'eval_runtime': 12.5713, 'eval_samples_per_second': 780.748, 'eval_steps_per_second': 48.841, 'epoch': 17.6}
+06/04/2022 00:45:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.174096703529358, 'eval_accuracy': 0.6279164544065207, 'eval_runtime': 12.6155, 'eval_samples_per_second': 778.011, 'eval_steps_per_second': 48.67, 'epoch': 17.73}
+06/04/2022 00:46:32 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.1335216760635376, 'eval_accuracy': 0.6318899643402954, 'eval_runtime': 12.6653, 'eval_samples_per_second': 774.95, 'eval_steps_per_second': 48.479, 'epoch': 17.86}
+{'loss': 0.4099, 'learning_rate': 7.129074315514994e-05, 'epoch': 17.93}
+06/04/2022 00:47:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.160591959953308, 'eval_accuracy': 0.6257768721344881, 'eval_runtime': 12.6162, 'eval_samples_per_second': 777.969, 'eval_steps_per_second': 48.668, 'epoch': 17.99}
+06/04/2022 00:47:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2940629720687866, 'eval_accuracy': 0.6224146714212939, 'eval_runtime': 12.5971, 'eval_samples_per_second': 779.147, 'eval_steps_per_second': 48.741, 'epoch': 18.12}
+{'loss': 0.3623, 'learning_rate': 7.056642039692887e-05, 'epoch': 18.25}
+06/04/2022 00:48:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.238413691520691, 'eval_accuracy': 0.6260825267447784, 'eval_runtime': 12.7551, 'eval_samples_per_second': 769.493, 'eval_steps_per_second': 48.137, 'epoch': 18.25}
+06/04/2022 00:49:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2378144264221191, 'eval_accuracy': 0.6185430463576159, 'eval_runtime': 12.8616, 'eval_samples_per_second': 763.123, 'eval_steps_per_second': 47.739, 'epoch': 18.38}
+06/04/2022 00:50:03 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2222102880477905, 'eval_accuracy': 0.6263881813550688, 'eval_runtime': 12.7995, 'eval_samples_per_second': 766.83, 'eval_steps_per_second': 47.971, 'epoch': 18.51}
+{'loss': 0.3654, 'learning_rate': 6.984209763870781e-05, 'epoch': 18.58}
+06/04/2022 00:50:47 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2450464963912964, 'eval_accuracy': 0.6286296484971982, 'eval_runtime': 12.7784, 'eval_samples_per_second': 768.091, 'eval_steps_per_second': 48.05, 'epoch': 18.64}
+06/04/2022 00:51:29 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2065600156784058, 'eval_accuracy': 0.6266938359653591, 'eval_runtime': 12.7607, 'eval_samples_per_second': 769.157, 'eval_steps_per_second': 48.116, 'epoch': 18.77}
+{'loss': 0.371, 'learning_rate': 6.911922352600318e-05, 'epoch': 18.9}
+06/04/2022 00:52:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2083479166030884, 'eval_accuracy': 0.6291390728476821, 'eval_runtime': 12.7854, 'eval_samples_per_second': 767.673, 'eval_steps_per_second': 48.024, 'epoch': 18.9}
+06/04/2022 00:52:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3205173015594482, 'eval_accuracy': 0.6236372898624555, 'eval_runtime': 12.6592, 'eval_samples_per_second': 775.322, 'eval_steps_per_second': 48.502, 'epoch': 19.04}
+06/04/2022 00:53:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3424516916275024, 'eval_accuracy': 0.6250636780438105, 'eval_runtime': 12.9047, 'eval_samples_per_second': 760.576, 'eval_steps_per_second': 47.58, 'epoch': 19.17}
+{'loss': 0.3311, 'learning_rate': 6.839490076778212e-05, 'epoch': 19.23}
+06/04/2022 00:54:20 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.316880226135254, 'eval_accuracy': 0.623841059602649, 'eval_runtime': 13.0135, 'eval_samples_per_second': 754.216, 'eval_steps_per_second': 47.182, 'epoch': 19.3}
+06/04/2022 00:55:02 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2514861822128296, 'eval_accuracy': 0.6260825267447784, 'eval_runtime': 13.0431, 'eval_samples_per_second': 752.505, 'eval_steps_per_second': 47.075, 'epoch': 19.43}
+{'loss': 0.3276, 'learning_rate': 6.767057800956105e-05, 'epoch': 19.56}
+06/04/2022 00:55:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2573105096817017, 'eval_accuracy': 0.6248599083036169, 'eval_runtime': 12.9518, 'eval_samples_per_second': 757.81, 'eval_steps_per_second': 47.407, 'epoch': 19.56}
+06/04/2022 00:56:27 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3499424457550049, 'eval_accuracy': 0.6235354049923586, 'eval_runtime': 12.919, 'eval_samples_per_second': 759.735, 'eval_steps_per_second': 47.527, 'epoch': 19.69}
+06/04/2022 00:57:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2644318342208862, 'eval_accuracy': 0.6276107997962302, 'eval_runtime': 12.964, 'eval_samples_per_second': 757.095, 'eval_steps_per_second': 47.362, 'epoch': 19.82}
+{'loss': 0.344, 'learning_rate': 6.694625525134e-05, 'epoch': 19.88}
+06/04/2022 00:57:53 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.273767113685608, 'eval_accuracy': 0.6252674477840041, 'eval_runtime': 12.9191, 'eval_samples_per_second': 759.73, 'eval_steps_per_second': 47.527, 'epoch': 19.95}
+06/04/2022 00:58:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.328154444694519, 'eval_accuracy': 0.6167091186958736, 'eval_runtime': 12.9012, 'eval_samples_per_second': 760.784, 'eval_steps_per_second': 47.593, 'epoch': 20.08}
+{'loss': 0.3075, 'learning_rate': 6.622193249311894e-05, 'epoch': 20.21}
+06/04/2022 00:59:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3539059162139893, 'eval_accuracy': 0.6196637799286806, 'eval_runtime': 12.8908, 'eval_samples_per_second': 761.394, 'eval_steps_per_second': 47.631, 'epoch': 20.21}
+06/04/2022 01:00:01 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.380934715270996, 'eval_accuracy': 0.6174223127865512, 'eval_runtime': 12.8381, 'eval_samples_per_second': 764.521, 'eval_steps_per_second': 47.826, 'epoch': 20.34}
+06/04/2022 01:00:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3198894262313843, 'eval_accuracy': 0.6279164544065207, 'eval_runtime': 12.897, 'eval_samples_per_second': 761.029, 'eval_steps_per_second': 47.608, 'epoch': 20.47}
+{'loss': 0.2966, 'learning_rate': 6.549760973489787e-05, 'epoch': 20.53}
+06/04/2022 01:01:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3192325830459595, 'eval_accuracy': 0.6197656647987774, 'eval_runtime': 13.037, 'eval_samples_per_second': 752.856, 'eval_steps_per_second': 47.097, 'epoch': 20.6}
+06/04/2022 01:02:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2851134538650513, 'eval_accuracy': 0.6226184411614876, 'eval_runtime': 13.07, 'eval_samples_per_second': 750.955, 'eval_steps_per_second': 46.978, 'epoch': 20.73}
+{'loss': 0.3106, 'learning_rate': 6.477328697667681e-05, 'epoch': 20.86}
+06/04/2022 01:02:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3288198709487915, 'eval_accuracy': 0.6239429444727458, 'eval_runtime': 13.0538, 'eval_samples_per_second': 751.889, 'eval_steps_per_second': 47.036, 'epoch': 20.86}
+06/04/2022 01:03:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.2974883317947388, 'eval_accuracy': 0.6252674477840041, 'eval_runtime': 12.8454, 'eval_samples_per_second': 764.087, 'eval_steps_per_second': 47.799, 'epoch': 20.99}
+06/04/2022 01:04:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4085227251052856, 'eval_accuracy': 0.6234335201222618, 'eval_runtime': 12.8075, 'eval_samples_per_second': 766.346, 'eval_steps_per_second': 47.941, 'epoch': 21.12}
+{'loss': 0.2829, 'learning_rate': 6.404896421845574e-05, 'epoch': 21.19}
+06/04/2022 01:05:02 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4046539068222046, 'eval_accuracy': 0.6197656647987774, 'eval_runtime': 12.7711, 'eval_samples_per_second': 768.531, 'eval_steps_per_second': 48.077, 'epoch': 21.25}
+06/04/2022 01:05:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4277583360671997, 'eval_accuracy': 0.6196637799286806, 'eval_runtime': 12.8038, 'eval_samples_per_second': 766.567, 'eval_steps_per_second': 47.954, 'epoch': 21.38}
+{'loss': 0.2672, 'learning_rate': 6.332609010575112e-05, 'epoch': 21.51}
+06/04/2022 01:06:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3524187803268433, 'eval_accuracy': 0.6209882832399388, 'eval_runtime': 12.9281, 'eval_samples_per_second': 759.199, 'eval_steps_per_second': 47.493, 'epoch': 21.51}
+06/04/2022 01:07:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.3837947845458984, 'eval_accuracy': 0.6256749872643912, 'eval_runtime': 12.8043, 'eval_samples_per_second': 766.541, 'eval_steps_per_second': 47.953, 'epoch': 21.64}
+06/04/2022 01:07:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4313039779663086, 'eval_accuracy': 0.6253693326541009, 'eval_runtime': 12.7047, 'eval_samples_per_second': 772.551, 'eval_steps_per_second': 48.329, 'epoch': 21.77}
+{'loss': 0.2822, 'learning_rate': 6.260176734753006e-05, 'epoch': 21.84}
+06/04/2022 01:08:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4227502346038818, 'eval_accuracy': 0.626286296484972, 'eval_runtime': 12.7804, 'eval_samples_per_second': 767.975, 'eval_steps_per_second': 48.042, 'epoch': 21.9}
+06/04/2022 01:09:18 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4915831089019775, 'eval_accuracy': 0.6159959246051961, 'eval_runtime': 12.8401, 'eval_samples_per_second': 764.402, 'eval_steps_per_second': 47.819, 'epoch': 22.03}
+{'loss': 0.2654, 'learning_rate': 6.1877444589309e-05, 'epoch': 22.16}
+06/04/2022 01:09:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4384249448776245, 'eval_accuracy': 0.6194600101884871, 'eval_runtime': 12.8497, 'eval_samples_per_second': 763.831, 'eval_steps_per_second': 47.783, 'epoch': 22.16}
+06/04/2022 01:10:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4137455224990845, 'eval_accuracy': 0.6205807437595517, 'eval_runtime': 12.7422, 'eval_samples_per_second': 770.278, 'eval_steps_per_second': 48.187, 'epoch': 22.29}
+06/04/2022 01:11:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4790656566619873, 'eval_accuracy': 0.6173204279164544, 'eval_runtime': 12.7888, 'eval_samples_per_second': 767.471, 'eval_steps_per_second': 48.011, 'epoch': 22.43}
+{'loss': 0.2441, 'learning_rate': 6.115312183108793e-05, 'epoch': 22.49}
+06/04/2022 01:12:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4405505657196045, 'eval_accuracy': 0.6201732042791646, 'eval_runtime': 12.6008, 'eval_samples_per_second': 778.919, 'eval_steps_per_second': 48.727, 'epoch': 22.56}
+06/04/2022 01:12:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.439962387084961, 'eval_accuracy': 0.6206826286296485, 'eval_runtime': 12.7598, 'eval_samples_per_second': 769.213, 'eval_steps_per_second': 48.12, 'epoch': 22.69}
+{'loss': 0.2561, 'learning_rate': 6.0428799072866874e-05, 'epoch': 22.82}
+06/04/2022 01:13:32 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4291538000106812, 'eval_accuracy': 0.6195618950585838, 'eval_runtime': 12.7098, 'eval_samples_per_second': 772.237, 'eval_steps_per_second': 48.309, 'epoch': 22.82}
+06/04/2022 01:14:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4202042818069458, 'eval_accuracy': 0.6209882832399388, 'eval_runtime': 13.2369, 'eval_samples_per_second': 741.49, 'eval_steps_per_second': 46.386, 'epoch': 22.95}
+06/04/2022 01:14:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5001107454299927, 'eval_accuracy': 0.6265919510952623, 'eval_runtime': 12.6989, 'eval_samples_per_second': 772.9, 'eval_steps_per_second': 48.351, 'epoch': 23.08}
+{'loss': 0.2396, 'learning_rate': 5.97073736056787e-05, 'epoch': 23.14}
+06/04/2022 01:15:41 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5063011646270752, 'eval_accuracy': 0.6183392766174223, 'eval_runtime': 12.6428, 'eval_samples_per_second': 776.332, 'eval_steps_per_second': 48.565, 'epoch': 23.21}
+06/04/2022 01:16:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.546041488647461, 'eval_accuracy': 0.6187468160978095, 'eval_runtime': 12.7114, 'eval_samples_per_second': 772.141, 'eval_steps_per_second': 48.303, 'epoch': 23.34}
+{'loss': 0.2203, 'learning_rate': 5.898449949297408e-05, 'epoch': 23.47}
+06/04/2022 01:17:04 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.521414875984192, 'eval_accuracy': 0.6205807437595517, 'eval_runtime': 12.6873, 'eval_samples_per_second': 773.607, 'eval_steps_per_second': 48.395, 'epoch': 23.47}
+06/04/2022 01:17:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4944204092025757, 'eval_accuracy': 0.615588385124809, 'eval_runtime': 12.9803, 'eval_samples_per_second': 756.144, 'eval_steps_per_second': 47.302, 'epoch': 23.6}
+06/04/2022 01:18:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4310420751571655, 'eval_accuracy': 0.6193581253183902, 'eval_runtime': 12.9353, 'eval_samples_per_second': 758.774, 'eval_steps_per_second': 47.467, 'epoch': 23.73}
+{'loss': 0.2325, 'learning_rate': 5.8260176734753014e-05, 'epoch': 23.79}
+06/04/2022 01:19:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.512701153755188, 'eval_accuracy': 0.6241467142129393, 'eval_runtime': 12.7793, 'eval_samples_per_second': 768.039, 'eval_steps_per_second': 48.046, 'epoch': 23.86}
+06/04/2022 01:19:55 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.4709540605545044, 'eval_accuracy': 0.6269994905756495, 'eval_runtime': 12.6249, 'eval_samples_per_second': 777.43, 'eval_steps_per_second': 48.634, 'epoch': 23.99}
+{'loss': 0.2237, 'learning_rate': 5.753585397653195e-05, 'epoch': 24.12}
+06/04/2022 01:20:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6006535291671753, 'eval_accuracy': 0.6209882832399388, 'eval_runtime': 12.5548, 'eval_samples_per_second': 781.775, 'eval_steps_per_second': 48.906, 'epoch': 24.12}
+06/04/2022 01:21:20 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.575831413269043, 'eval_accuracy': 0.6260825267447784, 'eval_runtime': 12.8005, 'eval_samples_per_second': 766.767, 'eval_steps_per_second': 47.967, 'epoch': 24.25}
+06/04/2022 01:22:02 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5406574010849, 'eval_accuracy': 0.6207845134997453, 'eval_runtime': 12.7517, 'eval_samples_per_second': 769.701, 'eval_steps_per_second': 48.15, 'epoch': 24.38}
+{'loss': 0.2026, 'learning_rate': 5.6811531218310885e-05, 'epoch': 24.45}
+06/04/2022 01:22:46 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5601016283035278, 'eval_accuracy': 0.6151808456444218, 'eval_runtime': 12.7203, 'eval_samples_per_second': 771.601, 'eval_steps_per_second': 48.269, 'epoch': 24.51}
+06/04/2022 01:23:27 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5486665964126587, 'eval_accuracy': 0.6184411614875192, 'eval_runtime': 12.708, 'eval_samples_per_second': 772.347, 'eval_steps_per_second': 48.316, 'epoch': 24.64}
+{'loss': 0.2132, 'learning_rate': 5.608865710560626e-05, 'epoch': 24.77}
+06/04/2022 01:24:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5483640432357788, 'eval_accuracy': 0.6206826286296485, 'eval_runtime': 12.7186, 'eval_samples_per_second': 771.703, 'eval_steps_per_second': 48.276, 'epoch': 24.77}
+06/04/2022 01:24:53 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5080244541168213, 'eval_accuracy': 0.6222109016811004, 'eval_runtime': 12.8309, 'eval_samples_per_second': 764.953, 'eval_steps_per_second': 47.853, 'epoch': 24.9}
+06/04/2022 01:25:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.684245228767395, 'eval_accuracy': 0.6240448293428426, 'eval_runtime': 12.7506, 'eval_samples_per_second': 769.767, 'eval_steps_per_second': 48.155, 'epoch': 25.03}
+{'loss': 0.2055, 'learning_rate': 5.5364334347385194e-05, 'epoch': 25.1}
+06/04/2022 01:26:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7172719240188599, 'eval_accuracy': 0.6186449312277127, 'eval_runtime': 12.9103, 'eval_samples_per_second': 760.248, 'eval_steps_per_second': 47.559, 'epoch': 25.16}
+06/04/2022 01:27:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6299787759780884, 'eval_accuracy': 0.6192562404482934, 'eval_runtime': 12.6667, 'eval_samples_per_second': 774.867, 'eval_steps_per_second': 48.474, 'epoch': 25.29}
+{'loss': 0.1818, 'learning_rate': 5.464001158916413e-05, 'epoch': 25.42}
+06/04/2022 01:27:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6086597442626953, 'eval_accuracy': 0.6185430463576159, 'eval_runtime': 12.7624, 'eval_samples_per_second': 769.057, 'eval_steps_per_second': 48.11, 'epoch': 25.42}
+06/04/2022 01:28:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6267955303192139, 'eval_accuracy': 0.6173204279164544, 'eval_runtime': 12.8934, 'eval_samples_per_second': 761.244, 'eval_steps_per_second': 47.621, 'epoch': 25.55}
+06/04/2022 01:29:08 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6040760278701782, 'eval_accuracy': 0.6199694345389709, 'eval_runtime': 12.689, 'eval_samples_per_second': 773.502, 'eval_steps_per_second': 48.388, 'epoch': 25.68}
+{'loss': 0.196, 'learning_rate': 5.3915688830943065e-05, 'epoch': 25.75}
+06/04/2022 01:29:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.58861243724823, 'eval_accuracy': 0.6185430463576159, 'eval_runtime': 12.9063, 'eval_samples_per_second': 760.48, 'eval_steps_per_second': 47.574, 'epoch': 25.81}
+06/04/2022 01:30:34 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.5889461040496826, 'eval_accuracy': 0.6185430463576159, 'eval_runtime': 12.9845, 'eval_samples_per_second': 755.902, 'eval_steps_per_second': 47.287, 'epoch': 25.95}
+{'loss': 0.194, 'learning_rate': 5.319136607272201e-05, 'epoch': 26.08}
+06/04/2022 01:31:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7114756107330322, 'eval_accuracy': 0.6137544574630668, 'eval_runtime': 13.0047, 'eval_samples_per_second': 754.729, 'eval_steps_per_second': 47.214, 'epoch': 26.08}
+06/04/2022 01:32:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7727131843566895, 'eval_accuracy': 0.6157921548650025, 'eval_runtime': 13.1809, 'eval_samples_per_second': 744.636, 'eval_steps_per_second': 46.582, 'epoch': 26.21}
+06/04/2022 01:32:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6867283582687378, 'eval_accuracy': 0.6143657666836475, 'eval_runtime': 13.2066, 'eval_samples_per_second': 743.189, 'eval_steps_per_second': 46.492, 'epoch': 26.34}
+{'loss': 0.1666, 'learning_rate': 5.246704331450094e-05, 'epoch': 26.4}
+06/04/2022 01:33:27 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6624928712844849, 'eval_accuracy': 0.6179317371370352, 'eval_runtime': 13.1766, 'eval_samples_per_second': 744.878, 'eval_steps_per_second': 46.598, 'epoch': 26.47}
+06/04/2022 01:34:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6879602670669556, 'eval_accuracy': 0.612633723892002, 'eval_runtime': 12.9602, 'eval_samples_per_second': 757.321, 'eval_steps_per_second': 47.376, 'epoch': 26.6}
+{'loss': 0.1784, 'learning_rate': 5.174272055627988e-05, 'epoch': 26.73}
+06/04/2022 01:34:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6273819208145142, 'eval_accuracy': 0.6194600101884871, 'eval_runtime': 12.7866, 'eval_samples_per_second': 767.599, 'eval_steps_per_second': 48.019, 'epoch': 26.73}
+06/04/2022 01:35:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6756114959716797, 'eval_accuracy': 0.6188487009679062, 'eval_runtime': 12.682, 'eval_samples_per_second': 773.93, 'eval_steps_per_second': 48.415, 'epoch': 26.86}
+06/04/2022 01:36:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.6403478384017944, 'eval_accuracy': 0.6227203260315843, 'eval_runtime': 12.6954, 'eval_samples_per_second': 773.113, 'eval_steps_per_second': 48.364, 'epoch': 26.99}
+{'loss': 0.1785, 'learning_rate': 5.1018397798058815e-05, 'epoch': 27.05}
+06/04/2022 01:37:01 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7369248867034912, 'eval_accuracy': 0.612633723892002, 'eval_runtime': 12.6934, 'eval_samples_per_second': 773.237, 'eval_steps_per_second': 48.372, 'epoch': 27.12}
+06/04/2022 01:37:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.696221947669983, 'eval_accuracy': 0.6191543555781966, 'eval_runtime': 12.8468, 'eval_samples_per_second': 764.005, 'eval_steps_per_second': 47.794, 'epoch': 27.25}
+{'loss': 0.1533, 'learning_rate': 5.029407503983775e-05, 'epoch': 27.38}
+06/04/2022 01:38:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7353326082229614, 'eval_accuracy': 0.6118186449312277, 'eval_runtime': 12.9233, 'eval_samples_per_second': 759.481, 'eval_steps_per_second': 47.511, 'epoch': 27.38}
+06/04/2022 01:39:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.683319330215454, 'eval_accuracy': 0.6151808456444218, 'eval_runtime': 12.98, 'eval_samples_per_second': 756.161, 'eval_steps_per_second': 47.303, 'epoch': 27.51}
+06/04/2022 01:39:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.745856761932373, 'eval_accuracy': 0.6244523688232297, 'eval_runtime': 13.06, 'eval_samples_per_second': 751.534, 'eval_steps_per_second': 47.014, 'epoch': 27.64}
+{'loss': 0.1608, 'learning_rate': 4.9569752281616686e-05, 'epoch': 27.71}
+06/04/2022 01:40:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7012735605239868, 'eval_accuracy': 0.6188487009679062, 'eval_runtime': 13.0879, 'eval_samples_per_second': 749.93, 'eval_steps_per_second': 46.914, 'epoch': 27.77}
+06/04/2022 01:41:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7192546129226685, 'eval_accuracy': 0.6173204279164544, 'eval_runtime': 13.0072, 'eval_samples_per_second': 754.582, 'eval_steps_per_second': 47.205, 'epoch': 27.9}
+{'loss': 0.1671, 'learning_rate': 4.8846878168912066e-05, 'epoch': 28.03}
+06/04/2022 01:41:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7612388134002686, 'eval_accuracy': 0.6205807437595517, 'eval_runtime': 13.0413, 'eval_samples_per_second': 752.607, 'eval_steps_per_second': 47.081, 'epoch': 28.03}
+06/04/2022 01:42:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.773216962814331, 'eval_accuracy': 0.6197656647987774, 'eval_runtime': 13.1284, 'eval_samples_per_second': 747.619, 'eval_steps_per_second': 46.769, 'epoch': 28.16}
+06/04/2022 01:43:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7603507041931152, 'eval_accuracy': 0.620886398369842, 'eval_runtime': 13.1509, 'eval_samples_per_second': 746.336, 'eval_steps_per_second': 46.689, 'epoch': 28.29}
+{'loss': 0.1418, 'learning_rate': 4.812255541069101e-05, 'epoch': 28.36}
+06/04/2022 01:44:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7353154420852661, 'eval_accuracy': 0.6220071319409067, 'eval_runtime': 12.86, 'eval_samples_per_second': 763.222, 'eval_steps_per_second': 47.745, 'epoch': 28.42}
+06/04/2022 01:44:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8159435987472534, 'eval_accuracy': 0.6230259806418746, 'eval_runtime': 12.7966, 'eval_samples_per_second': 767.0, 'eval_steps_per_second': 47.981, 'epoch': 28.55}
+{'loss': 0.1484, 'learning_rate': 4.7398232652469944e-05, 'epoch': 28.68}
+06/04/2022 01:45:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7645902633666992, 'eval_accuracy': 0.6176260825267448, 'eval_runtime': 12.8495, 'eval_samples_per_second': 763.844, 'eval_steps_per_second': 47.784, 'epoch': 28.68}
+06/04/2022 01:46:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7200120687484741, 'eval_accuracy': 0.6222109016811004, 'eval_runtime': 13.065, 'eval_samples_per_second': 751.243, 'eval_steps_per_second': 46.996, 'epoch': 28.81}
+06/04/2022 01:47:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7222212553024292, 'eval_accuracy': 0.6177279673968415, 'eval_runtime': 13.2242, 'eval_samples_per_second': 742.201, 'eval_steps_per_second': 46.43, 'epoch': 28.94}
+{'loss': 0.1554, 'learning_rate': 4.667390989424888e-05, 'epoch': 29.01}
+06/04/2022 01:47:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8999437093734741, 'eval_accuracy': 0.6202750891492613, 'eval_runtime': 12.9547, 'eval_samples_per_second': 757.642, 'eval_steps_per_second': 47.396, 'epoch': 29.07}
+06/04/2022 01:48:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8412492275238037, 'eval_accuracy': 0.6211920529801325, 'eval_runtime': 12.794, 'eval_samples_per_second': 767.158, 'eval_steps_per_second': 47.991, 'epoch': 29.2}
+{'loss': 0.1287, 'learning_rate': 4.5949587136027815e-05, 'epoch': 29.34}
+06/04/2022 01:49:07 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.852171778678894, 'eval_accuracy': 0.6167091186958736, 'eval_runtime': 12.7205, 'eval_samples_per_second': 771.591, 'eval_steps_per_second': 48.269, 'epoch': 29.34}
+06/04/2022 01:49:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.858345627784729, 'eval_accuracy': 0.6224146714212939, 'eval_runtime': 12.896, 'eval_samples_per_second': 761.088, 'eval_steps_per_second': 47.612, 'epoch': 29.47}
+06/04/2022 01:50:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7716362476348877, 'eval_accuracy': 0.6186449312277127, 'eval_runtime': 12.8178, 'eval_samples_per_second': 765.732, 'eval_steps_per_second': 47.902, 'epoch': 29.6}
+{'loss': 0.1357, 'learning_rate': 4.522526437780675e-05, 'epoch': 29.66}
+06/04/2022 01:51:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7438033819198608, 'eval_accuracy': 0.6164034640855833, 'eval_runtime': 12.8227, 'eval_samples_per_second': 765.441, 'eval_steps_per_second': 47.884, 'epoch': 29.73}
+06/04/2022 01:51:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7683743238449097, 'eval_accuracy': 0.6187468160978095, 'eval_runtime': 12.8062, 'eval_samples_per_second': 766.423, 'eval_steps_per_second': 47.945, 'epoch': 29.86}
+{'loss': 0.1446, 'learning_rate': 4.4500941619585687e-05, 'epoch': 29.99}
+06/04/2022 01:52:41 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.735747218132019, 'eval_accuracy': 0.6205807437595517, 'eval_runtime': 12.8088, 'eval_samples_per_second': 766.271, 'eval_steps_per_second': 47.936, 'epoch': 29.99}
+06/04/2022 01:53:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8631635904312134, 'eval_accuracy': 0.6189505858380031, 'eval_runtime': 12.9037, 'eval_samples_per_second': 760.634, 'eval_steps_per_second': 47.583, 'epoch': 30.12}
+06/04/2022 01:54:08 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8393076658248901, 'eval_accuracy': 0.6188487009679062, 'eval_runtime': 12.8703, 'eval_samples_per_second': 762.61, 'eval_steps_per_second': 47.707, 'epoch': 30.25}
+{'loss': 0.1198, 'learning_rate': 4.377661886136463e-05, 'epoch': 30.31}
+06/04/2022 01:54:52 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8043917417526245, 'eval_accuracy': 0.621395822720326, 'eval_runtime': 12.7964, 'eval_samples_per_second': 767.012, 'eval_steps_per_second': 47.982, 'epoch': 30.38}
+06/04/2022 01:55:34 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8547265529632568, 'eval_accuracy': 0.6159959246051961, 'eval_runtime': 12.7877, 'eval_samples_per_second': 767.532, 'eval_steps_per_second': 48.015, 'epoch': 30.51}
+{'loss': 0.1277, 'learning_rate': 4.3052296103143565e-05, 'epoch': 30.64}
+06/04/2022 01:56:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8921481370925903, 'eval_accuracy': 0.6183392766174223, 'eval_runtime': 12.8347, 'eval_samples_per_second': 764.726, 'eval_steps_per_second': 47.839, 'epoch': 30.64}
+06/04/2022 01:57:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.733242154121399, 'eval_accuracy': 0.6154865002547122, 'eval_runtime': 12.8395, 'eval_samples_per_second': 764.44, 'eval_steps_per_second': 47.821, 'epoch': 30.77}
+06/04/2022 01:57:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.7869782447814941, 'eval_accuracy': 0.62190524707081, 'eval_runtime': 12.911, 'eval_samples_per_second': 760.206, 'eval_steps_per_second': 47.556, 'epoch': 30.9}
+{'loss': 0.1302, 'learning_rate': 4.23279733449225e-05, 'epoch': 30.96}
+06/04/2022 01:58:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9990603923797607, 'eval_accuracy': 0.615588385124809, 'eval_runtime': 12.752, 'eval_samples_per_second': 769.685, 'eval_steps_per_second': 48.149, 'epoch': 31.03}
+06/04/2022 01:59:08 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9606678485870361, 'eval_accuracy': 0.6209882832399388, 'eval_runtime': 12.6731, 'eval_samples_per_second': 774.476, 'eval_steps_per_second': 48.449, 'epoch': 31.16}
+{'loss': 0.1101, 'learning_rate': 4.1603650586701436e-05, 'epoch': 31.29}
+06/04/2022 01:59:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9206773042678833, 'eval_accuracy': 0.612633723892002, 'eval_runtime': 12.7615, 'eval_samples_per_second': 769.112, 'eval_steps_per_second': 48.114, 'epoch': 31.29}
+06/04/2022 02:00:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8911464214324951, 'eval_accuracy': 0.6158940397350994, 'eval_runtime': 12.758, 'eval_samples_per_second': 769.32, 'eval_steps_per_second': 48.127, 'epoch': 31.42}
+06/04/2022 02:01:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.914329171180725, 'eval_accuracy': 0.6178298522669383, 'eval_runtime': 12.7665, 'eval_samples_per_second': 768.811, 'eval_steps_per_second': 48.095, 'epoch': 31.55}
+{'loss': 0.1153, 'learning_rate': 4.087932782848037e-05, 'epoch': 31.62}
+06/04/2022 02:01:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.867743730545044, 'eval_accuracy': 0.6192562404482934, 'eval_runtime': 12.742, 'eval_samples_per_second': 770.285, 'eval_steps_per_second': 48.187, 'epoch': 31.68}
+06/04/2022 02:02:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8583179712295532, 'eval_accuracy': 0.6217014773306164, 'eval_runtime': 13.122, 'eval_samples_per_second': 747.983, 'eval_steps_per_second': 46.792, 'epoch': 31.81}
+{'loss': 0.1187, 'learning_rate': 4.015645371577575e-05, 'epoch': 31.94}
+06/04/2022 02:03:24 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9050906896591187, 'eval_accuracy': 0.6184411614875192, 'eval_runtime': 13.0674, 'eval_samples_per_second': 751.106, 'eval_steps_per_second': 46.987, 'epoch': 31.94}
+06/04/2022 02:04:08 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.97797691822052, 'eval_accuracy': 0.617014773306164, 'eval_runtime': 13.032, 'eval_samples_per_second': 753.148, 'eval_steps_per_second': 47.115, 'epoch': 32.07}
+06/04/2022 02:04:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.977786660194397, 'eval_accuracy': 0.6215995924605197, 'eval_runtime': 13.0774, 'eval_samples_per_second': 750.533, 'eval_steps_per_second': 46.951, 'epoch': 32.2}
+{'loss': 0.1058, 'learning_rate': 3.943357960307113e-05, 'epoch': 32.27}
+06/04/2022 02:05:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9491300582885742, 'eval_accuracy': 0.6209882832399388, 'eval_runtime': 12.8224, 'eval_samples_per_second': 765.46, 'eval_steps_per_second': 47.885, 'epoch': 32.33}
+06/04/2022 02:06:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.889235258102417, 'eval_accuracy': 0.6221090168110036, 'eval_runtime': 12.825, 'eval_samples_per_second': 765.304, 'eval_steps_per_second': 47.875, 'epoch': 32.46}
+{'loss': 0.1082, 'learning_rate': 3.870925684485007e-05, 'epoch': 32.59}
+06/04/2022 02:06:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.944504976272583, 'eval_accuracy': 0.6134488028527764, 'eval_runtime': 12.8723, 'eval_samples_per_second': 762.488, 'eval_steps_per_second': 47.699, 'epoch': 32.59}
+06/04/2022 02:07:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9051055908203125, 'eval_accuracy': 0.6197656647987774, 'eval_runtime': 12.9161, 'eval_samples_per_second': 759.905, 'eval_steps_per_second': 47.538, 'epoch': 32.72}
+06/04/2022 02:08:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.929507851600647, 'eval_accuracy': 0.6195618950585838, 'eval_runtime': 12.9183, 'eval_samples_per_second': 759.777, 'eval_steps_per_second': 47.53, 'epoch': 32.86}
+{'loss': 0.1103, 'learning_rate': 3.7984934086629e-05, 'epoch': 32.92}
+06/04/2022 02:09:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.8675512075424194, 'eval_accuracy': 0.6199694345389709, 'eval_runtime': 12.8326, 'eval_samples_per_second': 764.85, 'eval_steps_per_second': 47.847, 'epoch': 32.99}
+06/04/2022 02:09:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.038928985595703, 'eval_accuracy': 0.6177279673968415, 'eval_runtime': 12.76, 'eval_samples_per_second': 769.201, 'eval_steps_per_second': 48.119, 'epoch': 33.12}
+{'loss': 0.0983, 'learning_rate': 3.726061132840794e-05, 'epoch': 33.25}
+06/04/2022 02:10:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9562547206878662, 'eval_accuracy': 0.6212939378502292, 'eval_runtime': 12.7471, 'eval_samples_per_second': 769.982, 'eval_steps_per_second': 48.168, 'epoch': 33.25}
+06/04/2022 02:11:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.031865358352661, 'eval_accuracy': 0.6163015792154865, 'eval_runtime': 12.7098, 'eval_samples_per_second': 772.241, 'eval_steps_per_second': 48.309, 'epoch': 33.38}
+06/04/2022 02:11:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9302575588226318, 'eval_accuracy': 0.6199694345389709, 'eval_runtime': 12.7422, 'eval_samples_per_second': 770.277, 'eval_steps_per_second': 48.186, 'epoch': 33.51}
+{'loss': 0.0984, 'learning_rate': 3.6536288570186874e-05, 'epoch': 33.57}
+06/04/2022 02:12:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9478838443756104, 'eval_accuracy': 0.6171166581762608, 'eval_runtime': 12.7114, 'eval_samples_per_second': 772.141, 'eval_steps_per_second': 48.303, 'epoch': 33.64}
+06/04/2022 02:13:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.024019479751587, 'eval_accuracy': 0.6215995924605197, 'eval_runtime': 12.7766, 'eval_samples_per_second': 768.199, 'eval_steps_per_second': 48.056, 'epoch': 33.77}
+{'loss': 0.1012, 'learning_rate': 3.581341445748226e-05, 'epoch': 33.9}
+06/04/2022 02:14:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9676425457000732, 'eval_accuracy': 0.6172185430463576, 'eval_runtime': 12.6701, 'eval_samples_per_second': 774.658, 'eval_steps_per_second': 48.461, 'epoch': 33.9}
+06/04/2022 02:14:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.020214080810547, 'eval_accuracy': 0.6217014773306164, 'eval_runtime': 12.7513, 'eval_samples_per_second': 769.728, 'eval_steps_per_second': 48.152, 'epoch': 34.03}
+06/04/2022 02:15:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0359628200531006, 'eval_accuracy': 0.6228222109016811, 'eval_runtime': 12.7672, 'eval_samples_per_second': 768.765, 'eval_steps_per_second': 48.092, 'epoch': 34.16}
+{'loss': 0.0917, 'learning_rate': 3.5090540344777634e-05, 'epoch': 34.22}
+06/04/2022 02:16:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9968873262405396, 'eval_accuracy': 0.6185430463576159, 'eval_runtime': 12.7494, 'eval_samples_per_second': 769.839, 'eval_steps_per_second': 48.159, 'epoch': 34.29}
+06/04/2022 02:16:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.022732973098755, 'eval_accuracy': 0.6184411614875192, 'eval_runtime': 12.7744, 'eval_samples_per_second': 768.336, 'eval_steps_per_second': 48.065, 'epoch': 34.42}
+{'loss': 0.0903, 'learning_rate': 3.436621758655657e-05, 'epoch': 34.55}
+06/04/2022 02:17:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0015881061553955, 'eval_accuracy': 0.6171166581762608, 'eval_runtime': 12.7356, 'eval_samples_per_second': 770.673, 'eval_steps_per_second': 48.211, 'epoch': 34.55}
+06/04/2022 02:18:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9882649183273315, 'eval_accuracy': 0.6181355068772287, 'eval_runtime': 12.7422, 'eval_samples_per_second': 770.274, 'eval_steps_per_second': 48.186, 'epoch': 34.68}
+06/04/2022 02:19:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.02238130569458, 'eval_accuracy': 0.615078960774325, 'eval_runtime': 12.7051, 'eval_samples_per_second': 772.522, 'eval_steps_per_second': 48.327, 'epoch': 34.81}
+{'loss': 0.096, 'learning_rate': 3.3641894828335506e-05, 'epoch': 34.88}
+06/04/2022 02:19:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.994763731956482, 'eval_accuracy': 0.620886398369842, 'eval_runtime': 12.7355, 'eval_samples_per_second': 770.68, 'eval_steps_per_second': 48.212, 'epoch': 34.94}
+06/04/2022 02:20:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.093865156173706, 'eval_accuracy': 0.6199694345389709, 'eval_runtime': 12.8001, 'eval_samples_per_second': 766.792, 'eval_steps_per_second': 47.968, 'epoch': 35.07}
+{'loss': 0.0879, 'learning_rate': 3.291757207011444e-05, 'epoch': 35.2}
+06/04/2022 02:21:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0225133895874023, 'eval_accuracy': 0.6191543555781966, 'eval_runtime': 12.7566, 'eval_samples_per_second': 769.408, 'eval_steps_per_second': 48.132, 'epoch': 35.2}
+06/04/2022 02:21:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0596585273742676, 'eval_accuracy': 0.6211920529801325, 'eval_runtime': 12.7526, 'eval_samples_per_second': 769.65, 'eval_steps_per_second': 48.147, 'epoch': 35.33}
+06/04/2022 02:22:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.061633348464966, 'eval_accuracy': 0.620886398369842, 'eval_runtime': 13.1409, 'eval_samples_per_second': 746.904, 'eval_steps_per_second': 46.724, 'epoch': 35.46}
+{'loss': 0.0839, 'learning_rate': 3.2193249311893384e-05, 'epoch': 35.53}
+06/04/2022 02:23:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.035139560699463, 'eval_accuracy': 0.6202750891492613, 'eval_runtime': 13.0554, 'eval_samples_per_second': 751.794, 'eval_steps_per_second': 47.03, 'epoch': 35.59}
+06/04/2022 02:24:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9828283786773682, 'eval_accuracy': 0.6228222109016811, 'eval_runtime': 12.8997, 'eval_samples_per_second': 760.873, 'eval_steps_per_second': 47.598, 'epoch': 35.72}
+{'loss': 0.0875, 'learning_rate': 3.146892655367232e-05, 'epoch': 35.85}
+06/04/2022 02:24:47 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.9562426805496216, 'eval_accuracy': 0.6191543555781966, 'eval_runtime': 12.9768, 'eval_samples_per_second': 756.348, 'eval_steps_per_second': 47.315, 'epoch': 35.85}
+06/04/2022 02:25:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 1.995432734489441, 'eval_accuracy': 0.6223127865511972, 'eval_runtime': 12.9627, 'eval_samples_per_second': 757.17, 'eval_steps_per_second': 47.367, 'epoch': 35.98}
+06/04/2022 02:26:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.041402578353882, 'eval_accuracy': 0.6199694345389709, 'eval_runtime': 12.9694, 'eval_samples_per_second': 756.784, 'eval_steps_per_second': 47.342, 'epoch': 36.11}
+{'loss': 0.0819, 'learning_rate': 3.0744603795451255e-05, 'epoch': 36.18}
+06/04/2022 02:26:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0533761978149414, 'eval_accuracy': 0.6202750891492613, 'eval_runtime': 12.801, 'eval_samples_per_second': 766.735, 'eval_steps_per_second': 47.965, 'epoch': 36.25}
+06/04/2022 02:27:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0433595180511475, 'eval_accuracy': 0.6193581253183902, 'eval_runtime': 12.6989, 'eval_samples_per_second': 772.9, 'eval_steps_per_second': 48.351, 'epoch': 36.38}
+{'loss': 0.08, 'learning_rate': 3.002028103723019e-05, 'epoch': 36.51}
+06/04/2022 02:28:20 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.037000894546509, 'eval_accuracy': 0.621395822720326, 'eval_runtime': 12.6648, 'eval_samples_per_second': 774.981, 'eval_steps_per_second': 48.481, 'epoch': 36.51}
+06/04/2022 02:29:04 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.098618507385254, 'eval_accuracy': 0.6173204279164544, 'eval_runtime': 12.6358, 'eval_samples_per_second': 776.764, 'eval_steps_per_second': 48.592, 'epoch': 36.64}
+06/04/2022 02:29:46 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0594775676727295, 'eval_accuracy': 0.6203769740193581, 'eval_runtime': 13.0148, 'eval_samples_per_second': 754.143, 'eval_steps_per_second': 47.177, 'epoch': 36.77}
+{'loss': 0.0797, 'learning_rate': 2.929595827900913e-05, 'epoch': 36.83}
+06/04/2022 02:30:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0229387283325195, 'eval_accuracy': 0.626286296484972, 'eval_runtime': 12.8873, 'eval_samples_per_second': 761.602, 'eval_steps_per_second': 47.644, 'epoch': 36.9}
+06/04/2022 02:31:12 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1271629333496094, 'eval_accuracy': 0.6250636780438105, 'eval_runtime': 12.8731, 'eval_samples_per_second': 762.443, 'eval_steps_per_second': 47.696, 'epoch': 37.03}
+{'loss': 0.077, 'learning_rate': 2.8571635520788065e-05, 'epoch': 37.16}
+06/04/2022 02:31:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1722300052642822, 'eval_accuracy': 0.6250636780438105, 'eval_runtime': 13.1844, 'eval_samples_per_second': 744.439, 'eval_steps_per_second': 46.57, 'epoch': 37.16}
+06/04/2022 02:32:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.14147686958313, 'eval_accuracy': 0.6167091186958736, 'eval_runtime': 13.1512, 'eval_samples_per_second': 746.321, 'eval_steps_per_second': 46.688, 'epoch': 37.29}
+06/04/2022 02:33:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1753909587860107, 'eval_accuracy': 0.6223127865511972, 'eval_runtime': 13.1732, 'eval_samples_per_second': 745.072, 'eval_steps_per_second': 46.61, 'epoch': 37.42}
+{'loss': 0.0716, 'learning_rate': 2.7847312762567e-05, 'epoch': 37.48}
+06/04/2022 02:34:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0781095027923584, 'eval_accuracy': 0.6147733061640347, 'eval_runtime': 13.083, 'eval_samples_per_second': 750.21, 'eval_steps_per_second': 46.931, 'epoch': 37.55}
+06/04/2022 02:34:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.0993692874908447, 'eval_accuracy': 0.6194600101884871, 'eval_runtime': 13.1787, 'eval_samples_per_second': 744.762, 'eval_steps_per_second': 46.59, 'epoch': 37.68}
+{'loss': 0.073, 'learning_rate': 2.712299000434594e-05, 'epoch': 37.81}
+06/04/2022 02:35:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.129952907562256, 'eval_accuracy': 0.6210901681100357, 'eval_runtime': 13.1438, 'eval_samples_per_second': 746.74, 'eval_steps_per_second': 46.714, 'epoch': 37.81}
+06/04/2022 02:36:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.187743902206421, 'eval_accuracy': 0.6178298522669383, 'eval_runtime': 13.2203, 'eval_samples_per_second': 742.417, 'eval_steps_per_second': 46.444, 'epoch': 37.94}
+06/04/2022 02:36:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.26550555229187, 'eval_accuracy': 0.6205807437595517, 'eval_runtime': 13.2178, 'eval_samples_per_second': 742.56, 'eval_steps_per_second': 46.453, 'epoch': 38.07}
+{'loss': 0.0701, 'learning_rate': 2.6398667246124876e-05, 'epoch': 38.14}
+06/04/2022 02:37:41 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.182269334793091, 'eval_accuracy': 0.6160978094752929, 'eval_runtime': 12.7268, 'eval_samples_per_second': 771.209, 'eval_steps_per_second': 48.245, 'epoch': 38.2}
+06/04/2022 02:38:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1641757488250732, 'eval_accuracy': 0.6160978094752929, 'eval_runtime': 12.7591, 'eval_samples_per_second': 769.258, 'eval_steps_per_second': 48.123, 'epoch': 38.33}
+{'loss': 0.067, 'learning_rate': 2.5675793133420252e-05, 'epoch': 38.46}
+06/04/2022 02:39:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.134080171585083, 'eval_accuracy': 0.6211920529801325, 'eval_runtime': 12.7083, 'eval_samples_per_second': 772.327, 'eval_steps_per_second': 48.315, 'epoch': 38.46}
+06/04/2022 02:39:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1966559886932373, 'eval_accuracy': 0.6184411614875192, 'eval_runtime': 12.8415, 'eval_samples_per_second': 764.321, 'eval_steps_per_second': 47.814, 'epoch': 38.59}
+06/04/2022 02:40:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2254459857940674, 'eval_accuracy': 0.6157921548650025, 'eval_runtime': 12.8391, 'eval_samples_per_second': 764.459, 'eval_steps_per_second': 47.823, 'epoch': 38.72}
+{'loss': 0.0668, 'learning_rate': 2.495147037519919e-05, 'epoch': 38.79}
+06/04/2022 02:41:14 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.167478322982788, 'eval_accuracy': 0.6193581253183902, 'eval_runtime': 12.8491, 'eval_samples_per_second': 763.868, 'eval_steps_per_second': 47.786, 'epoch': 38.85}
+06/04/2022 02:41:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.172813892364502, 'eval_accuracy': 0.6228222109016811, 'eval_runtime': 12.8129, 'eval_samples_per_second': 766.028, 'eval_steps_per_second': 47.921, 'epoch': 38.98}
+{'loss': 0.068, 'learning_rate': 2.4227147616978127e-05, 'epoch': 39.11}
+06/04/2022 02:42:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1832945346832275, 'eval_accuracy': 0.6223127865511972, 'eval_runtime': 12.7851, 'eval_samples_per_second': 767.688, 'eval_steps_per_second': 48.024, 'epoch': 39.11}
+06/04/2022 02:43:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2515242099761963, 'eval_accuracy': 0.6203769740193581, 'eval_runtime': 12.7224, 'eval_samples_per_second': 771.475, 'eval_steps_per_second': 48.261, 'epoch': 39.24}
+06/04/2022 02:44:03 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2647337913513184, 'eval_accuracy': 0.6195618950585838, 'eval_runtime': 12.86, 'eval_samples_per_second': 763.222, 'eval_steps_per_second': 47.745, 'epoch': 39.37}
+{'loss': 0.0618, 'learning_rate': 2.3504273504273504e-05, 'epoch': 39.44}
+06/04/2022 02:44:47 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.266108274459839, 'eval_accuracy': 0.6201732042791646, 'eval_runtime': 12.8314, 'eval_samples_per_second': 764.918, 'eval_steps_per_second': 47.851, 'epoch': 39.5}
+06/04/2022 02:45:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.22007155418396, 'eval_accuracy': 0.6160978094752929, 'eval_runtime': 13.0727, 'eval_samples_per_second': 750.799, 'eval_steps_per_second': 46.968, 'epoch': 39.63}
+{'loss': 0.0647, 'learning_rate': 2.2779950746052443e-05, 'epoch': 39.77}
+06/04/2022 02:46:12 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.198981523513794, 'eval_accuracy': 0.6199694345389709, 'eval_runtime': 13.1294, 'eval_samples_per_second': 747.558, 'eval_steps_per_second': 46.765, 'epoch': 39.77}
+06/04/2022 02:46:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.1818692684173584, 'eval_accuracy': 0.6168110035659704, 'eval_runtime': 13.1329, 'eval_samples_per_second': 747.36, 'eval_steps_per_second': 46.753, 'epoch': 39.9}
+06/04/2022 02:47:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2712855339050293, 'eval_accuracy': 0.6178298522669383, 'eval_runtime': 13.0679, 'eval_samples_per_second': 751.077, 'eval_steps_per_second': 46.985, 'epoch': 40.03}
+{'loss': 0.0621, 'learning_rate': 2.2055627987831378e-05, 'epoch': 40.09}
+06/04/2022 02:48:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.289855480194092, 'eval_accuracy': 0.6192562404482934, 'eval_runtime': 13.0907, 'eval_samples_per_second': 749.77, 'eval_steps_per_second': 46.904, 'epoch': 40.16}
+06/04/2022 02:49:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2864716053009033, 'eval_accuracy': 0.6200713194090678, 'eval_runtime': 13.1578, 'eval_samples_per_second': 745.944, 'eval_steps_per_second': 46.664, 'epoch': 40.29}
+{'loss': 0.0578, 'learning_rate': 2.1331305229610314e-05, 'epoch': 40.42}
+06/04/2022 02:49:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2877426147460938, 'eval_accuracy': 0.6203769740193581, 'eval_runtime': 13.0963, 'eval_samples_per_second': 749.448, 'eval_steps_per_second': 46.883, 'epoch': 40.42}
+06/04/2022 02:50:34 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.289370059967041, 'eval_accuracy': 0.618033622007132, 'eval_runtime': 13.159, 'eval_samples_per_second': 745.876, 'eval_steps_per_second': 46.66, 'epoch': 40.55}
+06/04/2022 02:51:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2803525924682617, 'eval_accuracy': 0.6156902699949057, 'eval_runtime': 12.8986, 'eval_samples_per_second': 760.938, 'eval_steps_per_second': 47.602, 'epoch': 40.68}
+{'loss': 0.0587, 'learning_rate': 2.0606982471389253e-05, 'epoch': 40.74}
+06/04/2022 02:52:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.267280340194702, 'eval_accuracy': 0.6212939378502292, 'eval_runtime': 12.98, 'eval_samples_per_second': 756.164, 'eval_steps_per_second': 47.304, 'epoch': 40.81}
+06/04/2022 02:52:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.256809949874878, 'eval_accuracy': 0.617524197656648, 'eval_runtime': 12.7651, 'eval_samples_per_second': 768.894, 'eval_steps_per_second': 48.1, 'epoch': 40.94}
+{'loss': 0.0591, 'learning_rate': 1.988265971316819e-05, 'epoch': 41.07}
+06/04/2022 02:53:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3409717082977295, 'eval_accuracy': 0.6195618950585838, 'eval_runtime': 12.9881, 'eval_samples_per_second': 755.69, 'eval_steps_per_second': 47.274, 'epoch': 41.07}
+06/04/2022 02:54:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.362072706222534, 'eval_accuracy': 0.6176260825267448, 'eval_runtime': 12.8149, 'eval_samples_per_second': 765.904, 'eval_steps_per_second': 47.913, 'epoch': 41.2}
+06/04/2022 02:54:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3811757564544678, 'eval_accuracy': 0.6182373917473255, 'eval_runtime': 12.7967, 'eval_samples_per_second': 766.994, 'eval_steps_per_second': 47.981, 'epoch': 41.33}
+{'loss': 0.0534, 'learning_rate': 1.915978560046357e-05, 'epoch': 41.4}
+06/04/2022 02:55:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3177638053894043, 'eval_accuracy': 0.6168110035659704, 'eval_runtime': 12.7948, 'eval_samples_per_second': 767.11, 'eval_steps_per_second': 47.988, 'epoch': 41.46}
+06/04/2022 02:56:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.291269540786743, 'eval_accuracy': 0.6193581253183902, 'eval_runtime': 12.8227, 'eval_samples_per_second': 765.442, 'eval_steps_per_second': 47.884, 'epoch': 41.59}
+{'loss': 0.0542, 'learning_rate': 1.8435462842242504e-05, 'epoch': 41.72}
+06/04/2022 02:56:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3679440021514893, 'eval_accuracy': 0.6181355068772287, 'eval_runtime': 12.7749, 'eval_samples_per_second': 768.301, 'eval_steps_per_second': 48.063, 'epoch': 41.72}
+06/04/2022 02:57:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2158854007720947, 'eval_accuracy': 0.6239429444727458, 'eval_runtime': 12.6887, 'eval_samples_per_second': 773.521, 'eval_steps_per_second': 48.389, 'epoch': 41.85}
+06/04/2022 02:58:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.2671620845794678, 'eval_accuracy': 0.6204788588894549, 'eval_runtime': 12.8536, 'eval_samples_per_second': 763.599, 'eval_steps_per_second': 47.769, 'epoch': 41.98}
+{'loss': 0.0581, 'learning_rate': 1.771114008402144e-05, 'epoch': 42.05}
+06/04/2022 02:59:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3415462970733643, 'eval_accuracy': 0.6161996943453897, 'eval_runtime': 12.9094, 'eval_samples_per_second': 760.3, 'eval_steps_per_second': 47.562, 'epoch': 42.11}
+06/04/2022 02:59:53 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3874828815460205, 'eval_accuracy': 0.6200713194090678, 'eval_runtime': 12.95, 'eval_samples_per_second': 757.916, 'eval_steps_per_second': 47.413, 'epoch': 42.24}
+{'loss': 0.05, 'learning_rate': 1.698681732580038e-05, 'epoch': 42.37}
+06/04/2022 03:00:35 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.381556749343872, 'eval_accuracy': 0.6188487009679062, 'eval_runtime': 12.9913, 'eval_samples_per_second': 755.506, 'eval_steps_per_second': 47.262, 'epoch': 42.37}
+06/04/2022 03:01:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3269996643066406, 'eval_accuracy': 0.6200713194090678, 'eval_runtime': 12.9478, 'eval_samples_per_second': 758.043, 'eval_steps_per_second': 47.421, 'epoch': 42.5}
+06/04/2022 03:02:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3419013023376465, 'eval_accuracy': 0.6192562404482934, 'eval_runtime': 12.9524, 'eval_samples_per_second': 757.778, 'eval_steps_per_second': 47.405, 'epoch': 42.63}
+{'loss': 0.0504, 'learning_rate': 1.6262494567579315e-05, 'epoch': 42.7}
+06/04/2022 03:02:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3436243534088135, 'eval_accuracy': 0.6163015792154865, 'eval_runtime': 12.6858, 'eval_samples_per_second': 773.698, 'eval_steps_per_second': 48.4, 'epoch': 42.76}
+06/04/2022 03:03:25 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.263062000274658, 'eval_accuracy': 0.6182373917473255, 'eval_runtime': 12.7159, 'eval_samples_per_second': 771.866, 'eval_steps_per_second': 48.286, 'epoch': 42.89}
+{'loss': 0.0514, 'learning_rate': 1.553817180935825e-05, 'epoch': 43.02}
+06/04/2022 03:04:07 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.339426040649414, 'eval_accuracy': 0.6177279673968415, 'eval_runtime': 12.8177, 'eval_samples_per_second': 765.735, 'eval_steps_per_second': 47.902, 'epoch': 43.02}
+06/04/2022 03:04:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3191661834716797, 'eval_accuracy': 0.6190524707080999, 'eval_runtime': 12.7891, 'eval_samples_per_second': 767.452, 'eval_steps_per_second': 48.01, 'epoch': 43.16}
+06/04/2022 03:05:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.389869451522827, 'eval_accuracy': 0.6190524707080999, 'eval_runtime': 12.7876, 'eval_samples_per_second': 767.538, 'eval_steps_per_second': 48.015, 'epoch': 43.29}
+{'loss': 0.0458, 'learning_rate': 1.4813849051137188e-05, 'epoch': 43.35}
+06/04/2022 03:06:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3678836822509766, 'eval_accuracy': 0.6176260825267448, 'eval_runtime': 12.7814, 'eval_samples_per_second': 767.915, 'eval_steps_per_second': 48.039, 'epoch': 43.42}
+06/04/2022 03:06:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3785650730133057, 'eval_accuracy': 0.6174223127865512, 'eval_runtime': 12.7943, 'eval_samples_per_second': 767.136, 'eval_steps_per_second': 47.99, 'epoch': 43.55}
+{'loss': 0.0497, 'learning_rate': 1.4089526292916125e-05, 'epoch': 43.68}
+06/04/2022 03:07:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.334163188934326, 'eval_accuracy': 0.6201732042791646, 'eval_runtime': 12.6947, 'eval_samples_per_second': 773.156, 'eval_steps_per_second': 48.367, 'epoch': 43.68}
+06/04/2022 03:08:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3369550704956055, 'eval_accuracy': 0.6222109016811004, 'eval_runtime': 12.7612, 'eval_samples_per_second': 769.131, 'eval_steps_per_second': 48.115, 'epoch': 43.81}
+06/04/2022 03:09:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3269360065460205, 'eval_accuracy': 0.6183392766174223, 'eval_runtime': 12.7821, 'eval_samples_per_second': 767.871, 'eval_steps_per_second': 48.036, 'epoch': 43.94}
+{'loss': 0.0483, 'learning_rate': 1.3365203534695062e-05, 'epoch': 44.0}
+06/04/2022 03:09:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3862266540527344, 'eval_accuracy': 0.6158940397350994, 'eval_runtime': 12.7476, 'eval_samples_per_second': 769.951, 'eval_steps_per_second': 48.166, 'epoch': 44.07}
+06/04/2022 03:10:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.382709503173828, 'eval_accuracy': 0.6192562404482934, 'eval_runtime': 12.9639, 'eval_samples_per_second': 757.105, 'eval_steps_per_second': 47.362, 'epoch': 44.2}
+{'loss': 0.0438, 'learning_rate': 1.2640880776473998e-05, 'epoch': 44.33}
+06/04/2022 03:11:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.416764974594116, 'eval_accuracy': 0.6186449312277127, 'eval_runtime': 13.0379, 'eval_samples_per_second': 752.806, 'eval_steps_per_second': 47.094, 'epoch': 44.33}
+06/04/2022 03:11:57 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4012601375579834, 'eval_accuracy': 0.618033622007132, 'eval_runtime': 12.721, 'eval_samples_per_second': 771.557, 'eval_steps_per_second': 48.267, 'epoch': 44.46}
+06/04/2022 03:12:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3848659992218018, 'eval_accuracy': 0.6188487009679062, 'eval_runtime': 12.6521, 'eval_samples_per_second': 775.76, 'eval_steps_per_second': 48.529, 'epoch': 44.59}
+{'loss': 0.0431, 'learning_rate': 1.1916558018252934e-05, 'epoch': 44.65}
+06/04/2022 03:13:22 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4574899673461914, 'eval_accuracy': 0.6186449312277127, 'eval_runtime': 12.7412, 'eval_samples_per_second': 770.335, 'eval_steps_per_second': 48.19, 'epoch': 44.72}
+06/04/2022 03:14:04 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.3860368728637695, 'eval_accuracy': 0.6165053489556801, 'eval_runtime': 12.7609, 'eval_samples_per_second': 769.144, 'eval_steps_per_second': 48.116, 'epoch': 44.85}
+{'loss': 0.0454, 'learning_rate': 1.1192235260031871e-05, 'epoch': 44.98}
+06/04/2022 03:14:46 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.385636568069458, 'eval_accuracy': 0.6174223127865512, 'eval_runtime': 12.7513, 'eval_samples_per_second': 769.723, 'eval_steps_per_second': 48.152, 'epoch': 44.98}
+06/04/2022 03:15:30 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4172568321228027, 'eval_accuracy': 0.617524197656648, 'eval_runtime': 12.8821, 'eval_samples_per_second': 761.911, 'eval_steps_per_second': 47.663, 'epoch': 45.11}
+06/04/2022 03:16:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4106497764587402, 'eval_accuracy': 0.6174223127865512, 'eval_runtime': 12.859, 'eval_samples_per_second': 763.277, 'eval_steps_per_second': 47.749, 'epoch': 45.24}
+{'loss': 0.0414, 'learning_rate': 1.046936114732725e-05, 'epoch': 45.31}
+06/04/2022 03:16:55 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4473636150360107, 'eval_accuracy': 0.6153846153846154, 'eval_runtime': 12.7649, 'eval_samples_per_second': 768.903, 'eval_steps_per_second': 48.1, 'epoch': 45.37}
+06/04/2022 03:17:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4614243507385254, 'eval_accuracy': 0.617014773306164, 'eval_runtime': 12.7201, 'eval_samples_per_second': 771.614, 'eval_steps_per_second': 48.27, 'epoch': 45.5}
+{'loss': 0.0408, 'learning_rate': 9.745038389106185e-06, 'epoch': 45.63}
+06/04/2022 03:18:19 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.485818862915039, 'eval_accuracy': 0.6159959246051961, 'eval_runtime': 12.7922, 'eval_samples_per_second': 767.265, 'eval_steps_per_second': 47.998, 'epoch': 45.63}
+06/04/2022 03:19:02 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.453056573867798, 'eval_accuracy': 0.6202750891492613, 'eval_runtime': 12.9641, 'eval_samples_per_second': 757.089, 'eval_steps_per_second': 47.361, 'epoch': 45.76}
+06/04/2022 03:19:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4372453689575195, 'eval_accuracy': 0.6217014773306164, 'eval_runtime': 13.055, 'eval_samples_per_second': 751.82, 'eval_steps_per_second': 47.032, 'epoch': 45.89}
+{'loss': 0.0425, 'learning_rate': 9.022164276401565e-06, 'epoch': 45.96}
+06/04/2022 03:20:29 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4706826210021973, 'eval_accuracy': 0.617014773306164, 'eval_runtime': 13.2233, 'eval_samples_per_second': 742.251, 'eval_steps_per_second': 46.433, 'epoch': 46.02}
+06/04/2022 03:21:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.471788167953491, 'eval_accuracy': 0.6172185430463576, 'eval_runtime': 13.2558, 'eval_samples_per_second': 740.432, 'eval_steps_per_second': 46.319, 'epoch': 46.15}
+{'loss': 0.0389, 'learning_rate': 8.297841518180502e-06, 'epoch': 46.28}
+06/04/2022 03:21:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4407763481140137, 'eval_accuracy': 0.6177279673968415, 'eval_runtime': 13.1066, 'eval_samples_per_second': 748.86, 'eval_steps_per_second': 46.847, 'epoch': 46.28}
+06/04/2022 03:22:45 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4574027061462402, 'eval_accuracy': 0.6192562404482934, 'eval_runtime': 19.23, 'eval_samples_per_second': 510.401, 'eval_steps_per_second': 31.929, 'epoch': 46.41}
+06/04/2022 03:23:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4576938152313232, 'eval_accuracy': 0.6183392766174223, 'eval_runtime': 13.2111, 'eval_samples_per_second': 742.934, 'eval_steps_per_second': 46.476, 'epoch': 46.54}
+{'loss': 0.0407, 'learning_rate': 7.573518759959439e-06, 'epoch': 46.61}
+06/04/2022 03:24:22 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4662325382232666, 'eval_accuracy': 0.6174223127865512, 'eval_runtime': 13.1895, 'eval_samples_per_second': 744.153, 'eval_steps_per_second': 46.552, 'epoch': 46.68}
+06/04/2022 03:25:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4661223888397217, 'eval_accuracy': 0.6188487009679062, 'eval_runtime': 12.9539, 'eval_samples_per_second': 757.689, 'eval_steps_per_second': 47.399, 'epoch': 46.81}
+{'loss': 0.0396, 'learning_rate': 6.849196001738375e-06, 'epoch': 46.94}
+06/04/2022 03:25:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.45862078666687, 'eval_accuracy': 0.6181355068772287, 'eval_runtime': 13.0653, 'eval_samples_per_second': 751.227, 'eval_steps_per_second': 46.995, 'epoch': 46.94}
+06/04/2022 03:26:32 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 2.4596476554870605, 'eval_accuracy': 0.6201732042791646, 'eval_runtime': 13.0571, 'eval_samples_per_second': 751.7, 'eval_steps_per_second': 47.024, 'epoch': 47.07}

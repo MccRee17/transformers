@@ -495,6 +495,9 @@ def main():
                 if resume_step is not None and step < resume_step:
                     completed_steps += 1
                     continue
+            for k,v in batch.items():
+                print(k, v)
+            assert False
             outputs = model(**batch)
             loss = outputs.loss
             # We keep track of the loss at each epoch

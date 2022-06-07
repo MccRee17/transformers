@@ -45,6 +45,7 @@ from transformers import (
     TrainingArguments,
     default_data_collator,
     set_seed,
+    EarlyStoppingCallback
 )
 from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils import check_min_version
@@ -375,18 +376,20 @@ def main():
         use_auth_token=True if model_args.use_auth_token else None,
     )
     config.hidden_act = model_args.act #"linear"
+    config.softmax_act = model_args.softmax_act
     print(f"using model config: {config}")
     
     #assert config.hidden_act == "linear"
-    model = AutoModelForSequenceClassification.from_pretrained(
-            model_args.model_name_or_path,
-            from_tf=bool(".ckpt" in model_args.model_name_or_path),
-            config=config,
-            cache_dir=model_args.cache_dir,
-            revision=model_args.model_revision,
-            use_auth_token=True if model_args.use_auth_token else None,
-            ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
-    )
+    model = BertForSequenceClassification(config)
+    #model = AutoModelForSequenceClassification.from_pretrained(
+    #        model_args.model_name_or_path,
+    #        from_tf=bool(".ckpt" in model_args.model_name_or_path),
+    #        config=config,
+    #        cache_dir=model_args.cache_dir,
+    #        revision=model_args.model_revision,
+    #        use_auth_token=True if model_args.use_auth_token else None,
+    #        ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
+    #)
     print(f"model architecture: {model}")
     for name, param in model.named_parameters():                
         if param.requires_grad:
@@ -526,6 +529,10 @@ def main():
     else:
         data_collator = None
 
+    training_args.load_best_model_at_end = True
+    training_args.metric_for_best_model = "accuracy"
+    training_args.greater_is_better = True
+    training_args.save_total_limit = 5
     #training_args.evaluate_during_training = True
     #training_args.logging_steps = 1000
     print(f"using training arge: {training_args}")
@@ -538,6 +545,8 @@ def main():
         compute_metrics=compute_metrics,
         tokenizer=tokenizer,
         data_collator=data_collator,
+        callbacks = [EarlyStoppingCallback(early_stopping_patience=3)],
+
     )
 
     # Training
@@ -547,7 +556,6 @@ def main():
             checkpoint = training_args.resume_from_checkpoint
         elif last_checkpoint is not None:
             checkpoint = last_checkpoint
-        print("Am I using checkpoint", checkpoint)
         train_result = trainer.train(resume_from_checkpoint=checkpoint)
         metrics = train_result.metrics
         max_train_samples = (
