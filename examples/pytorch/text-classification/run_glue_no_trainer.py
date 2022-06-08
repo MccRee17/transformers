@@ -497,7 +497,6 @@ def main():
                     continue
             for k,v in batch.items():
                 print(k, v)
-            assert False
             outputs = model(**batch)
             loss = outputs.loss
             # We keep track of the loss at each epoch
