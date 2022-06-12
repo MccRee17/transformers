@@ -200,6 +200,7 @@ class BertEmbeddings(nn.Module):
         # any TensorFlow checkpoint file
         self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        self.config = config
         # position_ids (1, len position emb) is contiguous in memory and exported when serialized
         self.position_embedding_type = getattr(config, "position_embedding_type", "absolute")
         self.register_buffer("position_ids", torch.arange(config.max_position_embeddings).expand((1, -1)))
@@ -232,20 +233,26 @@ class BertEmbeddings(nn.Module):
         # Setting the token_type_ids to the registered buffer in constructor where it is all zeros, which usually occurs
         # when its auto-generated, registered buffer helps users when tracing the model without passing token_type_ids, solves
         # issue #5664
-        if token_type_ids is None:
-            if hasattr(self, "token_type_ids"):
-                buffered_token_type_ids = self.token_type_ids[:, :seq_length]
-                buffered_token_type_ids_expanded = buffered_token_type_ids.expand(input_shape[0], seq_length)
-                token_type_ids = buffered_token_type_ids_expanded
-            else:
-                token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=self.position_ids.device)
+        # if token_type_ids is None:
+        #    if hasattr(self, "token_type_ids"):
+        #        buffered_token_type_ids = self.token_type_ids[:, :seq_length]
+        #        buffered_token_type_ids_expanded = buffered_token_type_ids.expand(input_shape[0], seq_length)
+        #        token_type_ids = buffered_token_type_ids_expanded
+        #    else:
+        #        token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=self.position_ids.device)
 
         if inputs_embeds is None:
+            #if self.config.crypten:
+            #    input_ids = nn.functional.one_hot(input_ids, self.config.vocab_size).float()
             inputs_embeds = self.word_embeddings(input_ids)
+        #if self.config.crypten:
+        #    token_type_ids = nn.functional.one_hot(token_type_ids, self.config.type_vocab_size).float()
         token_type_embeddings = self.token_type_embeddings(token_type_ids)
 
         embeddings = inputs_embeds + token_type_embeddings
         if self.position_embedding_type == "absolute":
+            if self.config.crypten:
+                position_ids = nn.functional.one_hot(position_ids, self.config.max_position_embeddings).float()
             position_embeddings = self.position_embeddings(position_ids)
             embeddings += position_embeddings
         embeddings = self.LayerNorm(embeddings)
@@ -583,7 +590,6 @@ class BertEncoder(nn.Module):
         all_hidden_states = () if output_hidden_states else None
         all_self_attentions = () if output_attentions else None
         all_cross_attentions = () if output_attentions and self.config.add_cross_attention else None
-
         next_decoder_cache = () if use_cache else None
         for i, layer_module in enumerate(self.layer):
             if output_hidden_states:
@@ -902,6 +908,7 @@ class BertModel(BertPreTrainedModel):
 
         # Initialize weights and apply final processing
         self.post_init()
+        print(config)
 
     def get_input_embeddings(self):
         return self.embeddings.word_embeddings
@@ -979,10 +986,12 @@ class BertModel(BertPreTrainedModel):
             input_shape = inputs_embeds.size()[:-1]
         else:
             raise ValueError("You have to specify either input_ids or inputs_embeds")
-
-        batch_size, seq_length = input_shape
+        
+        if self.config.crypten:
+            batch_size, seq_length, _ = input_shape
+        else:
+            batch_size, seq_length = input_shape
         device = input_ids.device if input_ids is not None else inputs_embeds.device
-
         # past_key_values_length
         past_key_values_length = past_key_values[0][0].shape[2] if past_key_values is not None else 0
 
@@ -1043,7 +1052,6 @@ class BertModel(BertPreTrainedModel):
 
         if not return_dict:
             return (sequence_output, pooled_output) + encoder_outputs[1:]
-
         return BaseModelOutputWithPoolingAndCrossAttentions(
             last_hidden_state=sequence_output,
             pooler_output=pooled_output,
@@ -1511,6 +1519,14 @@ class BertForNextSentencePrediction(BertPreTrainedModel):
         )
 
 
+class BertForSequenceClassificationWrapper(BertPreTrainedModel):
+    def __init__(self, config):
+        super().__init__(config)
+        self.model = BertForSequenceClassification(config)
+    
+    def forward(self, inputs):
+        return self.model.forward(**inputs)
+
 @add_start_docstrings(
     """
     Bert Model transformer with a sequence classification/regression head on top (a linear layer on top of the pooled
@@ -1563,6 +1579,7 @@ class BertForSequenceClassification(BertPreTrainedModel):
             `config.num_labels > 1` a classification loss is computed (Cross-Entropy).
         """
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
+        
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -1574,7 +1591,6 @@ class BertForSequenceClassification(BertPreTrainedModel):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
         )
-
         pooled_output = outputs[1]
 
         pooled_output = self.dropout(pooled_output)
@@ -1597,14 +1613,31 @@ class BertForSequenceClassification(BertPreTrainedModel):
                 else:
                     loss = loss_fct(logits, labels)
             elif self.config.problem_type == "single_label_classification":
-                loss_fct = CrossEntropyLoss()
+                if self.config.crypten:
+                    # Crypten may need onnx to export model. Has some conflict with dynamic slice version.
+                    # Need to implement cross entropy loss ourselves.
+                    def custom_ce(logits, labels):
+                        #print(logits.shape, labels.shape)
+                        loss = -torch.sum(torch.nn.functional.one_hot(labels, logits.shape[-1])*torch.log(logits))
+                        return loss/float(logits.shape[0])
+                    loss_fct = custom_ce
+                else:
+                    loss_fct = CrossEntropyLoss()
                 loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
             elif self.config.problem_type == "multi_label_classification":
                 loss_fct = BCEWithLogitsLoss()
                 loss = loss_fct(logits, labels)
+        
+        # Crypten experiments only needed in inference time.
+        if self.config.crypten:
+            return loss
+        
         if not return_dict:
             output = (logits,) + outputs[2:]
             return ((loss,) + output) if loss is not None else output
+        
+        #if self.config.crypten:
+        #    return torch.ones(1,).cuda()
 
         return SequenceClassifierOutput(
             loss=loss,
