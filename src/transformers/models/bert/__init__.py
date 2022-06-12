@@ -55,6 +55,7 @@ else:
         "BertForPreTraining",
         "BertForQuestionAnswering",
         "BertForSequenceClassification",
+        "BertForSequenceClassificationWrapper",
         "BertForTokenClassification",
         "BertLayer",
         "BertLMHeadModel",
