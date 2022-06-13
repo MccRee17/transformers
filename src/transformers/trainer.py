@@ -1489,6 +1489,7 @@ class Trainer:
         # _total_loss_scalar is updated everytime .item() has to be called on tr_loss and stores the sum of all losses
         self._total_loss_scalar = 0.0
         self._globalstep_last_logged = self.state.global_step
+        #assert False
         model.zero_grad()
 
         self.control = self.callback_handler.on_train_begin(args, self.state, self.control)
@@ -1621,6 +1622,11 @@ class Trainer:
                         else:
                             xm.optimizer_step(self.optimizer)
                     elif self.do_grad_scaling:
+                        #print("-----------------------------------HI------------------------")
+                        #print(f"bert grad: {model.module.bert.encoder.layer[0].attention.self.query.weight.grad}")
+                        #print(f"classifier grad: {model.module.classifier.weight.grad}")
+                        #params = self.optimizer.param_groups[0]["params"] 
+                        #print(f"optimizer param: {params[0].shape}")
                         scale_before = self.scaler.get_scale()
                         self.scaler.step(self.optimizer)
                         self.scaler.update()

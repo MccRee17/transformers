@@ -28,6 +28,7 @@ import datasets
 import numpy as np
 from datasets import load_dataset, load_metric
 
+import torch
 import transformers
 from transformers import (
     AutoConfig,
@@ -196,6 +197,14 @@ class ModelArguments:
     softmax_act: str = field(
         default=None,
         metadata={"help": "activation functions for softmax"},
+    )
+    std: float = field(
+        default=None,
+        metadata={"help": "std of gaussian noise"},
+    )
+    ratio: float = field(
+        default=None,
+        metadata={"help": "ratio of weight dropping"},
     )
     model_revision: str = field(
         default="main",
@@ -375,14 +384,11 @@ def main():
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-    config.hidden_act = model_args.act #"linear"
-    config.softmax_act = model_args.softmax_act
     print(f"using model config: {config}")
     
-    #assert config.hidden_act == "linear"
-    #model = BertForSequenceClassification(config)
     model = AutoModelForSequenceClassification.from_pretrained(
-            model_args.model_name_or_path,
+            #model_args.model_name_or_path,
+            "/home/ec2-user/transformers/examples/pytorch/text-classification/tmp/mnli/ft_gelu/checkpoint-12500",
             from_tf=bool(".ckpt" in model_args.model_name_or_path),
             config=config,
             cache_dir=model_args.cache_dir,
@@ -391,11 +397,20 @@ def main():
             ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
     )
     print(f"model architecture: {model}")
+    total_num = 0
+    total_drop = 0
     for name, param in model.named_parameters():                
-        if param.requires_grad:
-            print(name)
-        else:
-            print(f"not updating {name}")
+        size = param.size()
+        total_num += param.numel()
+        #print(name, size)
+        mask = torch.bernoulli(torch.ones(size)*(1-model_args.ratio))
+        total_drop += torch.count_nonzero(1-mask)
+        param.requires_grad = False
+        param *= mask
+        #noise = torch.empty(size).normal_(mean=0,std=model_args.std)
+        #param += noise
+    #assert False
+    print(f"----------------------total num: {total_num}, drops: {total_drop}------------------------")
     # Preprocessing the raw_datasets
     if data_args.task_name is not None:
         sentence1_key, sentence2_key = task_to_keys[data_args.task_name]

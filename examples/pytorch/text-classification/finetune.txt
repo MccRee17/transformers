@@ -1,0 +1,969 @@
+06/12/2022 04:19:57 - WARNING - __main__ - Process rank: -1, device: cuda:0, n_gpu: 4distributed training: False, 16-bits training: True
+06/12/2022 04:19:57 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
+_n_gpu=4,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=200,
+evaluation_strategy=IntervalStrategy.STEPS,
+fp16=True,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_min_num_params=0,
+full_determinism=False,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=2e-05,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=./tmp/mnli/ft_gelu/runs/Jun12_04-19-57_ip-172-31-12-12.us-east-2.compute.internal,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=3.0,
+optim=OptimizerNames.ADAMW_HF,
+output_dir=./tmp/mnli/ft_gelu,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=16,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=./tmp/mnli/ft_gelu,
+save_on_each_node=False,
+save_steps=500,
+save_strategy=IntervalStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+06/12/2022 04:19:58 - INFO - datasets.info - Loading Dataset Infos from /home/ec2-user/.cache/huggingface/modules/datasets_modules/datasets/glue/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/12/2022 04:19:58 - INFO - datasets.builder - Overwrite dataset info from restored data version.
+06/12/2022 04:19:58 - INFO - datasets.info - Loading Dataset info from /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/12/2022 04:19:58 - WARNING - datasets.builder - Reusing dataset glue (/home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad)
+06/12/2022 04:19:58 - INFO - datasets.info - Loading Dataset info from /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+using model config: BertConfig {
+  "_name_or_path": "bert-base-uncased",
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "crypten": false,
+  "finetuning_task": "mnli",
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "softmax_act": "softmax",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+BertConfig {
+  "_name_or_path": "bert-base-uncased",
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "crypten": false,
+  "finetuning_task": "mnli",
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "softmax_act": "softmax",
+  "transformers_version": "4.20.0.dev0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+model architecture: BertForSequenceClassification(
+  (bert): BertModel(
+    (embeddings): BertEmbeddings(
+      (word_embeddings): Embedding(30522, 768, padding_idx=0)
+      (position_embeddings): Embedding(512, 768)
+      (token_type_embeddings): Embedding(2, 768)
+      (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (encoder): BertEncoder(
+      (layer): ModuleList(
+        (0): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (1): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (2): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (3): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (4): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (5): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (6): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (7): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (8): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (9): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (10): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (11): BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+      )
+    )
+    (pooler): BertPooler(
+      (dense): Linear(in_features=768, out_features=768, bias=True)
+      (activation): Tanh()
+    )
+  )
+  (dropout): Dropout(p=0.1, inplace=False)
+  (classifier): Linear(in_features=768, out_features=3, bias=True)
+)
+bert.embeddings.word_embeddings.weight
+bert.embeddings.position_embeddings.weight
+bert.embeddings.token_type_embeddings.weight
+bert.embeddings.LayerNorm.weight
+bert.embeddings.LayerNorm.bias
+bert.encoder.layer.0.attention.self.query.weight
+bert.encoder.layer.0.attention.self.query.bias
+bert.encoder.layer.0.attention.self.key.weight
+bert.encoder.layer.0.attention.self.key.bias
+bert.encoder.layer.0.attention.self.value.weight
+bert.encoder.layer.0.attention.self.value.bias
+bert.encoder.layer.0.attention.output.dense.weight
+bert.encoder.layer.0.attention.output.dense.bias
+bert.encoder.layer.0.attention.output.LayerNorm.weight
+bert.encoder.layer.0.attention.output.LayerNorm.bias
+bert.encoder.layer.0.intermediate.dense.weight
+bert.encoder.layer.0.intermediate.dense.bias
+bert.encoder.layer.0.output.dense.weight
+bert.encoder.layer.0.output.dense.bias
+bert.encoder.layer.0.output.LayerNorm.weight
+bert.encoder.layer.0.output.LayerNorm.bias
+bert.encoder.layer.1.attention.self.query.weight
+bert.encoder.layer.1.attention.self.query.bias
+bert.encoder.layer.1.attention.self.key.weight
+bert.encoder.layer.1.attention.self.key.bias
+bert.encoder.layer.1.attention.self.value.weight
+bert.encoder.layer.1.attention.self.value.bias
+bert.encoder.layer.1.attention.output.dense.weight
+bert.encoder.layer.1.attention.output.dense.bias
+bert.encoder.layer.1.attention.output.LayerNorm.weight
+bert.encoder.layer.1.attention.output.LayerNorm.bias
+bert.encoder.layer.1.intermediate.dense.weight
+bert.encoder.layer.1.intermediate.dense.bias
+bert.encoder.layer.1.output.dense.weight
+bert.encoder.layer.1.output.dense.bias
+bert.encoder.layer.1.output.LayerNorm.weight
+bert.encoder.layer.1.output.LayerNorm.bias
+bert.encoder.layer.2.attention.self.query.weight
+bert.encoder.layer.2.attention.self.query.bias
+bert.encoder.layer.2.attention.self.key.weight
+bert.encoder.layer.2.attention.self.key.bias
+bert.encoder.layer.2.attention.self.value.weight
+bert.encoder.layer.2.attention.self.value.bias
+bert.encoder.layer.2.attention.output.dense.weight
+bert.encoder.layer.2.attention.output.dense.bias
+bert.encoder.layer.2.attention.output.LayerNorm.weight
+bert.encoder.layer.2.attention.output.LayerNorm.bias
+bert.encoder.layer.2.intermediate.dense.weight
+bert.encoder.layer.2.intermediate.dense.bias
+bert.encoder.layer.2.output.dense.weight
+bert.encoder.layer.2.output.dense.bias
+bert.encoder.layer.2.output.LayerNorm.weight
+bert.encoder.layer.2.output.LayerNorm.bias
+bert.encoder.layer.3.attention.self.query.weight
+bert.encoder.layer.3.attention.self.query.bias
+bert.encoder.layer.3.attention.self.key.weight
+bert.encoder.layer.3.attention.self.key.bias
+bert.encoder.layer.3.attention.self.value.weight
+bert.encoder.layer.3.attention.self.value.bias
+bert.encoder.layer.3.attention.output.dense.weight
+bert.encoder.layer.3.attention.output.dense.bias
+bert.encoder.layer.3.attention.output.LayerNorm.weight
+bert.encoder.layer.3.attention.output.LayerNorm.bias
+bert.encoder.layer.3.intermediate.dense.weight
+bert.encoder.layer.3.intermediate.dense.bias
+bert.encoder.layer.3.output.dense.weight
+bert.encoder.layer.3.output.dense.bias
+bert.encoder.layer.3.output.LayerNorm.weight
+bert.encoder.layer.3.output.LayerNorm.bias
+bert.encoder.layer.4.attention.self.query.weight
+bert.encoder.layer.4.attention.self.query.bias
+bert.encoder.layer.4.attention.self.key.weight
+bert.encoder.layer.4.attention.self.key.bias
+bert.encoder.layer.4.attention.self.value.weight
+bert.encoder.layer.4.attention.self.value.bias
+bert.encoder.layer.4.attention.output.dense.weight
+bert.encoder.layer.4.attention.output.dense.bias
+bert.encoder.layer.4.attention.output.LayerNorm.weight
+bert.encoder.layer.4.attention.output.LayerNorm.bias
+bert.encoder.layer.4.intermediate.dense.weight
+bert.encoder.layer.4.intermediate.dense.bias
+bert.encoder.layer.4.output.dense.weight
+bert.encoder.layer.4.output.dense.bias
+bert.encoder.layer.4.output.LayerNorm.weight
+bert.encoder.layer.4.output.LayerNorm.bias
+bert.encoder.layer.5.attention.self.query.weight
+bert.encoder.layer.5.attention.self.query.bias
+bert.encoder.layer.5.attention.self.key.weight
+bert.encoder.layer.5.attention.self.key.bias
+bert.encoder.layer.5.attention.self.value.weight
+bert.encoder.layer.5.attention.self.value.bias
+bert.encoder.layer.5.attention.output.dense.weight
+bert.encoder.layer.5.attention.output.dense.bias
+bert.encoder.layer.5.attention.output.LayerNorm.weight
+bert.encoder.layer.5.attention.output.LayerNorm.bias
+bert.encoder.layer.5.intermediate.dense.weight
+bert.encoder.layer.5.intermediate.dense.bias
+bert.encoder.layer.5.output.dense.weight
+bert.encoder.layer.5.output.dense.bias
+bert.encoder.layer.5.output.LayerNorm.weight
+bert.encoder.layer.5.output.LayerNorm.bias
+bert.encoder.layer.6.attention.self.query.weight
+bert.encoder.layer.6.attention.self.query.bias
+bert.encoder.layer.6.attention.self.key.weight
+bert.encoder.layer.6.attention.self.key.bias
+bert.encoder.layer.6.attention.self.value.weight
+bert.encoder.layer.6.attention.self.value.bias
+bert.encoder.layer.6.attention.output.dense.weight
+bert.encoder.layer.6.attention.output.dense.bias
+bert.encoder.layer.6.attention.output.LayerNorm.weight
+bert.encoder.layer.6.attention.output.LayerNorm.bias
+bert.encoder.layer.6.intermediate.dense.weight
+bert.encoder.layer.6.intermediate.dense.bias
+bert.encoder.layer.6.output.dense.weight
+bert.encoder.layer.6.output.dense.bias
+bert.encoder.layer.6.output.LayerNorm.weight
+bert.encoder.layer.6.output.LayerNorm.bias
+bert.encoder.layer.7.attention.self.query.weight
+bert.encoder.layer.7.attention.self.query.bias
+bert.encoder.layer.7.attention.self.key.weight
+bert.encoder.layer.7.attention.self.key.bias
+bert.encoder.layer.7.attention.self.value.weight
+bert.encoder.layer.7.attention.self.value.bias
+bert.encoder.layer.7.attention.output.dense.weight
+bert.encoder.layer.7.attention.output.dense.bias
+bert.encoder.layer.7.attention.output.LayerNorm.weight
+bert.encoder.layer.7.attention.output.LayerNorm.bias
+bert.encoder.layer.7.intermediate.dense.weight
+bert.encoder.layer.7.intermediate.dense.bias
+bert.encoder.layer.7.output.dense.weight
+bert.encoder.layer.7.output.dense.bias
+bert.encoder.layer.7.output.LayerNorm.weight
+bert.encoder.layer.7.output.LayerNorm.bias
+bert.encoder.layer.8.attention.self.query.weight
+bert.encoder.layer.8.attention.self.query.bias
+bert.encoder.layer.8.attention.self.key.weight
+bert.encoder.layer.8.attention.self.key.bias
+bert.encoder.layer.8.attention.self.value.weight
+bert.encoder.layer.8.attention.self.value.bias
+bert.encoder.layer.8.attention.output.dense.weight
+bert.encoder.layer.8.attention.output.dense.bias
+bert.encoder.layer.8.attention.output.LayerNorm.weight
+bert.encoder.layer.8.attention.output.LayerNorm.bias
+bert.encoder.layer.8.intermediate.dense.weight
+bert.encoder.layer.8.intermediate.dense.bias
+bert.encoder.layer.8.output.dense.weight
+bert.encoder.layer.8.output.dense.bias
+bert.encoder.layer.8.output.LayerNorm.weight
+bert.encoder.layer.8.output.LayerNorm.bias
+bert.encoder.layer.9.attention.self.query.weight
+bert.encoder.layer.9.attention.self.query.bias
+bert.encoder.layer.9.attention.self.key.weight
+bert.encoder.layer.9.attention.self.key.bias
+bert.encoder.layer.9.attention.self.value.weight
+bert.encoder.layer.9.attention.self.value.bias
+bert.encoder.layer.9.attention.output.dense.weight
+bert.encoder.layer.9.attention.output.dense.bias
+bert.encoder.layer.9.attention.output.LayerNorm.weight
+bert.encoder.layer.9.attention.output.LayerNorm.bias
+bert.encoder.layer.9.intermediate.dense.weight
+bert.encoder.layer.9.intermediate.dense.bias
+bert.encoder.layer.9.output.dense.weight
+bert.encoder.layer.9.output.dense.bias
+bert.encoder.layer.9.output.LayerNorm.weight
+bert.encoder.layer.9.output.LayerNorm.bias
+bert.encoder.layer.10.attention.self.query.weight
+bert.encoder.layer.10.attention.self.query.bias
+bert.encoder.layer.10.attention.self.key.weight
+bert.encoder.layer.10.attention.self.key.bias
+bert.encoder.layer.10.attention.self.value.weight
+bert.encoder.layer.10.attention.self.value.bias
+bert.encoder.layer.10.attention.output.dense.weight
+bert.encoder.layer.10.attention.output.dense.bias
+bert.encoder.layer.10.attention.output.LayerNorm.weight
+bert.encoder.layer.10.attention.output.LayerNorm.bias
+bert.encoder.layer.10.intermediate.dense.weight
+bert.encoder.layer.10.intermediate.dense.bias
+bert.encoder.layer.10.output.dense.weight
+bert.encoder.layer.10.output.dense.bias
+bert.encoder.layer.10.output.LayerNorm.weight
+bert.encoder.layer.10.output.LayerNorm.bias
+bert.encoder.layer.11.attention.self.query.weight
+bert.encoder.layer.11.attention.self.query.bias
+bert.encoder.layer.11.attention.self.key.weight
+bert.encoder.layer.11.attention.self.key.bias
+bert.encoder.layer.11.attention.self.value.weight
+bert.encoder.layer.11.attention.self.value.bias
+bert.encoder.layer.11.attention.output.dense.weight
+bert.encoder.layer.11.attention.output.dense.bias
+bert.encoder.layer.11.attention.output.LayerNorm.weight
+bert.encoder.layer.11.attention.output.LayerNorm.bias
+bert.encoder.layer.11.intermediate.dense.weight
+bert.encoder.layer.11.intermediate.dense.bias
+bert.encoder.layer.11.output.dense.weight
+bert.encoder.layer.11.output.dense.bias
+bert.encoder.layer.11.output.LayerNorm.weight
+bert.encoder.layer.11.output.LayerNorm.bias
+bert.pooler.dense.weight
+bert.pooler.dense.bias
+classifier.weight
+classifier.bias
+06/12/2022 04:20:00 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-30d64ca74200c6fe.arrow
+06/12/2022 04:20:00 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-d4d5d4fa44a4d7ca.arrow
+06/12/2022 04:20:00 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-56da9e49a4041ae6.arrow
+06/12/2022 04:20:00 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-3fb648d57f40a89d.arrow
+06/12/2022 04:20:00 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-fedfdef232847c36.arrow
+06/12/2022 04:20:00 - INFO - __main__ - Sample 335243 of the training set: {'premise': "you know when their parents come and it's hard to get them out and a lot of parents have places to go and and things like that and it's late at night so", 'hypothesis': "Parents are busy and it's sometimes hard to get them out.", 'label': 0, 'idx': 335243, 'input_ids': [101, 2017, 2113, 2043, 2037, 3008, 2272, 1998, 2009, 1005, 1055, 2524, 2000, 2131, 2068, 2041, 1998, 1037, 2843, 1997, 3008, 2031, 3182, 2000, 2175, 1998, 1998, 2477, 2066, 2008, 1998, 2009, 1005, 1055, 2397, 2012, 2305, 2061, 102, 3008, 2024, 5697, 1998, 2009, 1005, 1055, 2823, 2524, 2000, 2131, 2068, 2041, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+06/12/2022 04:20:00 - INFO - __main__ - Sample 58369 of the training set: {'premise': 'Where is art?', 'hypothesis': 'Where and what is art? ', 'label': 1, 'idx': 58369, 'input_ids': [101, 2073, 2003, 2396, 1029, 102, 2073, 1998, 2054, 2003, 2396, 1029, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+06/12/2022 04:20:00 - INFO - __main__ - Sample 13112 of the training set: {'premise': 'Alcohol and injury, as well as brief interventions, are on the list.', 'hypothesis': 'The list says alcohol and injury are negatives facing staff.', 'label': 1, 'idx': 13112, 'input_ids': [101, 6544, 1998, 4544, 1010, 2004, 2092, 2004, 4766, 19388, 1010, 2024, 2006, 1996, 2862, 1012, 102, 1996, 2862, 2758, 6544, 1998, 4544, 2024, 4997, 2015, 5307, 3095, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+using training arge: TrainingArguments(
+_n_gpu=4,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=200,
+evaluation_strategy=IntervalStrategy.STEPS,
+fp16=True,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_min_num_params=0,
+full_determinism=False,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=True,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_inputs_for_metrics=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=2e-05,
+length_column_name=length,
+load_best_model_at_end=True,
+local_rank=-1,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=./tmp/mnli/ft_gelu/runs/Jun12_04-19-57_ip-172-31-12-12.us-east-2.compute.internal,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=accuracy,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=3.0,
+optim=OptimizerNames.ADAMW_HF,
+output_dir=./tmp/mnli/ft_gelu,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=16,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=./tmp/mnli/ft_gelu,
+save_on_each_node=False,
+save_steps=500,
+save_strategy=IntervalStrategy.STEPS,
+save_total_limit=5,
+seed=42,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+06/12/2022 04:21:55 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.7266974449157715, 'eval_accuracy': 0.6911869587366276, 'eval_runtime': 31.956, 'eval_samples_per_second': 307.141, 'eval_steps_per_second': 9.607, 'epoch': 0.03}
+06/12/2022 04:23:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.6313111782073975, 'eval_accuracy': 0.7443708609271523, 'eval_runtime': 31.9255, 'eval_samples_per_second': 307.434, 'eval_steps_per_second': 9.616, 'epoch': 0.07}
+{'loss': 0.7785, 'learning_rate': 1.9456757931334205e-05, 'epoch': 0.08}
+06/12/2022 04:25:22 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.588123083114624, 'eval_accuracy': 0.7667855323484463, 'eval_runtime': 32.0374, 'eval_samples_per_second': 306.36, 'eval_steps_per_second': 9.583, 'epoch': 0.1}
+06/12/2022 04:27:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.5709187984466553, 'eval_accuracy': 0.7711665817626082, 'eval_runtime': 31.7581, 'eval_samples_per_second': 309.055, 'eval_steps_per_second': 9.667, 'epoch': 0.13}
+{'loss': 0.6003, 'learning_rate': 1.8914602346805737e-05, 'epoch': 0.16}
+06/12/2022 04:28:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.5478224158287048, 'eval_accuracy': 0.780539989811513, 'eval_runtime': 31.7928, 'eval_samples_per_second': 308.718, 'eval_steps_per_second': 9.656, 'epoch': 0.16}
+06/12/2022 04:30:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.5547283887863159, 'eval_accuracy': 0.779113601630158, 'eval_runtime': 32.1585, 'eval_samples_per_second': 305.207, 'eval_steps_per_second': 9.546, 'epoch': 0.2}
+06/12/2022 04:32:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.5201218724250793, 'eval_accuracy': 0.7936831380539989, 'eval_runtime': 31.9271, 'eval_samples_per_second': 307.419, 'eval_steps_per_second': 9.616, 'epoch': 0.23}
+{'loss': 0.5667, 'learning_rate': 1.837136027813994e-05, 'epoch': 0.24}
+06/12/2022 04:34:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.5221328735351562, 'eval_accuracy': 0.791237901171676, 'eval_runtime': 32.0584, 'eval_samples_per_second': 306.16, 'eval_steps_per_second': 9.576, 'epoch': 0.26}
+06/12/2022 04:35:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.49927228689193726, 'eval_accuracy': 0.8026490066225166, 'eval_runtime': 32.1334, 'eval_samples_per_second': 305.445, 'eval_steps_per_second': 9.554, 'epoch': 0.29}
+{'loss': 0.5295, 'learning_rate': 1.7828118209474144e-05, 'epoch': 0.33}
+06/12/2022 04:37:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4905180335044861, 'eval_accuracy': 0.804381049414162, 'eval_runtime': 31.9016, 'eval_samples_per_second': 307.665, 'eval_steps_per_second': 9.623, 'epoch': 0.33}
+06/12/2022 04:39:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4960268437862396, 'eval_accuracy': 0.803871625063678, 'eval_runtime': 32.0487, 'eval_samples_per_second': 306.253, 'eval_steps_per_second': 9.579, 'epoch': 0.36}
+06/12/2022 04:40:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4789334535598755, 'eval_accuracy': 0.8116148751910341, 'eval_runtime': 32.0624, 'eval_samples_per_second': 306.122, 'eval_steps_per_second': 9.575, 'epoch': 0.39}
+{'loss': 0.5108, 'learning_rate': 1.7284876140808347e-05, 'epoch': 0.41}
+06/12/2022 04:42:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.47297245264053345, 'eval_accuracy': 0.8127356087620988, 'eval_runtime': 31.733, 'eval_samples_per_second': 309.299, 'eval_steps_per_second': 9.674, 'epoch': 0.42}
+06/12/2022 04:44:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4735184907913208, 'eval_accuracy': 0.8117167600611309, 'eval_runtime': 31.6653, 'eval_samples_per_second': 309.96, 'eval_steps_per_second': 9.695, 'epoch': 0.46}
+{'loss': 0.4998, 'learning_rate': 1.6741634072142547e-05, 'epoch': 0.49}
+06/12/2022 04:46:04 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.47227537631988525, 'eval_accuracy': 0.8139582272032603, 'eval_runtime': 32.181, 'eval_samples_per_second': 304.994, 'eval_steps_per_second': 9.54, 'epoch': 0.49}
+06/12/2022 04:47:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.45271244645118713, 'eval_accuracy': 0.8230259806418747, 'eval_runtime': 32.0386, 'eval_samples_per_second': 306.35, 'eval_steps_per_second': 9.582, 'epoch': 0.52}
+06/12/2022 04:49:32 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.47035858035087585, 'eval_accuracy': 0.8144676515537442, 'eval_runtime': 31.9496, 'eval_samples_per_second': 307.202, 'eval_steps_per_second': 9.609, 'epoch': 0.55}
+{'loss': 0.494, 'learning_rate': 1.619839200347675e-05, 'epoch': 0.57}
+06/12/2022 04:51:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4504108130931854, 'eval_accuracy': 0.8242485990830362, 'eval_runtime': 31.9747, 'eval_samples_per_second': 306.961, 'eval_steps_per_second': 9.601, 'epoch': 0.59}
+06/12/2022 04:52:59 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.45062002539634705, 'eval_accuracy': 0.8246561385634233, 'eval_runtime': 31.8837, 'eval_samples_per_second': 307.837, 'eval_steps_per_second': 9.629, 'epoch': 0.62}
+{'loss': 0.4847, 'learning_rate': 1.5656236418948285e-05, 'epoch': 0.65}
+06/12/2022 04:54:42 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4533607065677643, 'eval_accuracy': 0.8195618950585838, 'eval_runtime': 31.66, 'eval_samples_per_second': 310.012, 'eval_steps_per_second': 9.697, 'epoch': 0.65}
+06/12/2022 04:56:27 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4702639579772949, 'eval_accuracy': 0.8173204279164544, 'eval_runtime': 31.8967, 'eval_samples_per_second': 307.712, 'eval_steps_per_second': 9.625, 'epoch': 0.68}
+06/12/2022 04:58:10 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4463764727115631, 'eval_accuracy': 0.8290371879775853, 'eval_runtime': 31.9435, 'eval_samples_per_second': 307.261, 'eval_steps_per_second': 9.611, 'epoch': 0.72}
+{'loss': 0.4725, 'learning_rate': 1.5112994350282486e-05, 'epoch': 0.73}
+06/12/2022 04:59:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4367105960845947, 'eval_accuracy': 0.8323993886907795, 'eval_runtime': 31.9348, 'eval_samples_per_second': 307.345, 'eval_steps_per_second': 9.613, 'epoch': 0.75}
+06/12/2022 05:01:37 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4396434724330902, 'eval_accuracy': 0.8300560366785532, 'eval_runtime': 31.8895, 'eval_samples_per_second': 307.782, 'eval_steps_per_second': 9.627, 'epoch': 0.78}
+{'loss': 0.4634, 'learning_rate': 1.4569752281616689e-05, 'epoch': 0.81}
+06/12/2022 05:03:20 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4380694329738617, 'eval_accuracy': 0.8290371879775853, 'eval_runtime': 32.1453, 'eval_samples_per_second': 305.332, 'eval_steps_per_second': 9.55, 'epoch': 0.81}
+06/12/2022 05:05:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43618708848953247, 'eval_accuracy': 0.8319918492103923, 'eval_runtime': 32.0667, 'eval_samples_per_second': 306.081, 'eval_steps_per_second': 9.574, 'epoch': 0.85}
+06/12/2022 05:06:49 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4380793273448944, 'eval_accuracy': 0.8305654610290372, 'eval_runtime': 32.0677, 'eval_samples_per_second': 306.071, 'eval_steps_per_second': 9.573, 'epoch': 0.88}
+{'loss': 0.463, 'learning_rate': 1.4026510212950892e-05, 'epoch': 0.9}
+06/12/2022 05:08:34 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4346393644809723, 'eval_accuracy': 0.8338257768721344, 'eval_runtime': 31.862, 'eval_samples_per_second': 308.047, 'eval_steps_per_second': 9.635, 'epoch': 0.91}
+06/12/2022 05:10:17 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42911189794540405, 'eval_accuracy': 0.8334182373917474, 'eval_runtime': 31.8734, 'eval_samples_per_second': 307.937, 'eval_steps_per_second': 9.632, 'epoch': 0.95}
+{'loss': 0.4565, 'learning_rate': 1.3483268144285096e-05, 'epoch': 0.98}
+06/12/2022 05:12:01 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42671144008636475, 'eval_accuracy': 0.8344370860927153, 'eval_runtime': 31.9432, 'eval_samples_per_second': 307.264, 'eval_steps_per_second': 9.611, 'epoch': 0.98}
+06/12/2022 05:13:45 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4592043161392212, 'eval_accuracy': 0.8279164544065206, 'eval_runtime': 31.9561, 'eval_samples_per_second': 307.14, 'eval_steps_per_second': 9.607, 'epoch': 1.01}
+06/12/2022 05:15:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.449522465467453, 'eval_accuracy': 0.8303616912888436, 'eval_runtime': 31.9844, 'eval_samples_per_second': 306.869, 'eval_steps_per_second': 9.598, 'epoch': 1.04}
+{'loss': 0.3932, 'learning_rate': 1.2940026075619296e-05, 'epoch': 1.06}
+06/12/2022 05:17:13 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4279978573322296, 'eval_accuracy': 0.8370860927152318, 'eval_runtime': 31.8887, 'eval_samples_per_second': 307.79, 'eval_steps_per_second': 9.627, 'epoch': 1.08}
+06/12/2022 05:18:56 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4308636486530304, 'eval_accuracy': 0.8407539480387163, 'eval_runtime': 31.8438, 'eval_samples_per_second': 308.223, 'eval_steps_per_second': 9.641, 'epoch': 1.11}
+{'loss': 0.3647, 'learning_rate': 1.23967840069535e-05, 'epoch': 1.14}
+06/12/2022 05:20:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4357781410217285, 'eval_accuracy': 0.8382068262862965, 'eval_runtime': 31.6664, 'eval_samples_per_second': 309.95, 'eval_steps_per_second': 9.695, 'epoch': 1.14}
+06/12/2022 05:22:23 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43095842003822327, 'eval_accuracy': 0.8380030565461029, 'eval_runtime': 31.9154, 'eval_samples_per_second': 307.532, 'eval_steps_per_second': 9.619, 'epoch': 1.17}
+06/12/2022 05:24:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4259815514087677, 'eval_accuracy': 0.8402445236882323, 'eval_runtime': 32.101, 'eval_samples_per_second': 305.754, 'eval_steps_per_second': 9.564, 'epoch': 1.21}
+{'loss': 0.3602, 'learning_rate': 1.1853541938287703e-05, 'epoch': 1.22}
+06/12/2022 05:25:51 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43476036190986633, 'eval_accuracy': 0.8404482934284259, 'eval_runtime': 31.9641, 'eval_samples_per_second': 307.063, 'eval_steps_per_second': 9.605, 'epoch': 1.24}
+06/12/2022 05:27:34 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4473010003566742, 'eval_accuracy': 0.8342333163525216, 'eval_runtime': 31.9211, 'eval_samples_per_second': 307.477, 'eval_steps_per_second': 9.617, 'epoch': 1.27}
+{'loss': 0.3551, 'learning_rate': 1.131247283789657e-05, 'epoch': 1.3}
+06/12/2022 05:29:16 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43878814578056335, 'eval_accuracy': 0.8390219052470708, 'eval_runtime': 32.0714, 'eval_samples_per_second': 306.036, 'eval_steps_per_second': 9.572, 'epoch': 1.3}
+06/12/2022 05:31:01 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4406350553035736, 'eval_accuracy': 0.8372898624554254, 'eval_runtime': 31.9511, 'eval_samples_per_second': 307.188, 'eval_steps_per_second': 9.608, 'epoch': 1.34}
+06/12/2022 05:32:44 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43407297134399414, 'eval_accuracy': 0.8407539480387163, 'eval_runtime': 31.9034, 'eval_samples_per_second': 307.648, 'eval_steps_per_second': 9.623, 'epoch': 1.37}
+{'loss': 0.361, 'learning_rate': 1.076923076923077e-05, 'epoch': 1.39}
+06/12/2022 05:34:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43952590227127075, 'eval_accuracy': 0.8380030565461029, 'eval_runtime': 31.7465, 'eval_samples_per_second': 309.168, 'eval_steps_per_second': 9.67, 'epoch': 1.4}
+06/12/2022 05:36:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43401622772216797, 'eval_accuracy': 0.8406520631686195, 'eval_runtime': 31.7426, 'eval_samples_per_second': 309.206, 'eval_steps_per_second': 9.672, 'epoch': 1.43}
+{'loss': 0.3502, 'learning_rate': 1.0225988700564973e-05, 'epoch': 1.47}
+06/12/2022 05:37:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43527355790138245, 'eval_accuracy': 0.839429444727458, 'eval_runtime': 31.903, 'eval_samples_per_second': 307.651, 'eval_steps_per_second': 9.623, 'epoch': 1.47}
+06/12/2022 05:39:38 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43924224376678467, 'eval_accuracy': 0.8429954151808456, 'eval_runtime': 31.9101, 'eval_samples_per_second': 307.582, 'eval_steps_per_second': 9.621, 'epoch': 1.5}
+06/12/2022 05:41:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4331531226634979, 'eval_accuracy': 0.8400407539480387, 'eval_runtime': 31.9327, 'eval_samples_per_second': 307.365, 'eval_steps_per_second': 9.614, 'epoch': 1.53}
+{'loss': 0.3529, 'learning_rate': 9.682746631899175e-06, 'epoch': 1.55}
+06/12/2022 05:43:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4389887750148773, 'eval_accuracy': 0.8402445236882323, 'eval_runtime': 31.9857, 'eval_samples_per_second': 306.856, 'eval_steps_per_second': 9.598, 'epoch': 1.56}
+06/12/2022 05:44:48 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42386314272880554, 'eval_accuracy': 0.8435048395313296, 'eval_runtime': 31.7652, 'eval_samples_per_second': 308.986, 'eval_steps_per_second': 9.665, 'epoch': 1.6}
+{'loss': 0.3611, 'learning_rate': 9.139504563233378e-06, 'epoch': 1.63}
+06/12/2022 05:46:31 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4344366490840912, 'eval_accuracy': 0.8397350993377484, 'eval_runtime': 31.6619, 'eval_samples_per_second': 309.994, 'eval_steps_per_second': 9.696, 'epoch': 1.63}
+06/12/2022 05:48:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42342835664749146, 'eval_accuracy': 0.8430973000509424, 'eval_runtime': 31.9189, 'eval_samples_per_second': 307.498, 'eval_steps_per_second': 9.618, 'epoch': 1.66}
+06/12/2022 05:49:58 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4309171438217163, 'eval_accuracy': 0.8407539480387163, 'eval_runtime': 32.0439, 'eval_samples_per_second': 306.299, 'eval_steps_per_second': 9.581, 'epoch': 1.69}
+{'loss': 0.3577, 'learning_rate': 8.59626249456758e-06, 'epoch': 1.71}
+06/12/2022 05:51:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.43926477432250977, 'eval_accuracy': 0.8404482934284259, 'eval_runtime': 31.9186, 'eval_samples_per_second': 307.501, 'eval_steps_per_second': 9.618, 'epoch': 1.73}
+06/12/2022 05:53:26 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42949429154396057, 'eval_accuracy': 0.8415690269994905, 'eval_runtime': 31.9419, 'eval_samples_per_second': 307.276, 'eval_steps_per_second': 9.611, 'epoch': 1.76}
+{'loss': 0.3555, 'learning_rate': 8.053020425901783e-06, 'epoch': 1.79}
+06/12/2022 05:55:08 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4359332323074341, 'eval_accuracy': 0.8411614875191035, 'eval_runtime': 31.89, 'eval_samples_per_second': 307.777, 'eval_steps_per_second': 9.627, 'epoch': 1.79}
+06/12/2022 05:56:53 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.41871732473373413, 'eval_accuracy': 0.8441161487519103, 'eval_runtime': 31.8652, 'eval_samples_per_second': 308.016, 'eval_steps_per_second': 9.634, 'epoch': 1.83}
+06/12/2022 05:58:36 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4273277819156647, 'eval_accuracy': 0.8405501782985226, 'eval_runtime': 31.9734, 'eval_samples_per_second': 306.974, 'eval_steps_per_second': 9.602, 'epoch': 1.86}
+{'loss': 0.3601, 'learning_rate': 7.509778357235985e-06, 'epoch': 1.87}
+06/12/2022 06:00:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42204201221466064, 'eval_accuracy': 0.845236882322975, 'eval_runtime': 31.8451, 'eval_samples_per_second': 308.21, 'eval_steps_per_second': 9.64, 'epoch': 1.89}
+06/12/2022 06:02:41 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4193068742752075, 'eval_accuracy': 0.8431991849210392, 'eval_runtime': 49.2485, 'eval_samples_per_second': 199.296, 'eval_steps_per_second': 6.234, 'epoch': 1.92}
+{'loss': 0.3484, 'learning_rate': 6.966536288570187e-06, 'epoch': 1.96}
+06/12/2022 06:05:40 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.42264705896377563, 'eval_accuracy': 0.8420784513499745, 'eval_runtime': 49.9207, 'eval_samples_per_second': 196.612, 'eval_steps_per_second': 6.15, 'epoch': 1.96}
+06/12/2022 06:08:22 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4067685902118683, 'eval_accuracy': 0.8473764645950076, 'eval_runtime': 32.091, 'eval_samples_per_second': 305.849, 'eval_steps_per_second': 9.567, 'epoch': 1.99}
+06/12/2022 06:10:05 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.44781604409217834, 'eval_accuracy': 0.8437086092715231, 'eval_runtime': 32.0788, 'eval_samples_per_second': 305.965, 'eval_steps_per_second': 9.57, 'epoch': 2.02}
+{'loss': 0.3129, 'learning_rate': 6.425467188179053e-06, 'epoch': 2.04}
+06/12/2022 06:11:50 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4515018165111542, 'eval_accuracy': 0.8440142638818136, 'eval_runtime': 31.9471, 'eval_samples_per_second': 307.227, 'eval_steps_per_second': 9.61, 'epoch': 2.05}
+06/12/2022 06:13:33 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.44110581278800964, 'eval_accuracy': 0.8449312277126847, 'eval_runtime': 31.7278, 'eval_samples_per_second': 309.35, 'eval_steps_per_second': 9.676, 'epoch': 2.09}
+{'loss': 0.2714, 'learning_rate': 5.882225119513255e-06, 'epoch': 2.12}
+06/12/2022 06:15:15 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.46527954936027527, 'eval_accuracy': 0.8433010697911361, 'eval_runtime': 31.6764, 'eval_samples_per_second': 309.852, 'eval_steps_per_second': 9.692, 'epoch': 2.12}
+06/12/2022 06:17:00 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4575940668582916, 'eval_accuracy': 0.8446255731023943, 'eval_runtime': 31.8897, 'eval_samples_per_second': 307.78, 'eval_steps_per_second': 9.627, 'epoch': 2.15}
+06/12/2022 06:18:43 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.465090811252594, 'eval_accuracy': 0.8440142638818136, 'eval_runtime': 31.9221, 'eval_samples_per_second': 307.467, 'eval_steps_per_second': 9.617, 'epoch': 2.18}
+{'loss': 0.2692, 'learning_rate': 5.338983050847458e-06, 'epoch': 2.2}
+06/12/2022 06:20:28 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4665656089782715, 'eval_accuracy': 0.8417727967396842, 'eval_runtime': 32.1438, 'eval_samples_per_second': 305.347, 'eval_steps_per_second': 9.551, 'epoch': 2.22}
+06/12/2022 06:22:11 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.44639721512794495, 'eval_accuracy': 0.8468670402445236, 'eval_runtime': 31.9278, 'eval_samples_per_second': 307.412, 'eval_steps_per_second': 9.615, 'epoch': 2.25}
+{'loss': 0.2724, 'learning_rate': 4.79574098218166e-06, 'epoch': 2.28}
+06/12/2022 06:23:54 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.446061909198761, 'eval_accuracy': 0.8470708099847173, 'eval_runtime': 31.8696, 'eval_samples_per_second': 307.974, 'eval_steps_per_second': 9.633, 'epoch': 2.28}
+06/12/2022 06:25:39 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.4588933289051056, 'eval_accuracy': 0.8469689251146205, 'eval_runtime': 31.9009, 'eval_samples_per_second': 307.671, 'eval_steps_per_second': 9.624, 'epoch': 2.31}
+06/12/2022 06:27:21 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.46464261412620544, 'eval_accuracy': 0.8430973000509424, 'eval_runtime': 31.9223, 'eval_samples_per_second': 307.466, 'eval_steps_per_second': 9.617, 'epoch': 2.35}
+{'loss': 0.2638, 'learning_rate': 4.252498913515863e-06, 'epoch': 2.36}
+06/12/2022 06:29:06 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
+{'eval_loss': 0.45361143350601196, 'eval_accuracy': 0.8471726948548141, 'eval_runtime': 31.8199, 'eval_samples_per_second': 308.454, 'eval_steps_per_second': 9.648, 'epoch': 2.38}
