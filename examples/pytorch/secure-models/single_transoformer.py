@@ -18,7 +18,7 @@ from single_models import Bert, BertEmbeddings
 # Inference arguments
 class config():
    def __init__(self):
-       self.batch_size = 1
+       self.batch_size = 8
        self.num_hidden_layers = 12
        self.hidden_size = 768
        self.intermediate_size = 3072

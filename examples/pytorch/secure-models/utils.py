@@ -30,8 +30,11 @@ def encrypt_model(model, modelFunc, config, dummy_input):
     if rank == 0:
         model_upd = model.cuda()
     else:
-        model_upd = modelFunc(config[0], config[1]).cuda()
-    
+        if isinstance(config, tuple):
+            model_upd = modelFunc(config[0], config[1]).cuda()
+        else:
+            model_upd = modelFunc(config).cuda()
+
     private_model = model_upd.encrypt(src=0)
     return private_model
 

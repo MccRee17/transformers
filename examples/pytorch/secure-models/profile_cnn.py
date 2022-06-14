@@ -13,24 +13,14 @@ import crypten.communicator as comm
 from crypten.config import cfg
 from utils import encrypt_tensor, encrypt_model
 
-from models import Bert, BertEmbeddings
+from network import mcccnn8
 
 # Inference arguments
 class config():
    def __init__(self):
        self.batch_size = 1
-       self.num_hidden_layers = 12
-       self.hidden_size = 768
-       self.intermediate_size = 3072
-       self.sequence_length = 512
-       self.max_position_embeddings = 512
-       self.hidden_act = "quad"
-       self.softmax_act = "softmax_2RELU"
-       self.layer_norm_eps = 1e-12
-       self.num_attention_heads = 12
-       self.vocab_size = 28996
-       self.hidden_dropout_prob = 0.1
-       self.attention_probs_dropout_prob = 0.1
+       self.num_class = 10
+       self.act = "quad"
 
 config = config()
 print(f"using model config: {config}")
@@ -48,22 +38,22 @@ cfg.communicator.verbose = True
 
 # setup fake data for timing purpose
 commInit = crypten.communicator.get().get_communication_stats()
-input_ids = F.one_hot(torch.randint(low=0, high=config.vocab_size, size=(config.batch_size, config.sequence_length)), config.vocab_size).float().cuda()
+input = torch.randn(config.batch_size, 3, 32, 32).cuda()
 
 timing = defaultdict(float)
 
-m = Bert(config, timing)
-model = encrypt_model(m, Bert, (config, timing), input_ids).eval()
+m = mcccnn8(config, timing)
+model = encrypt_model(m, mcccnn8, (config, timing), input).eval()
 
 # encrpy inputs
-input_ids = encrypt_tensor(input_ids)
+input = encrypt_tensor(input)
 
 for i in range(10):
-    m.reset_timing()
+    #m.reset_timing()
     time_s = time.time()
     # run a forward pass
     with crypten.no_grad():
-        model(input_ids)
+        model(input)
 
     time_e = time.time()
     timing["total_time"] = (time_e - time_s)
