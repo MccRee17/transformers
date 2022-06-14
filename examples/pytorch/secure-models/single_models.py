@@ -3,10 +3,7 @@ import time
 
 import torch
 import torch.nn.functional as F
-
-import crypten
-import crypten.nn as cnn
-import crypten.communicator as comm
+import torch.nn as cnn
 
 from utils import softmax_2RELU, activation_quad
 
@@ -17,12 +14,12 @@ class Bert(cnn.Module):
 
         self.embeddings = BertEmbeddings(config, timing)
         self.encoder = cnn.ModuleList([BertLayer(config, timing) for _ in range(config.num_hidden_layers)])
-        self.timing = timing
-   
+        self.timing = timing        
+
     def reset_timing(self):
-        for k,v in self.timing.items():
+        for k, v in self.timing.items():
             self.timing[k] = 0
- 
+    
     def forward(self, input_ids):
         output = self.embeddings(input_ids)
         for _, layer in enumerate(self.encoder):
@@ -43,10 +40,11 @@ class BertEmbeddings(cnn.Module):
             self.moduleList.append(ll)
 
         self.moduleList.append(cnn.Linear(self.lastTokenDim, config.hidden_size))
+        self.moduleList = cnn.ModuleList(self.moduleList)
 
         self.position_embeddings = cnn.Linear(config.max_position_embeddings, config.hidden_size)
-        print(config.hidden_size)
-        self.LayerNorm = cnn.BatchNorm2d(config.hidden_size, eps=config.layer_norm_eps)
+#        print(config.hidden_size)
+        self.LayerNorm = cnn.BatchNorm1d(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = cnn.Dropout(config.hidden_dropout_prob)
         self.config = config
         self.timing = timing
@@ -58,20 +56,13 @@ class BertEmbeddings(cnn.Module):
             self.moduleList[i].cuda(device=device)
         return self
 
-    def encrypt(self, mode=True, src=0):
-        super(BertEmbeddings, self).encrypt(mode=mode, src=src)
-
-        for i in range(len(self.moduleList)):
-            self.moduleList[i].encrypt(mode=mode, src=src)
-        return self
-
     def forward(self, input_ids):
         embeddings = None
         
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         for i, ll in enumerate(self.moduleList):
             #print(ll.weight.shape)
+ #           print(input_ids, ll)
             if i != (len(self.moduleList) - 1):
             #   print(input_ids[:, :, i * self.tokenSubDim : (i + 1) * self.tokenSubDim].shape)
                 res = ll(input_ids[:, :, i * self.tokenSubDim : (i + 1) * self.tokenSubDim])
@@ -86,10 +77,7 @@ class BertEmbeddings(cnn.Module):
             embeddings = res if embeddings is None else (embeddings + res)
 
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["EmbedTime"] += (t1-t0)
-        self.timing["EmbedCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["ËmbedCommByte"] += (comm1["bytes"] - comm0["bytes"])
 
         position_embeddings = (self.position_embeddings.weight[:,:input_ids.shape[1]]).transpose(0,1)
      #   print(position_embeddings.shape, self.position_embeddings.weight.shape)
@@ -98,15 +86,11 @@ class BertEmbeddings(cnn.Module):
         embeddings += position_embeddings
 
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         orig_size = embeddings.size()
         embeddings = embeddings.view(-1, self.config.hidden_size)
         embeddings = self.LayerNorm(embeddings).view(orig_size)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["NormTime"] += (t1-t0)
-        self.timing["NormCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["NormCommByte"] += (comm1["bytes"] - comm0["bytes"])
         embeddings = self.dropout(embeddings)
         return embeddings
 
@@ -164,7 +148,6 @@ class BertSelfAttention(cnn.Module):
 
     def forward(self, hidden_states):
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         query_layer = self.transpose_for_scores(self.query(hidden_states))
         key_layer = self.transpose_for_scores(self.key(hidden_states))
         value_layer = self.transpose_for_scores(self.value(hidden_states))
@@ -173,30 +156,19 @@ class BertSelfAttention(cnn.Module):
         #print(attention_scores.shape)
         attention_scores = attention_scores / math.sqrt(self.attention_head_size)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["LinearTime"] += (t1 - t0)
-        self.timing["LinearCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["LinearCommByte"] += (comm1["bytes"] - comm0["bytes"])
         
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         attention_probs = self.smax(attention_scores)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["SoftmaxTime"] += (t1 - t0)
-        self.timing["SoftmaxCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["SoftmaxCommByte"] += (comm1["bytes"] - comm0["bytes"])
 
         attention_probs = self.dropout(attention_probs)
         
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         context_layer = attention_probs.matmul(value_layer)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["LinearTime"] += (t1 - t0)
-        self.timing["LinearCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["LinearCommByte"] += (comm1["bytes"] - comm0["bytes"])
 
         context_layer = context_layer.permute(0, 2, 1, 3)#.contiguous()
         new_context_layer_shape = context_layer.size()[:-2] + (self.hidden_size,)
@@ -208,35 +180,26 @@ class BertSelfOutput(cnn.Module):
     def __init__(self, config, timing):
         super(BertSelfOutput, self).__init__()
         self.dense = cnn.Linear(config.hidden_size, config.hidden_size)
-        # using batchnorm here, crypten has not implemented LayerNorm
-        self.LayerNorm = cnn.BatchNorm2d(config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = cnn.BatchNorm1d(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = cnn.Dropout(config.hidden_dropout_prob)
         self.timing = timing
         self.config = config
 
     def forward(self, hidden_states, input_tensor):
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         hidden_states = self.dense(hidden_states)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["LinearTime"] += (t1 - t0)
-        self.timing["LinearCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["LinearCommByte"] += (comm1["bytes"] - comm0["bytes"])
         
         hidden_states = self.dropout(hidden_states)
         # residual connection here
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         orig_size = hidden_states.size()
         hidden_states = hidden_states + input_tensor
         hidden_states = hidden_states.view(-1, self.config.hidden_size)
         hidden_states = self.LayerNorm(hidden_states).view(orig_size)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["NormTime"] += (t1 - t0)
-        self.timing["NormCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["NormCommByte"] += (comm1["bytes"] - comm0["bytes"])
         return hidden_states
 
 class BertIntermediate(cnn.Module):
@@ -253,22 +216,14 @@ class BertIntermediate(cnn.Module):
 
     def forward(self, hidden_states):
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         hidden_states = self.dense(hidden_states)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["LinearTime"] += (t1 - t0)
-        self.timing["LinearCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["LinearCommByte"] += (comm1["bytes"] - comm0["bytes"])
         
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         hidden_states = self.intermediate_act_fn(hidden_states)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["ActTime"] += (t1 - t0)
-        self.timing["ActCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["ActCommByte"] += (comm1["bytes"] - comm0["bytes"])
         return hidden_states
 
 
@@ -276,32 +231,23 @@ class BertOutput(cnn.Module):
     def __init__(self, config, timing):
         super(BertOutput, self).__init__()
         self.dense = cnn.Linear(config.intermediate_size, config.hidden_size)
-        # using batchnorm here, crypten has not implemented LayerNorm
-        self.LayerNorm = cnn.BatchNorm2d(config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = cnn.BatchNorm1d(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = cnn.Dropout(config.hidden_dropout_prob)
         self.timing = timing
         self.config = config
 
     def forward(self, hidden_states, input_tensor):
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         hidden_states = self.dense(hidden_states)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["LinearTime"] += (t1 - t0)
-        self.timing["LinearCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["LinearCommByte"] += (comm1["bytes"] - comm0["bytes"])
         hidden_states = self.dropout(hidden_states)
         # residual connection
         t0 = time.time()
-        comm0 = comm.get().get_communication_stats()
         orig_size = hidden_states.size()
         hidden_states = hidden_states + input_tensor
         hidden_states = hidden_states.view(-1, self.config.hidden_size)
         hidden_states = self.LayerNorm(hidden_states).view(orig_size)
         t1 = time.time()
-        comm1 = comm.get().get_communication_stats()
         self.timing["NormTime"] += (t1 - t0)
-        self.timing["NormCommTime"] += (comm1["time"] - comm0["time"])
-        self.timing["NormCommByte"] += (comm1["bytes"] - comm0["bytes"])
         return hidden_states
