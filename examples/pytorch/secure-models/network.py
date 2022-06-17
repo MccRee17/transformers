@@ -7,7 +7,7 @@ import math
 import torch.nn.functional as F
 
 import crypten.nn as cnn
-from utils import activation_quad
+from utils import activation_quad, softmax_2RELU
 
 class resblock(nn.Module):
     def __init__(self, in_channels, out_channels, return_before_act):
@@ -76,10 +76,12 @@ class mcccnn8(cnn.Module):
             self.act  = cnn.ReLU()
         elif config.act == "quad":
             self.act = activation_quad()
-
-       # if config.softmax_act == "softmax":
-       #     self.softmax_act =
-    
+         
+        if config.softmax_act == "softmax":
+            self.smax = cnn.Softmax(dim=-1)
+        elif config.softmax_act == "softmax_2RELU":
+            self.smax = softmax_2RELU(dim=-1)
+   
     def forward(self, x):
         print(x.shape)
         out = self.conv1(x)
@@ -107,7 +109,8 @@ class mcccnn8(cnn.Module):
         out = self.pool(out)
         out = out.view(out.size(0), -1)
         out  = self.fc(out)
-        return None, None, None, None, None, out
+        out = self.smax(out)
+        return out
 
 class mcccnn8_poly(nn.Module):
     def __init__(self, num_class):

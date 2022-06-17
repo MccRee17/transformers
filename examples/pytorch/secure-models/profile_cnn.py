@@ -20,7 +20,8 @@ class config():
    def __init__(self):
        self.batch_size = 1
        self.num_class = 10
-       self.act = "quad"
+       self.act = "relu"
+       self.softmax_act = "softmax"
 
 config = config()
 print(f"using model config: {config}")
@@ -30,7 +31,7 @@ rank = sys.argv[1]
 os.environ["RANK"] = str(rank)
 os.environ["WORLD_SIZE"] = str(2)
 os.environ["MASTER_ADDR"] = "172.31.12.12"
-os.environ["MASTER_PORT"] = "29500"
+os.environ["MASTER_PORT"] = "29501"
 os.environ["RENDEZVOUS"] = "env://"
 
 crypten.init()

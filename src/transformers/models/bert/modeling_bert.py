@@ -463,6 +463,7 @@ class BertIntermediate(nn.Module):
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
         hidden_states = self.dense(hidden_states)
         #print(self.dense.weight[:2])
+        #print(self.intermediate_act_fn)
         hidden_states = self.intermediate_act_fn(hidden_states)
         return hidden_states
 

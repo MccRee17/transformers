@@ -391,11 +391,11 @@ def main():
             ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
     )
     print(f"model architecture: {model}")
-    for name, param in model.named_parameters():                
-        if param.requires_grad:
-            print(name)
-        else:
-            print(f"not updating {name}")
+    #for name, param in model.named_parameters():                
+    #    if param.requires_grad:
+    #        print(name)
+    #    else:
+    #        print(f"not updating {name}")
     # Preprocessing the raw_datasets
     if data_args.task_name is not None:
         sentence1_key, sentence2_key = task_to_keys[data_args.task_name]
@@ -529,10 +529,10 @@ def main():
     else:
         data_collator = None
 
-    training_args.load_best_model_at_end = True
-    training_args.metric_for_best_model = "accuracy"
-    training_args.greater_is_better = True
-    training_args.save_total_limit = 5
+    #training_args.load_best_model_at_end = True
+    #training_args.metric_for_best_model = "accuracy"
+    #training_args.greater_is_better = True
+    #training_args.save_total_limit = 5
     #training_args.evaluate_during_training = True
     #training_args.logging_steps = 1000
     print(f"using training arge: {training_args}")
@@ -545,8 +545,7 @@ def main():
         compute_metrics=compute_metrics,
         tokenizer=tokenizer,
         data_collator=data_collator,
-        callbacks = [EarlyStoppingCallback(early_stopping_patience=3)],
-
+    #    callbacks = [EarlyStoppingCallback(early_stopping_patience=3)],
     )
 
     # Training

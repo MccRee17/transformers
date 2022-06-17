@@ -401,16 +401,15 @@ def main():
     total_drop = 0
     for name, param in model.named_parameters():                
         size = param.size()
-        total_num += param.numel()
+        #total_num += param.numel()
         #print(name, size)
-        mask = torch.bernoulli(torch.ones(size)*(1-model_args.ratio))
-        total_drop += torch.count_nonzero(1-mask)
+        #mask = torch.bernoulli(torch.ones(size)*(1-model_args.ratio))
+        #total_drop += torch.count_nonzero(1-mask)
         param.requires_grad = False
-        param *= mask
-        #noise = torch.empty(size).normal_(mean=0,std=model_args.std)
-        #param += noise
-    #assert False
-    print(f"----------------------total num: {total_num}, drops: {total_drop}------------------------")
+        #param *= mask
+        noise = torch.empty(size).normal_(mean=0,std=model_args.std)
+        param += noise
+    # print(f"----------------------total num: {total_num}, drops: {total_drop}------------------------")
     # Preprocessing the raw_datasets
     if data_args.task_name is not None:
         sentence1_key, sentence2_key = task_to_keys[data_args.task_name]

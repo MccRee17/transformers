@@ -40,6 +40,7 @@ from transformers import (
     AutoConfig,
     AutoFeatureExtractor,
     AutoModelForImageClassification,
+    ViTForImageClassification,
     HfArgumentParser,
     Trainer,
     TrainingArguments,
@@ -139,6 +140,12 @@ class ModelArguments:
     model_revision: str = field(
         default="main",
         metadata={"help": "The specific model version to use (can be a branch name, tag name or commit id)."},
+    )
+    act: str = field(
+        default="relu",
+    )
+    softmax_act: str = field(
+        default="softmax",
     )
     feature_extractor_name: str = field(default=None, metadata={"help": "Name or path of preprocessor config."})
     use_auth_token: bool = field(
@@ -266,22 +273,30 @@ def main():
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-    model = AutoModelForImageClassification.from_pretrained(
-        model_args.model_name_or_path,
-        from_tf=bool(".ckpt" in model_args.model_name_or_path),
-        config=config,
-        cache_dir=model_args.cache_dir,
-        revision=model_args.model_revision,
-        use_auth_token=True if model_args.use_auth_token else None,
-        ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
-    )
+    config.hidden_act = model_args.act
+    config.softmax_act = model_args.softmax_act
+
+    model = ViTForImageClassification(config)
+    #model = AutoModelForImageClassification.from_pretrained(
+    #    model_args.model_name_or_path,
+    #    from_tf=bool(".ckpt" in model_args.model_name_or_path),
+    #    config=config,
+    #    cache_dir=model_args.cache_dir,
+    #    revision=model_args.model_revision,
+    #    use_auth_token=True if model_args.use_auth_token else None,
+    #    ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
+    #)
     feature_extractor = AutoFeatureExtractor.from_pretrained(
         model_args.feature_extractor_name or model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-
+    feature_extractor.image_mean = (0.4914, 0.4822, 0.4465)
+    feature_extractor.image_std = (0.2470, 0.2435, 0.2616)
+    print(feature_extractor)
+    print(model)
+    
     # Define torchvision transforms to be applied to each image.
     normalize = Normalize(mean=feature_extractor.image_mean, std=feature_extractor.image_std)
     _train_transforms = Compose(
