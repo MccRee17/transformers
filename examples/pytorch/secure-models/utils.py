@@ -49,6 +49,18 @@ class softmax_2RELU(cnn.Module):
         func_x = self.func(x)
         return func_x / func_x.sum(keepdim=True, dim=self.dim)
 
+class softmax_2QUAD(cnn.Module):
+    def __init__(self, norm, dim):
+        super().__init__()
+        self.dim = dim
+        self.norm = norm
+    
+    def forward(self, x):
+        a, b, c, d = x.size()
+        quad = x#self.norm(x)
+        quad = (quad*quad + quad + 1)
+        return quad / quad.sum(dim=self.dim, keepdims=True)
+
 class activation_quad(cnn.Module):
     def __init__(self):
         super().__init__()

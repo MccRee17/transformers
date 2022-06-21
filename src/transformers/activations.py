@@ -165,9 +165,11 @@ def softmax_2relu(scores, dim, eps=1e-12):
     out = (relu + eps/reduce_dim) / (torch.sum(relu, dim=dim, keepdims=True)+eps)
     #print(torch.isnan(out).any(), out.shape)
     return out
-    
+   
 def softmax_2quad(scores, dim):
-    quad =  0.125*torch.square(scores) + 0.25*scores + 0.5
+    a, b ,c, d = scores.size()
+    quad = torch.nn.functional.layer_norm(scores, (b,c,d))
+    quad = 0.125*(quad**2 + 8*quad + 16)# 0.125*torch.square(quad) + 0.25*scores + 0.5
     return quad / torch.sum(quad, dim=dim, keepdims=True)
 
 ACT2FN = {

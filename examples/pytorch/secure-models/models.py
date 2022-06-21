@@ -153,6 +153,9 @@ class BertSelfAttention(cnn.Module):
             self.smax = cnn.Softmax(dim=-1)
         elif config.softmax_act == "softmax_2RELU":
             self.smax = softmax_2RELU(dim=-1)
+        elif config.softmax_act == "softmax_2QUAD":
+            self.norm = cnn.BatchNorm2d(config.hidden_size, eps=config.layer_norm_eps)
+            self.smax = softmax_2QUAD(self.norm, dim=-1)
         else:
             raise ValueError(f"softmax type {config.softmax_act} not implemented.")
         self.timing = timing
