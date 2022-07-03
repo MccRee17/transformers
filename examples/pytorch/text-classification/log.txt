@@ -1,6 +1,6 @@
-06/13/2022 22:31:24 - WARNING - __main__ - Process rank: -1, device: cuda:0, n_gpu: 1distributed training: False, 16-bits training: False
-06/13/2022 22:31:24 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
-_n_gpu=1,
+06/29/2022 15:41:18 - WARNING - __main__ - Process rank: -1, device: cuda:0, n_gpu: 2distributed training: False, 16-bits training: False
+06/29/2022 15:41:18 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
+_n_gpu=2,
 adafactor=False,
 adam_beta1=0.9,
 adam_beta2=0.999,
@@ -19,11 +19,11 @@ deepspeed=None,
 disable_tqdm=False,
 do_eval=True,
 do_predict=False,
-do_train=False,
+do_train=True,
 eval_accumulation_steps=None,
 eval_delay=0,
-eval_steps=None,
-evaluation_strategy=IntervalStrategy.NO,
+eval_steps=200,
+evaluation_strategy=IntervalStrategy.STEPS,
 fp16=False,
 fp16_backend=auto,
 fp16_full_eval=False,
@@ -51,7 +51,7 @@ local_rank=-1,
 log_level=-1,
 log_level_replica=-1,
 log_on_each_node=True,
-logging_dir=./tmp/mnli/relu/runs/Jun13_22-31-24_ip-172-31-12-12.us-east-2.compute.internal,
+logging_dir=./tmp/mnli/ft_quad_2relu/runs/Jun29_15-41-18_ip-10-21-39-35,
 logging_first_step=False,
 logging_nan_inf_filter=True,
 logging_steps=500,
@@ -62,13 +62,13 @@ max_steps=-1,
 metric_for_best_model=None,
 mp_parameters=,
 no_cuda=False,
-num_train_epochs=3.0,
+num_train_epochs=5.0,
 optim=OptimizerNames.ADAMW_HF,
-output_dir=./tmp/mnli/relu,
+output_dir=./tmp/mnli/ft_quad_2relu,
 overwrite_output_dir=True,
 past_index=-1,
 per_device_eval_batch_size=8,
-per_device_train_batch_size=8,
+per_device_train_batch_size=32,
 prediction_loss_only=False,
 push_to_hub=False,
 push_to_hub_model_id=None,
@@ -77,7 +77,7 @@ push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
 remove_unused_columns=True,
 report_to=[],
 resume_from_checkpoint=None,
-run_name=./tmp/mnli/relu,
+run_name=./tmp/mnli/ft_quad_2relu,
 save_on_each_node=False,
 save_steps=500,
 save_strategy=IntervalStrategy.STEPS,
@@ -95,31 +95,29 @@ warmup_steps=0,
 weight_decay=0.0,
 xpu_backend=None,
 )
-06/13/2022 22:31:24 - INFO - datasets.info - Loading Dataset Infos from /home/ec2-user/.cache/huggingface/modules/datasets_modules/datasets/glue/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
-06/13/2022 22:31:24 - INFO - datasets.builder - Overwrite dataset info from restored data version.
-06/13/2022 22:31:24 - INFO - datasets.info - Loading Dataset info from /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
-06/13/2022 22:31:24 - WARNING - datasets.builder - Reusing dataset glue (/home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad)
-06/13/2022 22:31:24 - INFO - datasets.info - Loading Dataset info from /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/29/2022 15:41:18 - INFO - datasets.info - Loading Dataset Infos from /home/ubuntu/.cache/huggingface/modules/datasets_modules/datasets/glue/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/29/2022 15:41:18 - INFO - datasets.builder - Overwrite dataset info from restored data version.
+06/29/2022 15:41:18 - INFO - datasets.info - Loading Dataset info from /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
+06/29/2022 15:41:18 - WARNING - datasets.builder - Reusing dataset glue (/home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad)
+06/29/2022 15:41:18 - INFO - datasets.info - Loading Dataset info from /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad
 using model config: BertConfig {
-  "_name_or_path": "bert-base-uncased",
-  "architectures": [
-    "BertForMaskedLM"
-  ],
+  "_name_or_path": "huawei-noah/TinyBERT_General_4L_312D",
   "attention_probs_dropout_prob": 0.1,
+  "cell": {},
   "classifier_dropout": null,
   "crypten": false,
+  "emb_size": 312,
   "finetuning_task": "mnli",
-  "gradient_checkpointing": false,
-  "hidden_act": "gelu",
+  "hidden_act": "quad",
   "hidden_dropout_prob": 0.1,
-  "hidden_size": 768,
+  "hidden_size": 312,
   "id2label": {
     "0": "LABEL_0",
     "1": "LABEL_1",
     "2": "LABEL_2"
   },
   "initializer_range": 0.02,
-  "intermediate_size": 3072,
+  "intermediate_size": 1200,
   "label2id": {
     "LABEL_0": 0,
     "LABEL_1": 1,
@@ -129,10 +127,12 @@ using model config: BertConfig {
   "max_position_embeddings": 512,
   "model_type": "bert",
   "num_attention_heads": 12,
-  "num_hidden_layers": 12,
+  "num_hidden_layers": 4,
   "pad_token_id": 0,
   "position_embedding_type": "absolute",
-  "softmax_act": "softmax",
+  "pre_trained": "",
+  "softmax_act": "2relu",
+  "structure": [],
   "transformers_version": "4.20.0.dev0",
   "type_vocab_size": 2,
   "use_cache": true,
@@ -140,25 +140,23 @@ using model config: BertConfig {
 }
 
 BertConfig {
-  "_name_or_path": "/home/ec2-user/transformers/examples/pytorch/text-classification/tmp/mnli/ft_gelu/checkpoint-12500",
-  "architectures": [
-    "BertForMaskedLM"
-  ],
+  "_name_or_path": "huawei-noah/TinyBERT_General_4L_312D",
   "attention_probs_dropout_prob": 0.1,
+  "cell": {},
   "classifier_dropout": null,
   "crypten": false,
+  "emb_size": 312,
   "finetuning_task": "mnli",
-  "gradient_checkpointing": false,
-  "hidden_act": "gelu",
+  "hidden_act": "quad",
   "hidden_dropout_prob": 0.1,
-  "hidden_size": 768,
+  "hidden_size": 312,
   "id2label": {
     "0": "LABEL_0",
     "1": "LABEL_1",
     "2": "LABEL_2"
   },
   "initializer_range": 0.02,
-  "intermediate_size": 3072,
+  "intermediate_size": 1200,
   "label2id": {
     "LABEL_0": 0,
     "LABEL_1": 1,
@@ -168,10 +166,12 @@ BertConfig {
   "max_position_embeddings": 512,
   "model_type": "bert",
   "num_attention_heads": 12,
-  "num_hidden_layers": 12,
+  "num_hidden_layers": 4,
   "pad_token_id": 0,
   "position_embedding_type": "absolute",
-  "softmax_act": "softmax",
+  "pre_trained": "",
+  "softmax_act": "2relu",
+  "structure": [],
   "transformers_version": "4.20.0.dev0",
   "type_vocab_size": 2,
   "use_cache": true,
@@ -181,10 +181,10 @@ BertConfig {
 model architecture: BertForSequenceClassification(
   (bert): BertModel(
     (embeddings): BertEmbeddings(
-      (word_embeddings): Embedding(30522, 768, padding_idx=0)
-      (position_embeddings): Embedding(512, 768)
-      (token_type_embeddings): Embedding(2, 768)
-      (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+      (word_embeddings): Embedding(30522, 312, padding_idx=0)
+      (position_embeddings): Embedding(512, 312)
+      (token_type_embeddings): Embedding(2, 312)
+      (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
       (dropout): Dropout(p=0.1, inplace=False)
     )
     (encoder): BertEncoder(
@@ -192,309 +192,124 @@ model architecture: BertForSequenceClassification(
         (0): BertLayer(
           (attention): BertAttention(
             (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
+              (query): Linear(in_features=312, out_features=312, bias=True)
+              (key): Linear(in_features=312, out_features=312, bias=True)
+              (value): Linear(in_features=312, out_features=312, bias=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
             (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dense): Linear(in_features=312, out_features=312, bias=True)
+              (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
           (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
+            (dense): Linear(in_features=312, out_features=1200, bias=True)
+            (intermediate_act_fn): QuadActivation()
           )
           (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dense): Linear(in_features=1200, out_features=312, bias=True)
+            (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
             (dropout): Dropout(p=0.1, inplace=False)
           )
         )
         (1): BertLayer(
           (attention): BertAttention(
             (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
+              (query): Linear(in_features=312, out_features=312, bias=True)
+              (key): Linear(in_features=312, out_features=312, bias=True)
+              (value): Linear(in_features=312, out_features=312, bias=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
             (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dense): Linear(in_features=312, out_features=312, bias=True)
+              (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
           (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
+            (dense): Linear(in_features=312, out_features=1200, bias=True)
+            (intermediate_act_fn): QuadActivation()
           )
           (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dense): Linear(in_features=1200, out_features=312, bias=True)
+            (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
             (dropout): Dropout(p=0.1, inplace=False)
           )
         )
         (2): BertLayer(
           (attention): BertAttention(
             (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
+              (query): Linear(in_features=312, out_features=312, bias=True)
+              (key): Linear(in_features=312, out_features=312, bias=True)
+              (value): Linear(in_features=312, out_features=312, bias=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
             (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dense): Linear(in_features=312, out_features=312, bias=True)
+              (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
           (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
+            (dense): Linear(in_features=312, out_features=1200, bias=True)
+            (intermediate_act_fn): QuadActivation()
           )
           (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dense): Linear(in_features=1200, out_features=312, bias=True)
+            (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
             (dropout): Dropout(p=0.1, inplace=False)
           )
         )
         (3): BertLayer(
           (attention): BertAttention(
             (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
+              (query): Linear(in_features=312, out_features=312, bias=True)
+              (key): Linear(in_features=312, out_features=312, bias=True)
+              (value): Linear(in_features=312, out_features=312, bias=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
             (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dense): Linear(in_features=312, out_features=312, bias=True)
+              (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
           (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
+            (dense): Linear(in_features=312, out_features=1200, bias=True)
+            (intermediate_act_fn): QuadActivation()
           )
           (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (4): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (5): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (6): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (7): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (8): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (9): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (10): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-            (dropout): Dropout(p=0.1, inplace=False)
-          )
-        )
-        (11): BertLayer(
-          (attention): BertAttention(
-            (self): BertSelfAttention(
-              (query): Linear(in_features=768, out_features=768, bias=True)
-              (key): Linear(in_features=768, out_features=768, bias=True)
-              (value): Linear(in_features=768, out_features=768, bias=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-            (output): BertSelfOutput(
-              (dense): Linear(in_features=768, out_features=768, bias=True)
-              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
-              (dropout): Dropout(p=0.1, inplace=False)
-            )
-          )
-          (intermediate): BertIntermediate(
-            (dense): Linear(in_features=768, out_features=3072, bias=True)
-            (intermediate_act_fn): GELUActivation()
-          )
-          (output): BertOutput(
-            (dense): Linear(in_features=3072, out_features=768, bias=True)
-            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dense): Linear(in_features=1200, out_features=312, bias=True)
+            (LayerNorm): LayerNorm((312,), eps=1e-12, elementwise_affine=True)
             (dropout): Dropout(p=0.1, inplace=False)
           )
         )
       )
     )
     (pooler): BertPooler(
-      (dense): Linear(in_features=768, out_features=768, bias=True)
+      (dense): Linear(in_features=312, out_features=312, bias=True)
       (activation): Tanh()
     )
   )
   (dropout): Dropout(p=0.1, inplace=False)
-  (classifier): Linear(in_features=768, out_features=3, bias=True)
+  (classifier): Linear(in_features=312, out_features=3, bias=True)
 )
-----------------------total num: 109484547, drops: 5471540------------------------
-06/13/2022 22:31:27 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-46081116198779e3.arrow
-06/13/2022 22:31:27 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-c44709efa2a3813b.arrow
-06/13/2022 22:31:28 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-a6d2c4a17b7acf39.arrow
-06/13/2022 22:31:28 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-c519a44f101d2d72.arrow
-06/13/2022 22:31:28 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ec2-user/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-f456d546826d1631.arrow
+06/29/2022 15:41:22 - WARNING - datasets.fingerprint - Parameter 'function'=<function main.<locals>.preprocess_function at 0x7f82e2167d08> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was used instead. Make sure your transforms and parameters are serializable with pickle or dill for the dataset fingerprinting and caching to work. If you reuse this transform, the caching mechanism will consider it to be different from the previous calls and recompute everything. This warning is only showed once. Subsequent hashing failures won't be showed.
+06/29/2022 15:41:22 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-1c80317fa3b1799d.arrow
+06/29/2022 15:41:22 - INFO - datasets.fingerprint - Parameter 'function'=<function main.<locals>.preprocess_function at 0x7f82e2167d08> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was used instead.
+06/29/2022 15:41:22 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-bdd640fb06671ad1.arrow
+06/29/2022 15:41:22 - INFO - datasets.fingerprint - Parameter 'function'=<function main.<locals>.preprocess_function at 0x7f82e2167d08> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was used instead.
+06/29/2022 15:41:22 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-3eb13b9046685257.arrow
+06/29/2022 15:41:22 - INFO - datasets.fingerprint - Parameter 'function'=<function main.<locals>.preprocess_function at 0x7f82e2167d08> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was used instead.
+06/29/2022 15:41:22 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-23b8c1e9392456de.arrow
+06/29/2022 15:41:22 - INFO - datasets.fingerprint - Parameter 'function'=<function main.<locals>.preprocess_function at 0x7f82e2167d08> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was used instead.
+06/29/2022 15:41:22 - WARNING - datasets.arrow_dataset - Loading cached processed dataset at /home/ubuntu/.cache/huggingface/datasets/glue/mnli/1.0.0/dacbe3125aa31d7f70367a07a8a9e72a5a0bfeb5fc42e75c9db75b96da6053ad/cache-1a3d1fa7bc8960a9.arrow
+06/29/2022 15:41:22 - INFO - __main__ - Sample 354785 of the training set: {'premise': 'The town was little more than a single main street, bordered by shops and houses.', 'hypothesis': 'The small town had little more that one street that was bordered by shops, houses and a train station.', 'label': 1, 'idx': 354785, 'input_ids': [101, 1996, 2237, 2001, 2210, 2062, 2084, 1037, 2309, 2364, 2395, 1010, 11356, 2011, 7340, 1998, 3506, 1012, 102, 1996, 2235, 2237, 2018, 2210, 2062, 2008, 2028, 2395, 2008, 2001, 11356, 2011, 7340, 1010, 3506, 1998, 1037, 3345, 2276, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+06/29/2022 15:41:22 - INFO - __main__ - Sample 388323 of the training set: {'premise': "Below Jesus' feet is a Latin in?\xadscription that suggests that the tympanum was the work of one man, Gislebertus (Gilbert).", 'hypothesis': 'Gisleburtus destroyed the tympanum of Jesus.', 'label': 2, 'idx': 388323, 'input_ids': [101, 2917, 4441, 1005, 2519, 2003, 1037, 3763, 1999, 1029, 5896, 3258, 2008, 6083, 2008, 1996, 5939, 8737, 27975, 2001, 1996, 2147, 1997, 2028, 2158, 1010, 21025, 25016, 8296, 2271, 1006, 7664, 1007, 1012, 102, 21025, 25016, 8569, 5339, 2271, 3908, 1996, 5939, 8737, 27975, 1997, 4441, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+06/29/2022 15:41:22 - INFO - __main__ - Sample 285929 of the training set: {'premise': "A history of mad-cow disease by veteran science writer Richard Rhodes ( The Making of the Atomic Bomb ). Critics praise Rhodes' lucid explication of complex virology as well as his range--the book includes digressions on political and literary themes and a section on the scandal surrounding a Nobel Prize-winning expert on the disease who recently pleaded guilty to molesting a little boy.", 'hypothesis': "Critics appreciated the book of the scientist Richard Rhodes, which succeeded in explaining very carefully the mad-cow disease and other digressions, but it hasn't won any prize yet.", 'label': 1, 'idx': 285929, 'input_ids': [101, 1037, 2381, 1997, 5506, 1011, 11190, 4295, 2011, 8003, 2671, 3213, 2957, 10588, 1006, 1996, 2437, 1997, 1996, 9593, 5968, 1007, 1012, 4401, 8489, 10588, 1005, 12776, 3593, 4654, 21557, 1997, 3375, 6819, 13153, 15707, 2004, 2092, 2004, 2010, 2846, 1011, 1011, 1996, 2338, 2950, 10667, 8303, 8496, 2006, 2576, 1998, 4706, 6991, 1998, 1037, 2930, 2006, 1996, 9446, 4193, 1037, 10501, 3396, 1011, 3045, 6739, 2006, 1996, 4295, 2040, 3728, 12254, 5905, 2000, 16709, 16643, 3070, 1037, 2210, 2879, 1012, 102, 4401, 12315, 1996, 2338, 1997, 1996, 7155, 2957, 10588, 1010, 2029, 4594, 1999, 9990, 2200, 5362, 1996, 5506, 1011, 11190, 4295, 1998, 2060, 10667, 8303, 8496, 1010, 2021, 2009, 8440, 1005, 1056, 2180, 2151, 3396, 2664, 1012, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
 using training arge: TrainingArguments(
-_n_gpu=1,
+_n_gpu=2,
 adafactor=False,
 adam_beta1=0.9,
 adam_beta2=0.999,
@@ -513,11 +328,11 @@ deepspeed=None,
 disable_tqdm=False,
 do_eval=True,
 do_predict=False,
-do_train=False,
+do_train=True,
 eval_accumulation_steps=None,
 eval_delay=0,
-eval_steps=None,
-evaluation_strategy=IntervalStrategy.NO,
+eval_steps=200,
+evaluation_strategy=IntervalStrategy.STEPS,
 fp16=False,
 fp16_backend=auto,
 fp16_full_eval=False,
@@ -527,7 +342,7 @@ fsdp_min_num_params=0,
 full_determinism=False,
 gradient_accumulation_steps=1,
 gradient_checkpointing=False,
-greater_is_better=True,
+greater_is_better=None,
 group_by_length=False,
 half_precision_backend=auto,
 hub_model_id=None,
@@ -540,12 +355,12 @@ label_names=None,
 label_smoothing_factor=0.0,
 learning_rate=5e-05,
 length_column_name=length,
-load_best_model_at_end=True,
+load_best_model_at_end=False,
 local_rank=-1,
 log_level=-1,
 log_level_replica=-1,
 log_on_each_node=True,
-logging_dir=./tmp/mnli/relu/runs/Jun13_22-31-24_ip-172-31-12-12.us-east-2.compute.internal,
+logging_dir=./tmp/mnli/ft_quad_2relu/runs/Jun29_15-41-18_ip-10-21-39-35,
 logging_first_step=False,
 logging_nan_inf_filter=True,
 logging_steps=500,
@@ -553,16 +368,16 @@ logging_strategy=IntervalStrategy.STEPS,
 lr_scheduler_type=SchedulerType.LINEAR,
 max_grad_norm=1.0,
 max_steps=-1,
-metric_for_best_model=accuracy,
+metric_for_best_model=None,
 mp_parameters=,
 no_cuda=False,
-num_train_epochs=3.0,
+num_train_epochs=5.0,
 optim=OptimizerNames.ADAMW_HF,
-output_dir=./tmp/mnli/relu,
+output_dir=./tmp/mnli/ft_quad_2relu,
 overwrite_output_dir=True,
 past_index=-1,
 per_device_eval_batch_size=8,
-per_device_train_batch_size=8,
+per_device_train_batch_size=32,
 prediction_loss_only=False,
 push_to_hub=False,
 push_to_hub_model_id=None,
@@ -571,11 +386,11 @@ push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
 remove_unused_columns=True,
 report_to=[],
 resume_from_checkpoint=None,
-run_name=./tmp/mnli/relu,
+run_name=./tmp/mnli/ft_quad_2relu,
 save_on_each_node=False,
 save_steps=500,
 save_strategy=IntervalStrategy.STEPS,
-save_total_limit=5,
+save_total_limit=None,
 seed=42,
 sharded_ddp=[],
 skip_memory_metrics=True,
@@ -589,20 +404,3 @@ warmup_steps=0,
 weight_decay=0.0,
 xpu_backend=None,
 )
-06/13/2022 22:31:31 - INFO - __main__ - *** Evaluate ***
-06/13/2022 22:33:20 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
-***** eval metrics *****
-  eval_accuracy           =     0.7075
-  eval_loss               =     0.6908
-  eval_runtime            = 0:01:48.57
-  eval_samples            =       9815
-  eval_samples_per_second =     90.396
-  eval_steps_per_second   =     11.301
-06/13/2022 22:35:09 - INFO - datasets.metric - Removing /home/ec2-user/.cache/huggingface/metrics/glue/mnli/default_experiment-1-0.arrow
-***** eval metrics *****
-  eval_accuracy_mm           =     0.7088
-  eval_loss_mm               =     0.6861
-  eval_runtime_mm            = 0:01:49.76
-  eval_samples_mm            =       9832
-  eval_samples_per_second_mm =     89.571
-  eval_steps_per_second_mm   =     11.196

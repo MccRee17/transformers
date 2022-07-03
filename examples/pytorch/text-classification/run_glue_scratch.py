@@ -380,16 +380,16 @@ def main():
     print(f"using model config: {config}")
     
     #assert config.hidden_act == "linear"
-    #model = BertForSequenceClassification(config)
-    model = AutoModelForSequenceClassification.from_pretrained(
-            model_args.model_name_or_path,
-            from_tf=bool(".ckpt" in model_args.model_name_or_path),
-            config=config,
-            cache_dir=model_args.cache_dir,
-            revision=model_args.model_revision,
-            use_auth_token=True if model_args.use_auth_token else None,
-            ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
-    )
+    model = BertForSequenceClassification(config)
+    #model = AutoModelForSequenceClassification.from_pretrained(
+    #        model_args.model_name_or_path,
+    #        from_tf=bool(".ckpt" in model_args.model_name_or_path),
+    #        config=config,
+    #        cache_dir=model_args.cache_dir,
+    #        revision=model_args.model_revision,
+    #        use_auth_token=True if model_args.use_auth_token else None,
+    #        ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
+    #)
     print(f"model architecture: {model}")
     #for name, param in model.named_parameters():                
     #    if param.requires_grad:

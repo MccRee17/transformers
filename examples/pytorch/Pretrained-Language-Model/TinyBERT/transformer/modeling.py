@@ -148,7 +148,7 @@ def softmax_2relu(scores, dim, eps=1e-12):
 def softmax_2quad(scores, dim):
     a, b ,c, d = scores.size()
     quad = torch.nn.functional.layer_norm(scores, (b,c,d))
-    quad = 0.125*(quad**2 + 8*quad + 16)
+    quad = 0.125*(quad**2 + 2*quad + 1)
     return quad / torch.sum(quad, dim=dim, keepdims=True)
 
 try:
