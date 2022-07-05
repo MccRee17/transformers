@@ -4,18 +4,18 @@ import json
 import shutil
 import itertools
 import argparse
+import torch
 
 exp_name = "exp1"
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--task_name', type='str')
-parser.add_argument('--gpu', type="str")
+parser.add_argument('--task_name', type=str)
+parser.add_argument('--metric_name', type=str)
 
 args = parser.parse_args()
 task_name = args.task_name
-gpu = parser.gpu
+metric_name = args.metric_name
 
-metric_name = "eval_accuracy"
 base_dir = f"./tmp/{exp_name}/{task_name}/"
 if not os.path.exists("./tmp"):
     os.mkdir("./tmp")
@@ -28,15 +28,18 @@ log_path = os.path.join(base_dir, "log.txt")
 with open(log_path, "w") as f:
     pass
 
+num_devices = torch.cuda.device_count()
+
 def HPO_teacher():
     lr_list = [2e-5, 3e-5, 4e-5, 5e-5]
+    bs = 32 // num_devices
     teacher_acc = []
-
+    
     for lr in lr_list:
         output_dir = os.path.join(base_dir, str(lr))
         result_path = os.path.join(output_dir, "eval_results.json")
-        cmd = f"CUDA_VISIBLE_DEVICES={gpu} python run_glue.py --model_name_or_path bert-base-uncased --task_name {task_name} \
-              --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size 32 --learning_rate {str(lr)} \
+        cmd = f"python run_glue.py --model_name_or_path bert-base-uncased --task_name {task_name} \
+              --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {bs} --learning_rate {str(lr)} \
               --num_train_epochs 3 --act gelu --softmax_act softmax --output_dir {output_dir} --overwrite_output_dir"
         subprocess.run(cmd, shell=True)
         result = json.load(open(result_path))
@@ -66,9 +69,9 @@ def HPO_S1():
         for bs in bs_list:
             output_dir = os.path.join(base_dir, "S1" ,str(lr), str(bs))
             result_path = os.path.join(output_dir, "eval_results.json")
-            cmd = f"CUDA_VISIBLE_DEVICES={gpu} python run_glue.py --model_name_or_path huawei-noah/TinyBERT_General_4L_312D \
+            cmd = f"python run_glue.py --model_name_or_path huawei-noah/TinyBERT_General_4L_312D \
                   --task_name {task_name} \
-                  --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {str(bs)} --learning_rate {str(lr)} \
+                  --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {str(bs//num_devices)} --learning_rate {str(lr)} \
                   --num_train_epochs 3 --act quad --softmax_act 2relu --output_dir {output_dir} --overwrite_output_dir"
 
             subprocess.run(cmd, shell=True)
@@ -87,3 +90,8 @@ def HPO_S1():
 
 HPO_teacher()
 HPO_S1()
+
+# hold GPU
+a = torch.randn(50,50).cuda()
+while True:
+    a ** 2
