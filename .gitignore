@@ -1,7 +1,6 @@
 # Initially taken from Github's Python gitignore file
 
 # tmp
-**tmp**
 **checkpoint**
 **data/
 **wandb/
@@ -83,7 +82,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+#*.log
 local_settings.py
 db.sqlite3
 
