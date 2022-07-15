@@ -11,6 +11,7 @@ exp_name = "exp1"
 parser = argparse.ArgumentParser()
 parser.add_argument('--task_name', type=str)
 parser.add_argument('--metric_name', type=str)
+parser.add_argument('--network_type', type=str)
 
 args = parser.parse_args()
 task_name = args.task_name
@@ -89,8 +90,10 @@ def HPO_S1():
         f.write(f"best S1 with lr {best_lr} bs {best_bs}, acc: {best_metric} \n")
 
 def HPO_S2():
-    lr_list = [3e-5, 5e-5, 1e-4]
-    bs_list = [16, 64, 128]
+    #lr_list = [3e-5, 5e-5, 1e-4]
+    #bs_list = [16, 64, 128]
+    lr_list = [3e-5]
+    bs_list = [16]
     best = None
     best_metric = 0
 
@@ -100,30 +103,48 @@ def HPO_S2():
             output_dir = os.path.join(base_dir, "S2" ,str(lr), str(bs))
             result_path = os.path.join(output_dir, "eval_results.json")
             data_dir = os.path.join("glue_data", task_name)
-            cmd = f"python task_distill.py --teacher_model {exp_name}_{task_name}_t \
+            teacher_dir = f"{exp_name}_{task_name}_t"
+            
+            # overwrite config
+            config = json.load(open(os.path.join(teacher_dir, "config.json")))
+            json_object = json.dumps(config)
+            with open(os.path.join(teacher_dir, "config.json"), "w") as outfile:
+                outfile.write(json_object)
+
+            config = json.load(open(os.path.join("./TinyBERT_General_4L_312D_S2/", "config.json")))
+            json_object = json.dumps(config)
+            with open(os.path.join("./TinyBERT_General_4L_312D_S2/", "config.json"), "w") as outfile:
+                outfile.write(json_object)
+            
+            cmd = f"python task_distill.py --teacher_model {teacher_dir} \
                        --student_model ./TinyBERT_General_4L_312D_S2/ \
                        --data_dir {data_dir} --task_name {task_name} --output_dir {output_dir} \
                        --max_seq_length 128 --train_batch_size {bs} \
-                       --num_train_epochs 10 --do_lower_case "
+                       --do_lower_case --log_path {log_path}"
 
             subprocess.run(cmd, shell=True)
 
             # distill pred layers
+            config = json.load(open(os.path.join(output_dir, "config.json")))
+            json_object = json.dumps(config)
+            with open(os.path.join(output_dir, "config.json"), "w") as outfile:
+                outfile.write(json_object)
+            
             output_dir_stage2 = os.path.join(base_dir, "S2" ,str(lr), str(bs)+"_stage2")
             result_path = os.path.join(output_dir_stage2, "eval_results.json")
             data_dir = os.path.join("glue_data", task_name)
             cmd = f"python task_distill.py --pred_distill  \
-                       --teacher_model {exp_name}_{task_name}_t \
+                       --teacher_model {teacher_dir} \
                        --student_model {output_dir} \
                        --data_dir {data_dir} \
                        --task_name {task_name} \
                        --output_dir {output_dir_stage2} \
                        --do_lower_case \
                        --learning_rate {lr}  \
-                       --num_train_epochs  3  \
+                       --num_train_epochs  5 \
                        --eval_step 100 \
                        --max_seq_length 128 \
-                       --train_batch_size {bs} "
+                       --train_batch_size {bs} --log_path {log_path}"
 
             subprocess.run(cmd, shell=True)
 
@@ -140,9 +161,14 @@ def HPO_S2():
     #best_lr, best_bs = best
     #with open(log_path, "a") as f:
     #    f.write(f"S2 with lr {best_lr} bs {best_bs}, acc: {best_metric} \n")
-#HPO_teacher()
-#HPO_S1()
-HPO_S2()
+
+assert args.network_type in ["teacher", "S1", "S2"]
+if args.network_type == "teacher":
+    HPO_teacher()
+elif args.network_type == "S1":
+    HPO_S1()
+else:
+    HPO_S2()
 
 # hold GPU
 a = torch.randn(50,50).cuda()

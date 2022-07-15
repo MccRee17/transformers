@@ -173,75 +173,6 @@ except ImportError:
             return self.weight * x + self.bias
 
 
-class HeadAttention(nn.Module):
-    def __init__(self, config, hidden_size, head_num, head_used):
-        super(HeadAttention, self).__init__()
-        self.head_num = head_num
-        self.head_used = head_used
-        self.hidden_size = hidden_size
-        if self.hidden_size % self.head_num != 0:
-            raise ValueError(
-                "The hidden size (%d) is not a multiple of the number of attention "
-                "heads (%d)" % (self.hidden_size, self.head_num))
-
-        self.attention_head_size = int(self.hidden_size / self.head_num)
-        self.all_head_size = self.num_heads_used * self.attention_head_size
-
-        self.query = nn.Linear(self.hidden_size, self.all_head_size)
-        self.key = nn.Linear(self.hidden_size, self.all_head_size)
-        self.value = nn.Linear(self.hidden_size, self.all_head_size)
-
-        self.dropout = nn.Dropout(config.attention_probs_dropout_prob)
-        self.softmax_act = ACT2SFN[config.softmax_act]
-        print(f"using softmax_act: {self.softmax_act}")
-
-    def transpose_for_scores(self, x):
-        new_x_shape = x.size()[:-1] + (self.num_heads_used,
-                                       self.attention_head_size)
-        x = x.view(*new_x_shape)
-        return x.permute(0, 2, 1, 3)
-
-    def forward(self, hidden_states, attention_mask):
-        mixed_query_layer = self.query(hidden_states)
-        mixed_key_layer = self.key(hidden_states)
-        mixed_value_layer = self.value(hidden_states)
-
-        query_layer = self.transpose_for_scores(mixed_query_layer)
-        key_layer = self.transpose_for_scores(mixed_key_layer)
-        value_layer = self.transpose_for_scores(mixed_value_layer)
-
-        # Take the dot product between "query" and "key" to get the raw attention scores.
-        attention_scores = torch.matmul(
-            query_layer, key_layer.transpose(-1, -2))
-        attention_scores = attention_scores / \
-            math.sqrt(self.attention_head_size)
-        # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
-        attention_scores = attention_scores + attention_mask
-
-        # Normalize the attention scores to probabilities.
-        #attention_probs = nn.Softmax(dim=-1)(attention_scores)
-        attention_probs = self.softmax_act(attention_scores, dim=-1)  #nn.Softmax(dim=-1)(attention_scores)
-
-        # This is actually dropping out entire tokens to attend to, which might
-        # seem a bit unusual, but is taken from the original Transformer paper.
-        attention_probs = self.dropout(attention_probs)
-
-        context_layer = torch.matmul(attention_probs, value_layer)
-        context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
-        new_context_layer_shape = context_layer.size()[
-            :-2] + (self.all_head_size,)
-        context_layer = context_layer.view(*new_context_layer_shape)
-
-        if self.num_heads_used != self.num_attention_heads:
-            pad_shape = context_layer.size()[:-1] + \
-                ((self.num_attention_heads - self.num_heads_used)
-                 * self.attention_head_size, )
-
-            pad_layer = torch.zeros(*pad_shape).to(context_layer.device)
-            context_layer = torch.cat((context_layer, pad_layer), -1)
-        return context_layer
-
-
 ACT2FN = {"gelu": gelu, "relu": torch.nn.functional.relu, "quad": quad}
 ACT2SFN = {
     "softmax": torch.nn.functional.softmax,
@@ -269,6 +200,7 @@ class BertConfig(object):
                  initializer_range=0.02,
                  pre_trained='',
                  softmax_act="softmax",
+                 log_path="None",
                  training=''):
         """Constructs BertConfig.
 
@@ -315,6 +247,7 @@ class BertConfig(object):
             self.pre_trained = pre_trained
             self.training = training
             self.softmax_act = softmax_act
+            self.log_path = log_path
         else:
             raise ValueError("First argument must be either a vocabulary size (int)"
                              "or the path to a pretrained model config file (str)")
@@ -406,7 +339,9 @@ class BertSelfAttention(nn.Module):
 
         self.dropout = nn.Dropout(config.attention_probs_dropout_prob)
         self.softmax_act = ACT2SFN[config.softmax_act]
-        print(f"using softmax_act: {self.softmax_act}")
+        if config.log_path is not None:
+            with open(config.log_path, "a") as f:
+                f.write(f"using softmax_act: {self.softmax_act} \n")
 
     def transpose_for_scores(self, x):
         new_x_shape = x.size()[
@@ -486,7 +421,9 @@ class BertIntermediate(nn.Module):
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act
-        print(f"using act: {self.intermediate_act_fn}")
+        if config.log_path is not None:
+            with open(config.log_path, "a") as f:
+                f.write(f"using act: {self.intermediate_act_fn} \n")
 
     def forward(self, hidden_states):
         hidden_states = self.dense(hidden_states)
@@ -524,7 +461,6 @@ class BertLayer(nn.Module):
             hidden_states, attention_mask)
         intermediate_output = self.intermediate(attention_output)
         layer_output = self.output(intermediate_output, attention_output)
-
         return layer_output, layer_att
 
 
@@ -561,7 +497,7 @@ class BertPooler(nn.Module):
 
         pooled_output = self.dense(pooled_output)
         pooled_output = self.activation(pooled_output)
-
+        #print(pooled_output)
         return pooled_output
 
 
@@ -1133,7 +1069,6 @@ class BertForSentencePairClassification(BertPreTrainedModel):
         _, b_pooled_output = self.bert(
             b_input_ids, b_token_type_ids, b_attention_mask, output_all_encoded_layers=False)
         # b_pooled_output = self.dropout(b_pooled_output)
-
         logits = self.classifier(torch.relu(torch.cat((a_pooled_output, b_pooled_output,
                                                        torch.abs(a_pooled_output - b_pooled_output)), -1)))
 
@@ -1161,8 +1096,7 @@ class TinyBertForSequenceClassification(BertPreTrainedModel):
         sequence_output, att_output, pooled_output = self.bert(input_ids, token_type_ids, attention_mask,
                                                                output_all_encoded_layers=True, output_att=True)
 
-        logits = self.classifier(torch.relu(pooled_output))
-
+        logits = self.classifier(pooled_output)
         tmp = []
         if is_student:
             for s_id, sequence_layer in enumerate(sequence_output):

@@ -610,14 +610,14 @@ def do_eval(model, task_name, eval_dataloader,
     eval_loss = 0
     nb_eval_steps = 0
     preds = []
-
+    orig_state = model.training
+    model.eval()
     for batch_ in tqdm(eval_dataloader, desc="Evaluating"):
         batch_ = tuple(t.to(device) for t in batch_)
         with torch.no_grad():
             input_ids, input_mask, segment_ids, label_ids, seq_lengths = batch_
 
             logits, _, _ = model(input_ids, segment_ids, input_mask)
-
         # create eval loss and other metric required by the task
         if output_mode == "classification":
             loss_fct = CrossEntropyLoss()
@@ -643,7 +643,9 @@ def do_eval(model, task_name, eval_dataloader,
         preds = np.squeeze(preds)
     result = compute_metrics(task_name, preds, eval_labels.numpy())
     result['eval_loss'] = eval_loss
-
+    
+    if orig_state is True:
+        model.train()    
     return result
 
 
@@ -694,7 +696,7 @@ def main():
                         type=int,
                         help="Total batch size for training.")
     parser.add_argument("--eval_batch_size",
-                        default=32,
+                        default=1,
                         type=int,
                         help="Total batch size for eval.")
     parser.add_argument("--learning_rate",
@@ -726,6 +728,10 @@ def main():
                         type=int,
                         default=1,
                         help="Number of updates steps to accumulate before performing a backward/update pass.")
+    parser.add_argument('--log_path',
+                        type=str,
+                        default=None,
+                        help="path to write important logs: teacher accuracy")
 
     # added arguments
     parser.add_argument('--aug_train',
@@ -778,11 +784,12 @@ def main():
         "wnli": "classification"
     }
 
+
     # intermediate distillation default parameters
     default_params = {
         "cola": {"num_train_epochs": 50, "max_seq_length": 64},
         "mnli": {"num_train_epochs": 5, "max_seq_length": 128},
-        "mrpc": {"num_train_epochs": 20, "max_seq_length": 128},
+        "mrpc": {"num_train_epochs": 50, "max_seq_length": 128},
         "sst-2": {"num_train_epochs": 10, "max_seq_length": 64},
         "sts-b": {"num_train_epochs": 20, "max_seq_length": 128},
         "qqp": {"num_train_epochs": 5, "max_seq_length": 128},
@@ -822,10 +829,12 @@ def main():
     if task_name in default_params:
         args.max_seq_len = default_params[task_name]["max_seq_length"]
 
+    #print(task_name, args.num_train_epochs)
     if not args.pred_distill and not args.do_eval:
         if task_name in default_params:
-            args.num_train_epoch = default_params[task_name]["num_train_epochs"]
-
+            args.num_train_epochs = default_params[task_name]["num_train_epochs"]
+    #print(default_params, args.num_train_epochs)
+    #assert False
     if task_name not in processors:
         raise ValueError("Task not found: %s" % task_name)
 
@@ -865,11 +874,14 @@ def main():
     if not args.do_eval:
         teacher_model = TinyBertForSequenceClassification.from_pretrained(args.teacher_model, num_labels=num_labels)
         teacher_model.to(device)
+        # set teacher model to eval mode
+        #teacher_model.eval()
 
     result_t = do_eval(teacher_model, task_name, eval_dataloader,device, output_mode, eval_labels, num_labels)
     logger.info("***** Teacher evaluation *****")
     logger.info(result_t)
-    #assert False
+    with open(args.log_path, "a") as f:
+        f.write(f"teacher: {result_t} \n")
     student_model = TinyBertForSequenceClassification.from_pretrained(args.student_model, num_labels=num_labels)
     student_model.to(device)
     if args.do_eval:
