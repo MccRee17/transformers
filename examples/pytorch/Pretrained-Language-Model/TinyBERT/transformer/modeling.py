@@ -1087,19 +1087,24 @@ class TinyBertForSequenceClassification(BertPreTrainedModel):
         self.bert = BertModel(config)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self.classifier = nn.Linear(config.hidden_size, num_labels)
-        self.fit_dense = nn.Linear(config.hidden_size, fit_size)
+        self.extra_project = config.hidden_size != fit_size
+        if self.extra_project:
+            self.fit_dense = nn.Linear(config.hidden_size, fit_size)
         self.apply(self.init_bert_weights)
 
     def forward(self, input_ids, token_type_ids=None, attention_mask=None,
                 labels=None, is_student=False):
-
+        # Bert-base config
+        assert input_ids.shape[1] == 512
         sequence_output, att_output, pooled_output = self.bert(input_ids, token_type_ids, attention_mask,
                                                                output_all_encoded_layers=True, output_att=True)
 
         logits = self.classifier(pooled_output)
+        #logits = self.classifier(torch.relu(pooled_output))
         tmp = []
-        if is_student:
+        if is_student and self.extra_project:
             for s_id, sequence_layer in enumerate(sequence_output):
+                print(sequence_layer.size())
                 tmp.append(self.fit_dense(sequence_layer))
             sequence_output = tmp
         return logits, att_output, sequence_output

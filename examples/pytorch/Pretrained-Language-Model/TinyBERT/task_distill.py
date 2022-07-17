@@ -680,7 +680,7 @@ def main():
                         type=str,
                         help="Where do you want to store the pre-trained models downloaded from s3")
     parser.add_argument("--max_seq_length",
-                        default=128,
+                        default=512,
                         type=int,
                         help="The maximum total input sequence length after WordPiece tokenization. \n"
                              "Sequences longer than this will be truncated, and sequences shorter \n"
@@ -696,7 +696,7 @@ def main():
                         type=int,
                         help="Total batch size for training.")
     parser.add_argument("--eval_batch_size",
-                        default=1,
+                        default=2,
                         type=int,
                         help="Total batch size for eval.")
     parser.add_argument("--learning_rate",
@@ -787,14 +787,14 @@ def main():
 
     # intermediate distillation default parameters
     default_params = {
-        "cola": {"num_train_epochs": 50, "max_seq_length": 64},
-        "mnli": {"num_train_epochs": 5, "max_seq_length": 128},
-        "mrpc": {"num_train_epochs": 50, "max_seq_length": 128},
-        "sst-2": {"num_train_epochs": 10, "max_seq_length": 64},
-        "sts-b": {"num_train_epochs": 20, "max_seq_length": 128},
-        "qqp": {"num_train_epochs": 5, "max_seq_length": 128},
-        "qnli": {"num_train_epochs": 10, "max_seq_length": 128},
-        "rte": {"num_train_epochs": 20, "max_seq_length": 128}
+        "cola": {"num_train_epochs": 50, "max_seq_length": 512},
+        "mnli": {"num_train_epochs": 5, "max_seq_length": 512},
+        "mrpc": {"num_train_epochs": 20, "max_seq_length": 512},
+        "sst-2": {"num_train_epochs": 10, "max_seq_length": 512},
+        "sts-b": {"num_train_epochs": 20, "max_seq_length": 512},
+        "qqp": {"num_train_epochs": 5, "max_seq_length": 512},
+        "qnli": {"num_train_epochs": 10, "max_seq_length": 512},
+        "rte": {"num_train_epochs": 30, "max_seq_length": 512}
     }
 
     acc_tasks = ["mnli", "mrpc", "sst-2", "qqp", "qnli", "rte"]
@@ -827,7 +827,7 @@ def main():
     task_name = args.task_name.lower()
 
     if task_name in default_params:
-        args.max_seq_len = default_params[task_name]["max_seq_length"]
+        args.max_seq_length = default_params[task_name]["max_seq_length"]
 
     #print(task_name, args.num_train_epochs)
     if not args.pred_distill and not args.do_eval:
@@ -876,7 +876,6 @@ def main():
         teacher_model.to(device)
         # set teacher model to eval mode
         #teacher_model.eval()
-
     result_t = do_eval(teacher_model, task_name, eval_dataloader,device, output_mode, eval_labels, num_labels)
     logger.info("***** Teacher evaluation *****")
     logger.info(result_t)
@@ -956,12 +955,11 @@ def main():
                 att_loss = 0.
                 rep_loss = 0.
                 cls_loss = 0.
+                with torch.no_grad():
+                    teacher_logits, teacher_atts, teacher_reps = teacher_model(input_ids, segment_ids, input_mask)
 
                 student_logits, student_atts, student_reps = student_model(input_ids, segment_ids, input_mask,
                                                                            is_student=True)
-
-                with torch.no_grad():
-                    teacher_logits, teacher_atts, teacher_reps = teacher_model(input_ids, segment_ids, input_mask)
 
                 if not args.pred_distill:
                     teacher_layer_num = len(teacher_atts)
