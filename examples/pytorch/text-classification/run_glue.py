@@ -102,7 +102,7 @@ class DataTrainingArguments:
         },
     )
     overwrite_cache: bool = field(
-        default=False, metadata={"help": "Overwrite the cached preprocessed datasets or not."}
+        default=True, metadata={"help": "Overwrite the cached preprocessed datasets or not."}
     )
     pad_to_max_length: bool = field(
         default=True,
@@ -457,7 +457,6 @@ def main():
             (examples[sentence1_key],) if sentence2_key is None else (examples[sentence1_key], examples[sentence2_key])
         )
         result = tokenizer(*args, padding=padding, max_length=max_seq_length, truncation=True)
-
         # Map labels to IDs (not necessary for GLUE tasks)
         if label_to_id is not None and "label" in examples:
             result["label"] = [(label_to_id[l] if l != -1 else -1) for l in examples["label"]]
@@ -497,6 +496,10 @@ def main():
     # Log a few random samples from the training set:
     if training_args.do_train:
         for index in random.sample(range(len(train_dataset)), 3):
+            print(len(train_dataset[index]["input_ids"]) )
+            import time
+            time.sleep(5)
+            assert len(train_dataset[index]["input_ids"]) == data_args.max_seq_length
             logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
 
     # Get the metric function
@@ -532,7 +535,7 @@ def main():
     #training_args.load_best_model_at_end = True
     #training_args.metric_for_best_model = "accuracy"
     #training_args.greater_is_better = True
-    #training_args.save_total_limit = 5
+    training_args.save_total_limit = 1
     #training_args.evaluate_during_training = True
     #training_args.logging_steps = 1000
     print(f"using training arge: {training_args}")

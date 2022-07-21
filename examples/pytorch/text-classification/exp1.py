@@ -39,8 +39,8 @@ def HPO_teacher():
         output_dir = os.path.join(base_dir, str(lr))
         result_path = os.path.join(output_dir, "eval_results.json")
         cmd = f"python run_glue.py --model_name_or_path bert-base-uncased --task_name {task_name} \
-              --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {bs} --learning_rate {str(lr)} \
-              --num_train_epochs 3 --act gelu --softmax_act softmax --output_dir {output_dir} --overwrite_output_dir"
+              --do_train --do_eval --max_seq_length 512 --per_device_train_batch_size {bs} --learning_rate {str(lr)} \
+              --num_train_epochs 3 --save_steps 200 --act gelu --softmax_act softmax --output_dir {output_dir} --overwrite_output_dir"
         subprocess.run(cmd, shell=True)
         result = json.load(open(result_path))
         acc = float(result[metric_name])
@@ -60,8 +60,10 @@ def HPO_teacher():
     shutil.copytree(teacher_path, dst_path)
 
 def HPO_S1():
-    lr_list = [2e-5, 5e-5, 1e-4]
-    bs_list = [16, 64, 128]
+    #lr_list = [2e-5, 5e-5, 1e-4]
+    #bs_list = [16, 64, 128]
+    lr_list = [1e-4]
+    bs_list = [8]
     best = None
     best_metric = 0
 
@@ -69,10 +71,10 @@ def HPO_S1():
         for bs in bs_list:
             output_dir = os.path.join(base_dir, "S1" ,str(lr), str(bs))
             result_path = os.path.join(output_dir, "eval_results.json")
-            cmd = f"python run_glue.py --model_name_or_path huawei-noah/TinyBERT_General_4L_312D \
+            cmd = f"python run_glue.py --model_name_or_path exp_{task_name}_t \
                   --task_name {task_name} \
-                  --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {str(bs//num_devices)} --learning_rate {str(lr)} \
-                  --num_train_epochs 3 --act quad --softmax_act 2relu --output_dir {output_dir} --overwrite_output_dir"
+                  --do_train --do_eval --max_seq_length 512 --per_device_train_batch_size {str(bs//num_devices)} --learning_rate {str(lr)} \
+                  --num_train_epochs 10 --act quad --softmax_act 2relu --output_dir {output_dir} --overwrite_output_dir"
 
             subprocess.run(cmd, shell=True)
             result = json.load(open(result_path))
@@ -88,7 +90,7 @@ def HPO_S1():
     with open(log_path, "a") as f:
         f.write(f"best S1 with lr {best_lr} bs {best_bs}, acc: {best_metric} \n")
 
-HPO_teacher()
+#HPO_teacher()
 HPO_S1()
 
 # hold GPU

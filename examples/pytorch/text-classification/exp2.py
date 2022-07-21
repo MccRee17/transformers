@@ -47,7 +47,7 @@ def HPO_S0():
             cmd = f"python run_glue_scratch.py --model_name_or_path bert-base-uncased \
                   --task_name {task_name} --warmup_ratio 0.2\
                   --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {str(bs//num_devices)} --learning_rate {str(lr)} \
-                  --num_train_epochs 30 --act quad --softmax_act 2relu --output_dir {output_dir} --overwrite_output_dir"
+                  --num_train_epochs 10 --act quad --softmax_act 2relu --output_dir {output_dir} --overwrite_output_dir"
 
             subprocess.run(cmd, shell=True)
             result = json.load(open(result_path))
@@ -64,8 +64,8 @@ def HPO_S0():
 
 
 def HPO_S1():
-    lr_list = [1e-5, 5e-5, 1e-4]
-    bs_list = [128, 32]
+    lr_list = [1e-5]
+    bs_list = [32]
     #lr_list = [1e-4]
     #bs_list = [8]
     best = None
@@ -77,7 +77,7 @@ def HPO_S1():
             result_path = os.path.join(output_dir, "eval_results.json")
             cmd = f"python run_glue.py --model_name_or_path {model_path} \
                   --task_name {task_name} \
-                  --do_train --do_eval --max_seq_length 128 --per_device_train_batch_size {str(bs//num_devices)} --learning_rate {str(lr)} \
+                  --do_train --do_eval --max_seq_length 512 --warmup_ratio 0.2 --per_device_train_batch_size {str(bs//num_devices)} --learning_rate {str(lr)} \
                   --num_train_epochs 10 --act quad --softmax_act 2relu --output_dir {output_dir} --overwrite_output_dir"
 
             subprocess.run(cmd, shell=True)
